@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import entities.Function;
 import models.RawModel;
+import shaders.FunctionShader;
 import toolbox.Maths;
 
 public class FunctionRenderer {

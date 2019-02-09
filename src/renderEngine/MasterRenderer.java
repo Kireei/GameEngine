@@ -14,6 +14,7 @@ import entities.Entity;
 import entities.Function;
 import entities.Light;
 import models.TexturedModel;
+import shaders.FunctionShader;
 import shaders.StaticShader;
 import shaders.TerrainShader;
 import terrain.Terrain;

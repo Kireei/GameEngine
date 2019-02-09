@@ -1,9 +1,8 @@
-package renderEngine;
+package shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
 
 import entities.Camera;
-import shaders.ShaderProgram;
 import toolbox.Maths;
 
 public class FunctionShader extends ShaderProgram{
