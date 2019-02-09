@@ -11,6 +11,7 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import entities.Camera;
 import entities.Entity;
+import entities.Function;
 import entities.Light;
 import models.TexturedModel;
 import shaders.StaticShader;
@@ -31,9 +32,13 @@ public class MasterRenderer {
 	private TerrainRenderer terrainRenderer;
 	private TerrainShader terrainShader = new TerrainShader();
 	
+	private FunctionRenderer functionRenderer;
+	private FunctionShader functionShader = new FunctionShader();
+	
 	
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
+	private List<Function> functions = new ArrayList<Function>();
 	
 	
 	public MasterRenderer(){
@@ -42,6 +47,7 @@ public class MasterRenderer {
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
+		functionRenderer = new FunctionRenderer(functionShader, projectionMatrix);
 	}
 	
 	
@@ -57,6 +63,9 @@ public class MasterRenderer {
 		terrainShader.loadViewMatrix(camera);
 		terrainRenderer.render(terrains);
 		terrainShader.stop();
+		functionShader.start();
+		functionRenderer.render(functions);
+		functionShader.stop();
 		terrains.clear();
 		entities.clear();
 	}

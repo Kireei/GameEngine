@@ -8,6 +8,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import entities.Entity;
+import entities.Function;
 import entities.Light;
 import image.Image;
 import map.Map;
@@ -53,6 +54,9 @@ public class MainGameLoop {
 		List<Entity> boxes = new ArrayList<Entity>();
 		
 		MasterRenderer renderer = new MasterRenderer();
+		
+		List<Function> functions = new ArrayList<Function>();
+		functions.add(new Function(new Vector3f(0, 0, 0), loader));
 		
 		int xPos = 0;
 		int yPos = 0;
