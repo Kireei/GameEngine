@@ -80,4 +80,8 @@ public class Camera {
 		return roll;
 	}
 
+	public void setPosition(Vector3f position) {
+		this.position = position;
+	}
+
 }

@@ -1,13 +1,12 @@
-package entities;
+package functions;
 
 import models.RawModel;
 import renderEngine.Loader;
-import textures.ModelTexture;
 import toolbox.Maths;
 
 public class Function {
 
-	private static final float SIZE = 200;
+	private static final float SIZE = 100;
 	private static final int VERTEX_COUNT = 512;
 	private static final float SPACE = SIZE / VERTEX_COUNT; 
 
@@ -16,13 +15,13 @@ public class Function {
 	private RawModel model;
 
 
-	public Function(int gridX, int gridZ, Loader loader, float var) {
+	public Function(int gridX, int gridZ, Loader loader, float var, FunctionTypes type) {
 		this.x = gridX;
 		this.z = gridZ;
-		this.model = generateFunction(loader, var);
+		this.model = generateFunction(loader, var, type);
 	}
 
-	private RawModel generateFunction(Loader loader, float var) {
+	private RawModel generateFunction(Loader loader, float var, FunctionTypes type) {
 		int count = VERTEX_COUNT;
 		float[] vertices = new float[count * 3];
 		float[] colors = new float[count * 3];
@@ -32,13 +31,13 @@ public class Function {
 
 		for (int j = 0; j < VERTEX_COUNT; j++) {
 			
-			vertices[vertexPointer * 3] = SPACE * j -( SIZE / 2);//(float) j / ((float) SIZE - 1) * SIZE;
+			vertices[vertexPointer * 3] = SPACE * j - (SIZE / 2);
 			float x = vertices[vertexPointer * 3];
-			vertices[vertexPointer * 3 + 1] = (float) Maths.macLaurinSine(x, (int)Math.floor(var));//Maths.macLaurinSine(x, (int)Math.floor(var)); ;
-			vertices[vertexPointer * 3 + 2] = 0;//(float) i / ((float) VERTEX_COUNT - 1) * SIZE;
+			vertices[vertexPointer * 3 + 1] = (float) getFunction(type, x, var);
+			vertices[vertexPointer * 3 + 2] = 0;
 			colors[vertexPointer * 3] = 1 - var * var / 255;
-			colors[vertexPointer * 3 + 1] = 0.5f;//(var+2) * var / 255;
-			colors[vertexPointer * 3 + 2] = 0;//var * var / 255;
+			colors[vertexPointer * 3 + 1] = 0.5f;
+			colors[vertexPointer * 3 + 2] = 0;
 			vertexPointer++;
 		}
 
@@ -52,6 +51,21 @@ public class Function {
 		}
 	
 		return loader.loadToVAO(vertices, textureCoords, colors, indices);
+	}
+	
+	private double getFunction(FunctionTypes type, float x, float var) {
+		switch(type) {
+		case SINE:
+			return Maths.macLaurinSine(x, var);
+		case ARCTAN:
+			return Maths.macLaurinArcTan(x, var);
+		case E:
+			return Maths.macLaurinE(x, var);
+		case COS:
+			return Maths.macLaurinCos(x, var);
+		default:
+			return Maths.macLaurinSine(x, var);
+		}
 	}
 
 	public float getX() {
