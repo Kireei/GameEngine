@@ -3,34 +3,52 @@ package shaders;
 import org.lwjgl.util.vector.Matrix4f;
 
 import entities.Camera;
+import entities.Light;
 import toolbox.Maths;
 
 public class FunctionShader extends ShaderProgram{
 	
-	private static final String VERTEX_SHADER = "src/shaders/functionVertexShader.txt";
-	private static final String FRAGMENT_SHADER = "src/shaders/functionFragmentShader.txt";
+	private static final String VERTEX_FILE = "src/shaders/functionVertexShader.txt";
+	private static final String FRAGMENT_FILE = "src/shaders/functionFragmentShader.txt";
 	
 	private int location_transformationMatrix;
 	private int location_projectionMatrix;
 	private int location_viewMatrix;
-	
+	private int location_lightPosition;
+	private int location_lightColor;
+	private int location_shineDamper;
+	private int location_reflectivity;
+
 	public FunctionShader() {
-		super(VERTEX_SHADER, FRAGMENT_SHADER);
+		super(VERTEX_FILE, FRAGMENT_FILE);
+		
 	}
 
-	
+	@Override
+	protected void bindAttributes() {
+		super.bindAttribute(0, "position");
+		super.bindAttribute(2, "color");
+	}
+
+	@Override
 	protected void getAllUniformLocations() {
 		location_transformationMatrix = super.getUniformLocation("transformationMatrix");
 		location_projectionMatrix = super.getUniformLocation("projectionMatrix");
 		location_viewMatrix = super.getUniformLocation("viewMatrix");
-		
 	}
-
 	
-	protected void bindAttributes() {
-		super.bindAttribute(0, "position");
-		super.bindAttribute(1, "color");
-		
+	public void loadShineVariable(float damper, float reflectivity){
+		super.loadFloat(location_shineDamper, damper);
+		super.loadFloat(location_reflectivity, reflectivity);
+	}
+	
+	public void loadTransformationMatrix(Matrix4f matrix){
+		super.loadMatrix(location_transformationMatrix, matrix);
+	}
+	
+	public void loadLight(Light light){
+		super.loadVector(location_lightPosition, light.getPosition());
+		super.loadVector(location_lightColor, light.getColor());
 	}
 	
 	public void loadViewMatrix(Camera camera){
@@ -42,8 +60,5 @@ public class FunctionShader extends ShaderProgram{
 		super.loadMatrix(location_projectionMatrix, projection);
 	}
 	
-	public void loadTransformationMatrix(Matrix4f matrix){
-		super.loadMatrix(location_transformationMatrix, matrix);
-	}
-
+	
 }

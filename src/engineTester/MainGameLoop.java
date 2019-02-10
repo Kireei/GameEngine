@@ -53,8 +53,8 @@ public class MainGameLoop {
 		
 		MasterRenderer renderer = new MasterRenderer();
 		
-		List<Function> functions = new ArrayList<Function>();
-		functions.add(new Function(new Vector3f(0, 0, 0), loader));
+		
+		//Function function =  new Function(0, 0, loader, new ModelTexture(loader.loadTexture("chimp")));
 		
 		int xPos = 0;
 		int yPos = 0;
@@ -69,29 +69,40 @@ public class MainGameLoop {
 				continue;
 				}
 			if(map[i] == 1){
-				boxes.add(new Entity(staticModel, new Vector3f(xPos, yPos, 0),0,0,0,1));
+				boxes.add(new Entity(staticModel, new Vector3f(xPos * 2, yPos * 2, 0),0,0,0,1));
 				xPos++;	
 				
 			}
 			
 			
 		}
-		
+		float var = 0;
+		Function function = new Function(0,0,loader, 0);
 		while(!Display.isCloseRequested()){
+			
+			if(var < 50) {
+				renderer.removeFunction(function);
+				function = new Function(0, 0, loader, var);
+				renderer.processFunction(function);
+			}
+			
 			camera.move();
 			entity.increaseRotation(0, 1, 0);
-			renderer.processTerrain(terrain);
-			renderer.processEntity(entity);
+			//renderer.processTerrain(terrain);
+			//renderer.processFunction(function);
+			//renderer.processEntity(entity);
 			//light.setPosition(camera.getPosition());
 			light.setPosition(new Vector3f(100, 50, -100));
-			for(int i = 0; i < boxes.size(); i++){
+			/*for(int i = 0; i < boxes.size(); i++){
 				renderer.processEntity(boxes.get(i));
-			}
+			}*/
 			
 			
 			renderer.render(light, camera);
+			var += 0.2;
 			
 			DisplayManager.updateDisplay();
+			
 		}
 		
 		renderer.cleanUp();

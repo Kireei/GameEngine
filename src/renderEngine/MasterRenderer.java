@@ -59,12 +59,16 @@ public class MasterRenderer {
 		shader.loadViewMatrix(camera);
 		renderer.render(entities);
 		shader.stop();
+		
 		terrainShader.start();
 		terrainShader.loadLight(sun);
 		terrainShader.loadViewMatrix(camera);
 		terrainRenderer.render(terrains);
 		terrainShader.stop();
+		
 		functionShader.start();
+		functionShader.loadLight(sun);
+		functionShader.loadViewMatrix(camera);
 		functionRenderer.render(functions);
 		functionShader.stop();
 		terrains.clear();
@@ -73,6 +77,14 @@ public class MasterRenderer {
 	
 	public void processTerrain(Terrain terrain){
 		terrains.add(terrain);
+	}
+	
+	public void processFunction(Function function) {
+		functions.add(function);
+	}
+	
+	public void removeFunction(Function function) {
+		functions.remove(function);
 	}
 	
 	
@@ -116,6 +128,7 @@ public class MasterRenderer {
 	public void cleanUp(){
 		shader.cleanUp();
 		terrainShader.cleanUp();
+		functionShader.cleanUp();
 	}
 
 }

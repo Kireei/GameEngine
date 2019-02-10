@@ -27,4 +27,37 @@ public class Maths {
 		Matrix4f.translate(negativeCameraPos, viewMatrix, viewMatrix);
 		return viewMatrix;
 	}
+	
+	public static float factorial(float n) {
+		float final_answer = 1;
+		for(float i = n; i > 0; i--) {
+			final_answer *= i;
+		}
+		return final_answer;
+	}
+	
+	public static double macLaurinSine(float var, int grade) {
+		double expression = 0;
+		for(int i = 0; i < grade; i++) {
+			expression += (Math.pow(-1, i) * Math.pow(var, 2 * i + 1)) / (factorial(2 * i + 1));
+		}
+		
+		return expression;
+	}
+	
+	public static double macLaurinArcTan(float var, int grade) {
+		double expression = 0;
+		for(int i = 0; i < grade; i++) {
+			expression += (Math.pow(-1, i) * Math.pow(var, 2 * i + 1)) / (2 * i + 1);
+		}
+		return expression;
+	}
+	
+	public static double macLaurinE(float var, int grade) {
+		double expression = 0;
+		for(int i = 0; i < grade; i++) {
+			expression += Math.pow(var, i) / factorial(i);
+		}
+		return expression;
+	}
 }
