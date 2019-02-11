@@ -5,10 +5,6 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class Camera {
 	
-	public void setPosition(Vector3f position) {
-		this.position = position;
-	}
-
 	private Vector3f position = new Vector3f(0, 1, 0);
 	private float pitch;
 	private float yaw;
@@ -82,6 +78,11 @@ public class Camera {
 
 	public float getRoll() {
 		return roll;
+	}
+
+	public void setPosition(Vector3f vector3f) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

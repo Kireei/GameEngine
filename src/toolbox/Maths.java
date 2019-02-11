@@ -30,13 +30,14 @@ public class Maths {
 	
 	public static float factorial(float n) {
 		float final_answer = 1;
+		if(n == 0) return 1;
 		for(float i = n; i > 0; i--) {
 			final_answer *= i;
 		}
 		return final_answer;
 	}
 	
-	public static double macLaurinSine(float var, int grade) {
+	public static double macLaurinSine(float var, float grade) {
 		double expression = 0;
 		for(int i = 0; i < grade; i++) {
 			expression += (Math.pow(-1, i) * Math.pow(var, 2 * i + 1)) / (factorial(2 * i + 1));
@@ -45,7 +46,7 @@ public class Maths {
 		return expression;
 	}
 	
-	public static double macLaurinArcTan(float var, int grade) {
+	public static double macLaurinArcTan(float var, float grade) {
 		double expression = 0;
 		for(int i = 0; i < grade; i++) {
 			expression += (Math.pow(-1, i) * Math.pow(var, 2 * i + 1)) / (2 * i + 1);
@@ -53,11 +54,21 @@ public class Maths {
 		return expression;
 	}
 	
-	public static double macLaurinE(float var, int grade) {
+	public static double macLaurinE(float var, float grade) {
 		double expression = 0;
 		for(int i = 0; i < grade; i++) {
 			expression += Math.pow(var, i) / factorial(i);
 		}
 		return expression;
 	}
+	
+	public static double macLaurinCos(float var, float grade) {
+		double expression = 0;
+		for(int i = 0; i < grade; i++) {
+			expression += (Math.pow(-1, i) * Math.pow(var, 2 * i)) / (factorial(2 * i));
+		}
+		
+		return expression;
+	}
+	
 }

@@ -3,16 +3,14 @@ package renderEngine;
 import java.util.List;
 
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import entities.Function;
+import functions.Function;
 import models.RawModel;
 import shaders.FunctionShader;
-import textures.ModelTexture;
 import toolbox.Maths;
 
 public class FunctionRenderer {
@@ -27,18 +25,17 @@ public class FunctionRenderer {
 	
 	public void render(List<Function> functions){
 		for(Function function:functions){
-			prepareTerrain(function);
+			prepareFunction(function);
 			loadModelMatrix(function);
 			GL11.glDrawElements(GL11.GL_LINES, function.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			unbindTexturedModel();
 		}
 	}
 	
-	private void prepareTerrain(Function function){
+	private void prepareFunction(Function function){
 		RawModel rawModel = function.getModel();
 		GL30.glBindVertexArray(rawModel.getVaoID());
 		GL20.glEnableVertexAttribArray(0);
-		GL20.glEnableVertexAttribArray(1);
 		GL20.glEnableVertexAttribArray(2);
 		
 		
@@ -46,7 +43,6 @@ public class FunctionRenderer {
 	
 	private void unbindTexturedModel(){
 		GL20.glDisableVertexAttribArray(0);
-		GL20.glDisableVertexAttribArray(1);
 		GL20.glDisableVertexAttribArray(2);
 		GL30.glBindVertexArray(0);
 	}

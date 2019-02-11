@@ -8,8 +8,9 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import entities.Entity;
-import entities.Function;
 import entities.Light;
+import functions.Function;
+import functions.FunctionTypes;
 import image.Image;
 import map.Map;
 import models.RawModel;
@@ -48,13 +49,11 @@ public class MainGameLoop {
 		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("chimp")));
 		
 		Camera camera = new Camera();
+		camera.setPosition(new Vector3f(0,0,20));
 		
 		List<Entity> boxes = new ArrayList<Entity>();
 		
 		MasterRenderer renderer = new MasterRenderer();
-		
-		
-		//Function function =  new Function(0, 0, loader, new ModelTexture(loader.loadTexture("chimp")));
 		
 		int xPos = 0;
 		int yPos = 0;
@@ -79,12 +78,12 @@ public class MainGameLoop {
 		
 		
 		float var = 0;
-		Function function = new Function(0,0,loader, 0);
+		Function function = new Function(0,0,loader, 0, FunctionTypes.SINE);
 		while(!Display.isCloseRequested()){
 			
-			if(var < 50) {
+			if(var < 100) {
 				renderer.removeFunction(function);
-				function = new Function(0, 0, loader, var);
+				function = new Function(0, 0, loader, var, FunctionTypes.COS);
 				renderer.processFunction(function);
 			}
 			

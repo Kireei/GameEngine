@@ -11,8 +11,8 @@ import org.lwjgl.util.vector.Matrix4f;
 
 import entities.Camera;
 import entities.Entity;
-import entities.Function;
 import entities.Light;
+import functions.Function;
 import models.TexturedModel;
 import shaders.FunctionShader;
 import shaders.StaticShader;
