@@ -5,6 +5,10 @@ import org.lwjgl.util.vector.Vector3f;
 
 public class Camera {
 	
+	public void setPosition(Vector3f position) {
+		this.position = position;
+	}
+
 	private Vector3f position = new Vector3f(0, 1, 0);
 	private float pitch;
 	private float yaw;

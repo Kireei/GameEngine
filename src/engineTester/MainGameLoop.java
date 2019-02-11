@@ -76,6 +76,8 @@ public class MainGameLoop {
 			
 			
 		}
+		
+		
 		float var = 0;
 		Function function = new Function(0,0,loader, 0);
 		while(!Display.isCloseRequested()){
@@ -99,7 +101,7 @@ public class MainGameLoop {
 			
 			
 			renderer.render(light, camera);
-			var += 0.2;
+			var += 0.1;
 			
 			DisplayManager.updateDisplay();
 			

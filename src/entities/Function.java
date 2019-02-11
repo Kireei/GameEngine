@@ -2,7 +2,6 @@ package entities;
 
 import models.RawModel;
 import renderEngine.Loader;
-import textures.ModelTexture;
 import toolbox.Maths;
 
 public class Function {
@@ -15,11 +14,21 @@ public class Function {
 	private float z;
 	private RawModel model;
 
-
+	/*
+	 * @param gridX 	X-coordinate of function
+	 * @param gridZ 	Z-coordinate of function
+	 * 
+	 * @param loader 	loader
+	 * @param var 		a variable to use as the maximum grade of a certain function
+	 */
+	
+	
 	public Function(int gridX, int gridZ, Loader loader, float var) {
 		this.x = gridX;
 		this.z = gridZ;
 		this.model = generateFunction(loader, var);
+		
+		
 	}
 
 	private RawModel generateFunction(Loader loader, float var) {
