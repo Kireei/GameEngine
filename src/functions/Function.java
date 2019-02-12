@@ -31,7 +31,7 @@ public class Function {
 
 		for (int j = 0; j < VERTEX_COUNT; j++) {
 			
-			vertices[vertexPointer * 3] = SPACE * j - (SIZE / 2);
+			vertices[vertexPointer * 3] = checkLine(type, j);
 			float x = vertices[vertexPointer * 3];
 			vertices[vertexPointer * 3 + 1] = (float) getFunction(type, x, var);
 			vertices[vertexPointer * 3 + 2] = 0;
@@ -67,8 +67,20 @@ public class Function {
 			return Math.sin(x);
 		case TRUECOS:
 			return Math.cos(x);
+		case HLINE:
+			return 0;
+		case VLINE:
+			return x;
 		default:
 			return Maths.macLaurinSine(x, var);
+		}
+	}
+	
+	private float checkLine(FunctionTypes types, float j) {
+		if (types == FunctionTypes.VLINE) {
+			return 0f;
+		} else {
+			return (SPACE * j - (SIZE / 2));
 		}
 	}
 

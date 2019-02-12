@@ -2,5 +2,6 @@ package functions;
 
 public enum FunctionTypes {
 	SINE, COS, ARCTAN, E,
-	TRUESINE, TRUECOS,
+	TRUESINE, TRUECOS, HLINE,
+	VLINE,
 }
