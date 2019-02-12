@@ -75,15 +75,17 @@ public class MainGameLoop {
 			
 			
 		}
-		camera.setPosition(new Vector3f(0,20,20));
+		camera.setPosition(new Vector3f(0,0,20));
 		
 		float var = 0;
 		Function function = new Function(0,0,loader, 0, FunctionTypes.SINE);
+		Function function2 = new Function(0,0,loader, 10, FunctionTypes.TRUESINE);
+		renderer.processFunction(function2);
 		while(!Display.isCloseRequested()){
 			
 			if(var < 100) {
 				renderer.removeFunction(function);
-				function = new Function(0, 0, loader, var, FunctionTypes.E);
+				function = new Function(0, 0, loader, var, FunctionTypes.SINE);
 				renderer.processFunction(function);
 			}
 			

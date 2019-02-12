@@ -63,6 +63,10 @@ public class Function {
 			return Maths.macLaurinE(x, var);
 		case COS:
 			return Maths.macLaurinCos(x, var);
+		case TRUESINE:
+			return Math.sin(x);
+		case TRUECOS:
+			return Math.cos(x);
 		default:
 			return Maths.macLaurinSine(x, var);
 		}

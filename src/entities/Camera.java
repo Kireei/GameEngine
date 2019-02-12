@@ -80,9 +80,8 @@ public class Camera {
 		return roll;
 	}
 
-	public void setPosition(Vector3f vector3f) {
-		// TODO Auto-generated method stub
-		
+	public void setPosition(Vector3f position) {
+		this.position = position;
 	}
 
 }
