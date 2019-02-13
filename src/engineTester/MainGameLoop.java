@@ -79,15 +79,15 @@ public class MainGameLoop {
 		
 		float var = 0;
 		Function function = new Function(0, 0, loader, 0, FunctionTypes.SINE);
-		Function function2 = new Function(0, 0, loader, 0, FunctionTypes.HLINE);
-		Function function3 = new Function(0,0, loader, 0, FunctionTypes.VLINE);
-		renderer.processFunction(function2);
+		//Function function2 = new Function(0, 0, loader, 0, FunctionTypes.HLINE);
+		Function function3 = new Function(0,0, loader, 0, FunctionTypes.TRUESINE);
+		//renderer.processFunction(function2);
 		renderer.processFunction(function3);
 		while(!Display.isCloseRequested()){
 			
 			if(var < 100) {
 				renderer.removeFunction(function);
-				function = new Function(0, 0, loader, var, FunctionTypes.SINE);
+				function = new Function(0, 0, loader, var, FunctionTypes.E);
 				renderer.processFunction(function);
 			}
 			

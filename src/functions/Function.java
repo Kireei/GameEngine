@@ -31,7 +31,7 @@ public class Function {
 
 		for (int j = 0; j < VERTEX_COUNT; j++) {
 			
-			vertices[vertexPointer * 3] = checkLine(type, j);
+			vertices[vertexPointer * 3] = (float) checkLine(type, j);
 			float x = vertices[vertexPointer * 3];
 			vertices[vertexPointer * 3 + 1] = (float) getFunction(type, x, var);
 			vertices[vertexPointer * 3 + 2] = 0;
@@ -76,9 +76,9 @@ public class Function {
 		}
 	}
 	
-	private float checkLine(FunctionTypes types, float j) {
-		if (types == FunctionTypes.VLINE) {
-			return 0f;
+	private double checkLine(FunctionTypes type, float j) {
+		if (type == FunctionTypes.VLINE) {
+			return 0;//-(SIZE / 2);
 		} else {
 			return (SPACE * j - (SIZE / 2));
 		}
