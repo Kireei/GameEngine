@@ -50,7 +50,7 @@ public class MainGameLoop {
 		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("chimp")));
 		Sphere sphere = new Sphere(16, loader, new ModelTexture(loader.loadTexture("chimp")));
 		Camera camera = new Camera();
-		camera.setPosition(new Vector3f(0,0,20));
+	
 		
 		List<Entity> boxes = new ArrayList<Entity>();
 		
@@ -76,9 +76,19 @@ public class MainGameLoop {
 			
 			
 		}
+		camera.setPosition(new Vector3f(0,0,20));
+		
 		float var = 0;
+<<<<<<< HEAD
 		Function function = new Function(0,0,loader, 0, FunctionTypes.SINE);
 		renderer.processSphere(sphere);
+=======
+		Function function = new Function(0, 0, loader, 0, FunctionTypes.SINE);
+		//Function function2 = new Function(0, 0, loader, 0, FunctionTypes.HLINE);
+		Function function3 = new Function(0,0, loader, 0, FunctionTypes.TRUESINE);
+		//renderer.processFunction(function2);
+		renderer.processFunction(function3);
+>>>>>>> refs/remotes/origin/master
 		while(!Display.isCloseRequested()){
 			
 			if(var < 100) {
