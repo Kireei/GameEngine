@@ -79,22 +79,22 @@ public class MainGameLoop {
 		camera.setPosition(new Vector3f(0,0,20));
 		
 		float var = 0;
-<<<<<<< HEAD
+
 		Function function = new Function(0,0,loader, 0, FunctionTypes.SINE);
 		renderer.processSphere(sphere);
-=======
-		Function function = new Function(0, 0, loader, 0, FunctionTypes.SINE);
+
+		Function function1 = new Function(0, 0, loader, 0, FunctionTypes.SINE);
 		//Function function2 = new Function(0, 0, loader, 0, FunctionTypes.HLINE);
 		Function function3 = new Function(0,0, loader, 0, FunctionTypes.TRUESINE);
 		//renderer.processFunction(function2);
 		renderer.processFunction(function3);
->>>>>>> refs/remotes/origin/master
+
 		while(!Display.isCloseRequested()){
 			
 			if(var < 100) {
-				renderer.removeFunction(function);
-				function = new Function(0, 0, loader, var, FunctionTypes.E);
-				renderer.processFunction(function);
+				renderer.removeFunction(function1);
+				function1 = new Function(0, 0, loader, var, FunctionTypes.E);
+				renderer.processFunction(function1);
 			}
 			
 			camera.move();
