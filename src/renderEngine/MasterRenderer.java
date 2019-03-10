@@ -17,6 +17,7 @@ import models.TexturedModel;
 import shaders.FunctionShader;
 import shaders.StaticShader;
 import shaders.TerrainShader;
+import terrain.Sphere;
 import terrain.Terrain;
 
 public class MasterRenderer {
@@ -40,6 +41,7 @@ public class MasterRenderer {
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
 	private List<Function> functions = new ArrayList<Function>();
+	private List<Sphere> spheres = new ArrayList<Sphere>();
 	
 	
 	public MasterRenderer(){
@@ -63,7 +65,8 @@ public class MasterRenderer {
 		terrainShader.start();
 		terrainShader.loadLight(sun);
 		terrainShader.loadViewMatrix(camera);
-		terrainRenderer.render(terrains);
+		//terrainRenderer.render(terrains);
+		terrainRenderer.renderSpheres(spheres);
 		terrainShader.stop();
 		
 		functionShader.start();
@@ -77,6 +80,9 @@ public class MasterRenderer {
 	
 	public void processTerrain(Terrain terrain){
 		terrains.add(terrain);
+	}
+	public void processSphere(Sphere sphere) {
+		spheres.add(sphere);
 	}
 	
 	public void processFunction(Function function) {

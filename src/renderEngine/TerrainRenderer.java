@@ -11,6 +11,7 @@ import org.lwjgl.util.vector.Vector3f;
 
 import models.RawModel;
 import shaders.TerrainShader;
+import terrain.Sphere;
 import terrain.Terrain;
 import textures.ModelTexture;
 import toolbox.Maths;
@@ -29,7 +30,18 @@ public class TerrainRenderer {
 		for(Terrain terrain:terrains){
 			prepareTerrain(terrain);
 			loadModelMatrix(terrain);
-			GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			//GL11.glDrawElements(GL11.GL_TRIANGLES, terrain.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			GL11.glDrawElements(GL11.GL_LINES, terrain.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			unbindTexturedModel();
+		}
+	}
+	
+	public void renderSpheres(List<Sphere> spheres){
+		for(Sphere sphere:spheres){
+			prepareSphere(sphere);
+			loadModelMatrix(sphere);
+			//GL11.glDrawElements(GL11.GL_TRIANGLES, sphere.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			GL11.glDrawElements(GL11.GL_LINES, sphere.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			unbindTexturedModel();
 		}
 	}
@@ -47,6 +59,19 @@ public class TerrainRenderer {
 		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getID());
 	}
 	
+	private void prepareSphere(Sphere sphere){
+		RawModel rawModel = sphere.getModel();
+		GL30.glBindVertexArray(rawModel.getVaoID());
+		GL20.glEnableVertexAttribArray(0);
+		GL20.glEnableVertexAttribArray(1);
+		GL20.glEnableVertexAttribArray(2);
+		
+		ModelTexture texture = sphere.getTexture();
+		shader.loadShineVariable(texture.getShineDamper(), texture.getReflectivity());
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getID());
+	}
+	
 	private void unbindTexturedModel(){
 		GL20.glDisableVertexAttribArray(0);
 		GL20.glDisableVertexAttribArray(1);
@@ -55,6 +80,11 @@ public class TerrainRenderer {
 	}
 	private void loadModelMatrix(Terrain terrain){
 		Matrix4f transformationMatrix = Maths.createTransformationsMatrix(new Vector3f(terrain.getX(), 0, terrain.getZ()), 0, 0, 0, 1);
+		shader.loadTransformationMatrix(transformationMatrix);
+	}
+	
+	private void loadModelMatrix(Sphere sphere){
+		Matrix4f transformationMatrix = Maths.createTransformationsMatrix(new Vector3f(1f, 0, 1f), 0, 0, 0, 4);
 		shader.loadTransformationMatrix(transformationMatrix);
 	}
 }
