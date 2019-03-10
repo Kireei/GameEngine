@@ -86,7 +86,7 @@ public class Sphere {
 					indices[pointer++] = second;
 					continue;
 				}
-				int first = vertex_count * (gz - 1) + gx-1;
+				int first = vertex_count * (gz - 1) + gx - 1;
 				int second = first + vertex_count;
 				int third = second + 1;
 				int fourth = first + 1;
