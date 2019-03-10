@@ -81,7 +81,7 @@ public class MainGameLoop {
 			
 			if(var < 100) {
 				renderer.removeFunction(function);
-				function = new Function(0, 0, loader, var, FunctionTypes.COS);
+				function = new Function(0, 0, loader, var, FunctionTypes.E);
 				renderer.processFunction(function);
 			}
 			
