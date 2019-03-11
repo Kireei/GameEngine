@@ -6,7 +6,7 @@ import textures.ModelTexture;
 
 public class Terrain {
 
-	private static final float SIZE = 8000;
+	private static final float SIZE = 200;
 	private static final int VERTEX_COUNT = 128;
 
 	private float x;
@@ -31,7 +31,7 @@ public class Terrain {
 		for (int i = 0; i < VERTEX_COUNT; i++) {
 			for (int j = 0; j < VERTEX_COUNT; j++) {
 				vertices[vertexPointer * 3] = (float) j / ((float) VERTEX_COUNT - 1) * SIZE;
-				vertices[vertexPointer * 3 + 1] = (float) Math.random() * 50;
+				vertices[vertexPointer * 3 + 1] = (float) Math.random() * 2;
 				vertices[vertexPointer * 3 + 2] = (float) i / ((float) VERTEX_COUNT - 1) * SIZE;
 				normals[vertexPointer * 3] = 0;
 				normals[vertexPointer * 3 + 1] = 1;
