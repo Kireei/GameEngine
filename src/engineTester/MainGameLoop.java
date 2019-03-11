@@ -81,7 +81,6 @@ public class MainGameLoop {
 		float var = 0;
 
 		Function function = new Function(0,0,loader, 0, FunctionTypes.SINE);
-		renderer.processSphere(sphere);
 
 		Function function1 = new Function(0, 0, loader, 0, FunctionTypes.SINE);
 		//Function function2 = new Function(0, 0, loader, 0, FunctionTypes.HLINE);
@@ -89,6 +88,8 @@ public class MainGameLoop {
 		//renderer.processFunction(function2);
 		renderer.processFunction(function3);
 
+		renderer.processSphere(sphere);
+		
 		while(!Display.isCloseRequested()){
 			
 			if(var < 100) {
