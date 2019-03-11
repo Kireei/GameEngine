@@ -5,6 +5,7 @@ import org.lwjgl.util.vector.Vector3f;
 import models.RawModel;
 import renderEngine.Loader;
 import textures.ModelTexture;
+import toolbox.OpenSimplexNoise;
 
 public class Sphere {
 	
@@ -12,9 +13,13 @@ public class Sphere {
 	private int vertex_count;
 	private RawModel model;
 	private ModelTexture texture;
+	private OpenSimplexNoise noise;
+	
+	
 	public Sphere(int vertices, Loader loader, ModelTexture texture) {
 		this.texture = texture;
 		this.vertex_count = vertices;
+		this.noise = new OpenSimplexNoise();
 		this.model = generateSphere(loader);
 	}
 
@@ -27,6 +32,7 @@ public class Sphere {
 		int[] indices = new int[6 * (vertex_count) * (vertex_count)];
 		double alpha = (2 * Math.PI) / vertex_count;
 		int vertexPointer = 0;
+		float step = 0;
 		for (int i = 0; i < vertex_count; i++) {
 			for(int j = 0; j < vertex_count; j++) {
 				if(i == 0) {
@@ -53,22 +59,23 @@ public class Sphere {
 					vertexPointer++;
 					
 				}else {
-					float multiplier = (float) (1);
+					
 					Vector3f vec = new Vector3f((float) (Math.cos(alpha * j) * Math.sin(alpha * i)), (float) Math.cos(alpha * i), (float) (Math.sin(alpha * j) * Math.sin(alpha * i)));
 					
-					vec.scale(multiplier);
+					vec.scale((float) noise.eval(step, step));
 					
 					vertices[vertexPointer * 3] = vec.x;
 					vertices[vertexPointer * 3 + 1] = vec.y;
 					vertices[vertexPointer * 3 + 2] = vec.z;
 					
-					normals[vertexPointer * 3] = (float) (Math.cos(alpha * j) * Math.sin(alpha * i));
-					normals[vertexPointer * 3 + 1] = (float) Math.cos(alpha * i);
-					normals[vertexPointer * 3 + 2] = (float) (Math.sin(alpha * j) * Math.sin(alpha * i));
+					normals[vertexPointer * 3] = vec.x; //(float) (Math.cos(alpha * j) * Math.sin(alpha * i));
+					normals[vertexPointer * 3 + 1] = vec.y;//(float) Math.cos(alpha * i);
+					normals[vertexPointer * 3 + 2] = vec.z;//(float) (Math.sin(alpha * j) * Math.sin(alpha * i));
 					textureCoords[vertexPointer * 2] = 1;
 					textureCoords[vertexPointer * 2 + 1] = 1;
 					
 					vertexPointer++;
+					step += 0.002;
 				}
 			}
 		}
