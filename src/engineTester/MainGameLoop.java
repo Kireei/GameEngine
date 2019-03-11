@@ -48,7 +48,7 @@ public class MainGameLoop {
 		Light light  = new Light(new Vector3f(0,0, -20), new Vector3f(1,1,1));
 		
 		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("chimp")));
-		Sphere sphere = new Sphere(16, loader, new ModelTexture(loader.loadTexture("chimp")));
+		Sphere sphere = new Sphere(128, loader, new ModelTexture(loader.loadTexture("chimp")));
 		Camera camera = new Camera();
 	
 		
@@ -99,8 +99,8 @@ public class MainGameLoop {
 			}
 			
 			camera.move();
-			entity.increaseRotation(0, 1, 0);
-			renderer.processTerrain(terrain);
+			//entity.increaseRotation(0, 1, 0);
+			//renderer.processTerrain(terrain);
 			
 			//renderer.processFunction(function);
 			//renderer.processEntity(entity);
