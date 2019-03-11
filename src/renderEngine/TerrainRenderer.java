@@ -40,8 +40,8 @@ public class TerrainRenderer {
 		for(Sphere sphere:spheres){
 			prepareSphere(sphere);
 			loadModelMatrix(sphere);
-			//GL11.glDrawElements(GL11.GL_TRIANGLES, sphere.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
-			GL11.glDrawElements(GL11.GL_LINES, sphere.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			GL11.glDrawElements(GL11.GL_TRIANGLES, sphere.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			//GL11.glDrawElements(GL11.GL_LINES, sphere.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			unbindTexturedModel();
 		}
 	}

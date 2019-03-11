@@ -1,5 +1,7 @@
 package terrain;
 
+import org.lwjgl.util.vector.Vector3f;
+
 import models.RawModel;
 import renderEngine.Loader;
 import textures.ModelTexture;
@@ -51,9 +53,14 @@ public class Sphere {
 					vertexPointer++;
 					
 				}else {
-					vertices[vertexPointer * 3] = (float) (Math.cos(alpha * j) * Math.sin(alpha * i));
-					vertices[vertexPointer * 3 + 1] = (float) Math.cos(alpha * i);
-					vertices[vertexPointer * 3 + 2] = (float) (Math.sin(alpha * j) * Math.sin(alpha * i));
+					float multiplier = (float) (1);
+					Vector3f vec = new Vector3f((float) (Math.cos(alpha * j) * Math.sin(alpha * i)), (float) Math.cos(alpha * i), (float) (Math.sin(alpha * j) * Math.sin(alpha * i)));
+					
+					vec.scale(multiplier);
+					
+					vertices[vertexPointer * 3] = vec.x;
+					vertices[vertexPointer * 3 + 1] = vec.y;
+					vertices[vertexPointer * 3 + 2] = vec.z;
 					
 					normals[vertexPointer * 3] = (float) (Math.cos(alpha * j) * Math.sin(alpha * i));
 					normals[vertexPointer * 3 + 1] = (float) Math.cos(alpha * i);
