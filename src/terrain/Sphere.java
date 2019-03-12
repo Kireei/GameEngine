@@ -47,7 +47,7 @@ public class Sphere {
 					vertexPointer++;
 					
 					
-				}else if(i == vertex_count - 1) {
+				}else if(i == vertex_count) {
 					vertices[vertexPointer * 3] = 0;
 					vertices[vertexPointer * 3 + 1] = -1;
 					vertices[vertexPointer * 3 + 2] = 0;
@@ -62,7 +62,7 @@ public class Sphere {
 					
 					Vector3f vec = new Vector3f((float) (Math.cos(alpha * j) * Math.sin(alpha * i)), (float) Math.cos(alpha * i), (float) (Math.sin(alpha * j) * Math.sin(alpha * i)));
 					
-					vec.scale((float) noise.eval(step, step));
+					vec.scale((float) noise.eval(-step, step));
 					
 					vertices[vertexPointer * 3] = vec.x;
 					vertices[vertexPointer * 3 + 1] = vec.y;
@@ -75,7 +75,7 @@ public class Sphere {
 					textureCoords[vertexPointer * 2 + 1] = 1;
 					
 					vertexPointer++;
-					step += 0.002;
+					step += 0.0002;
 				}
 			}
 		}
