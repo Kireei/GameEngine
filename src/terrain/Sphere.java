@@ -59,7 +59,7 @@ public class Sphere {
 					vertexPointer++;
 					
 				}else {
-					
+					 
 					Vector3f vec = new Vector3f((float) (Math.cos(alpha * j) * Math.sin(alpha * i)), (float) Math.cos(alpha * i), (float) (Math.sin(alpha * j) * Math.sin(alpha * i)));
 					
 					vec.scale((float) (noise.eval(i * 0.02, j * 0.02) / 2 + 1) +1);
