@@ -3,21 +3,24 @@ package terrain;
 import models.RawModel;
 import renderEngine.Loader;
 import textures.ModelTexture;
+import toolbox.OpenSimplexNoise;
 
 public class Terrain {
 
 	private static final float SIZE = 200;
-	private static final int VERTEX_COUNT = 128;
+	private static final int VERTEX_COUNT = 512;
 
 	private float x;
 	private float z;
 	private RawModel model;
 	private ModelTexture texture;
+	private OpenSimplexNoise noise;
 
 	public Terrain(int gridX, int gridZ, Loader loader, ModelTexture texture) {
 		this.texture = texture;
 		this.x = gridX * SIZE;
 		this.z = gridZ * SIZE;
+		noise = new OpenSimplexNoise();
 		this.model = generateTerrain(loader);
 	}
 
@@ -31,7 +34,7 @@ public class Terrain {
 		for (int i = 0; i < VERTEX_COUNT; i++) {
 			for (int j = 0; j < VERTEX_COUNT; j++) {
 				vertices[vertexPointer * 3] = (float) j / ((float) VERTEX_COUNT - 1) * SIZE;
-				vertices[vertexPointer * 3 + 1] = (float) Math.random() * 2;
+				vertices[vertexPointer * 3 + 1] = (float) (5*noise.eval(i*0.02, j*0.02));//(float) Math.random() * 2;
 				vertices[vertexPointer * 3 + 2] = (float) i / ((float) VERTEX_COUNT - 1) * SIZE;
 				normals[vertexPointer * 3] = 0;
 				normals[vertexPointer * 3 + 1] = 1;

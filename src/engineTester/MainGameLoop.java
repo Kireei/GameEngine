@@ -48,7 +48,7 @@ public class MainGameLoop {
 		Light light  = new Light(new Vector3f(0,0, -20), new Vector3f(1,1,1));
 		
 		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("chimp")));
-		Sphere sphere = new Sphere(128, loader, new ModelTexture(loader.loadTexture("chimp")));
+		Sphere sphere = new Sphere(512, loader, new ModelTexture(loader.loadTexture("chimp")));
 		Camera camera = new Camera();
 	
 		
@@ -104,8 +104,8 @@ public class MainGameLoop {
 			
 			//renderer.processFunction(function);
 			//renderer.processEntity(entity);
-			light.setPosition(camera.getPosition());
-			//light.setPosition(new Vector3f(100, 50, -100));
+			//light.setPosition(camera.getPosition());
+			light.setPosition(new Vector3f(100, 10, -100));
 			/*for(int i = 0; i < boxes.size(); i++){
 				renderer.processEntity(boxes.get(i));
 			}*/

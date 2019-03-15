@@ -62,8 +62,7 @@ public class Sphere {
 					
 					Vector3f vec = new Vector3f((float) (Math.cos(alpha * j) * Math.sin(alpha * i)), (float) Math.cos(alpha * i), (float) (Math.sin(alpha * j) * Math.sin(alpha * i)));
 					
-					vec.scale((float) noise.eval(step, step));
-					
+					vec.scale((float) (noise.eval(i * 0.02, j * 0.02) / 2 + 1) +1);
 					vertices[vertexPointer * 3] = vec.x;
 					vertices[vertexPointer * 3 + 1] = vec.y;
 					vertices[vertexPointer * 3 + 2] = vec.z;

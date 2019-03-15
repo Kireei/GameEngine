@@ -45,6 +45,7 @@ public class MasterRenderer {
 	
 	
 	public MasterRenderer(){
+		GL11.glFrontFace(GL11.GL_CCW);
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
 		createProjectionMatrix();
@@ -65,7 +66,7 @@ public class MasterRenderer {
 		terrainShader.start();
 		terrainShader.loadLight(sun);
 		terrainShader.loadViewMatrix(camera);
-		//terrainRenderer.render(terrains);
+		terrainRenderer.render(terrains);
 		terrainRenderer.renderSpheres(spheres);
 		terrainShader.stop();
 		
