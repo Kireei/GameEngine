@@ -93,9 +93,9 @@ public class MainGameLoop {
 		while(!Display.isCloseRequested()){
 			
 			if(var < 100) {
-				renderer.removeFunction(function1);
-				function1 = new Function(0, 0, loader, var, FunctionTypes.E);
-				renderer.processFunction(function1);
+				//renderer.removeFunction(function1);
+				//function1 = new Function(0, 0, loader, var, FunctionTypes.E);
+				//renderer.processFunction(function1);
 			}
 			
 			camera.move();
