@@ -25,61 +25,38 @@ public class Sphere {
 
 	
 	private RawModel generateSphere(Loader loader) {
-		int count = vertex_count * vertex_count + 2;
+		int count = vertex_count * vertex_count;
 		float[] vertices = new float[count * 3];
 		float[] normals = new float[count * 3];
 		float[] textureCoords = new float[count * 2];
 		int[] indices = new int[6 * (vertex_count) * (vertex_count)];
-		double alpha = (2 * Math.PI) / vertex_count;
+		//double alpha = (2 * Math.PI) / vertex_count;
 		int vertexPointer = 0;
-		float step = 0;
+
 		for (int i = 0; i < vertex_count; i++) {
+			double alpha = (((i / vertex_count) - 0.5) * (Math.PI / 2));
 			for(int j = 0; j < vertex_count; j++) {
-				if(i == 0) {
-					vertices[vertexPointer * 3] = 0;
-					vertices[vertexPointer * 3 + 1] = 1;
-					vertices[vertexPointer * 3 + 2] = 0;
-					normals[vertexPointer * 3] = 0;
-					normals[vertexPointer * 3 + 1] = 1;
-					normals[vertexPointer * 3 + 2] = 0;
-					textureCoords[vertexPointer * 2] = 1;
-					textureCoords[vertexPointer * 2 + 1] = 1;
-					vertexPointer++;
 					
-					
-				}else if(i == vertex_count) {
-					vertices[vertexPointer * 3] = 0;
-					vertices[vertexPointer * 3 + 1] = -1;
-					vertices[vertexPointer * 3 + 2] = 0;
-					normals[vertexPointer * 3] = 0;
-					normals[vertexPointer * 3 + 1] = -1;
-					normals[vertexPointer * 3 + 2] = 0;
-					textureCoords[vertexPointer * 2] = 1;
-					textureCoords[vertexPointer * 2 + 1] = 1;
-					vertexPointer++;
-					
-				}else {
-					 
-					Vector3f vec = new Vector3f((float) (Math.cos(alpha * j) * Math.sin(alpha * i)), (float) Math.cos(alpha * i), (float) (Math.sin(alpha * j) * Math.sin(alpha * i)));
-					
+					double theta = (((j / vertex_count) - 0.5 * vertex_count) * Math.PI);
+					//Vector3f vec = new Vector3f((float) (Math.cos(alpha) * Math.sin(theta)), (float) Math.cos(theta),(float) (Math.sin(theta) * Math.sin(alpha)) );
+					//System.out.println(vec.x + " " + vec.y + " " + vec.z + " " + i + " " + j);
 
-					vec.scale((float) (noise.eval(i * 0.02, j * 0.02) / 2 + 1) +1);
+					//vec.scale((float) (noise.eval(i * 0.02, j * 0.02) / 2 + 1) +1);
 
-					vec.scale(0.5f * ((float) noise.eval(-step,  step) + 1));
 
-					vertices[vertexPointer * 3] = vec.x;
-					vertices[vertexPointer * 3 + 1] = vec.y;
-					vertices[vertexPointer * 3 + 2] = vec.z;
+					vertices[vertexPointer * 3] =(float) (Math.cos(alpha) * Math.sin(theta));// vec.x;
+					vertices[vertexPointer * 3 + 1] = (float) Math.cos(theta); //vec.y;
+					vertices[vertexPointer * 3 + 2] = (float) (Math.sin(theta) * Math.sin(alpha)); //vec.z;
 					
-					normals[vertexPointer * 3] = vec.x; //(float) (Math.cos(alpha * j) * Math.sin(alpha * i));
-					normals[vertexPointer * 3 + 1] = vec.y;//(float) Math.cos(alpha * i);
-					normals[vertexPointer * 3 + 2] = vec.z;//(float) (Math.sin(alpha * j) * Math.sin(alpha * i));
+					normals[vertexPointer * 3] = (float) (Math.cos(alpha) * Math.sin(theta));//vec.x; //(float) (Math.cos(alpha * j) * Math.sin(alpha * i));
+					normals[vertexPointer * 3 + 1] =(float) Math.cos(theta);// vec.y;//(float) Math.cos(alpha * i);
+					normals[vertexPointer * 3 + 2] = (float) (Math.sin(theta) * Math.sin(alpha));//vec.z;//(float) (Math.sin(alpha * j) * Math.sin(alpha * i));
 					textureCoords[vertexPointer * 2] = 1;
 					textureCoords[vertexPointer * 2 + 1] = 1;
 					
 					vertexPointer++;
-					step += 0.001;
-				}
+
+				
 			}
 		}
 		int pointer = 0;

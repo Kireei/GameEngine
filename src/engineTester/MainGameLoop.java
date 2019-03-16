@@ -100,7 +100,7 @@ public class MainGameLoop {
 			
 			camera.move();
 			//entity.increaseRotation(0, 1, 0);
-			//renderer.processTerrain(terrain);
+			renderer.processTerrain(terrain);
 			
 			//renderer.processFunction(function);
 			//renderer.processEntity(entity);
