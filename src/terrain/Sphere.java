@@ -35,10 +35,10 @@ public class Sphere {
 		double alpha = 0;
 		double theta = 0;
 		for (float i = 0; i < vertex_count; i++) {
-			alpha = (((i / vertex_count) - 0.5) * (Math.PI / 2));
+			alpha = (((i / vertex_count) - 0.5) * (Math.PI));
 			for(float j = 0; j < vertex_count; j++) {
 					
-					theta = (((j / vertex_count) - 0.5) * Math.PI);
+					theta = (((j / vertex_count) - 0.5) * Math.PI) * 2;
 					Vector3f vec = new Vector3f((float) (Math.cos(alpha) * Math.sin(theta)), (float) Math.cos(theta),(float) (Math.sin(theta) * Math.sin(alpha)) );
 					//System.out.println(vec.x + " " + vec.y + " " + vec.z + " " + i + " " + j);
 
@@ -51,8 +51,8 @@ public class Sphere {
 					vertices[vertexPointer * 3 + 2] = (float) vec.z;
 					
 					normals[vertexPointer * 3] = (float) (Math.cos(alpha) * Math.sin(theta));//vec.x; //(float) (Math.cos(alpha * j) * Math.sin(alpha * i));
-					normals[vertexPointer * 3 + 1] =(float) Math.cos(theta);// vec.y;//(float) Math.cos(alpha * i);
-					normals[vertexPointer * 3 + 2] = (float) (Math.sin(theta) * Math.sin(alpha));//vec.z;//(float) (Math.sin(alpha * j) * Math.sin(alpha * i));
+					normals[vertexPointer * 3 + 1] =(float) (Math.sin(theta) * Math.sin(alpha));// vec.y;//(float) Math.cos(alpha * i);
+					normals[vertexPointer * 3 + 2] = (float) Math.cos(theta);//vec.z;//(float) (Math.sin(alpha * j) * Math.sin(alpha * i));
 					textureCoords[vertexPointer * 2] = 1;
 					textureCoords[vertexPointer * 2 + 1] = 1;
 					
@@ -62,8 +62,8 @@ public class Sphere {
 			}
 		}
 		int pointer = 0;
-		for (int gz = 0; gz < vertex_count-1; gz++) {
-			for (int gx = 0; gx < vertex_count; gx++) {
+		for (int gz = 0; gz < vertex_count; gz++) {
+			for (int gx = 0; gx < vertex_count-1; gx++) {
 				
 				int first = (int) (vertex_count * (gz - 1) + gx - 1);
 				int second = (int) (first + vertex_count);

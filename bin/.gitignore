@@ -1,10 +1,5 @@
-/toolbox/
-/terrain/
 /renderEngine/
-<<<<<<< HEAD
-/engineTester/
 /shaders/
-=======
-/shaders/
-/engineTester/
->>>>>>> branch 'master' of https://github.com/Kireei/GameEngine.git
+/terrain/
+/textures/
+/toolbox/
