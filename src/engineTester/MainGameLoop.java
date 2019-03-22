@@ -19,8 +19,8 @@ import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import renderEngine.OBJLoader;
-import terrain.Sphere;
 import terrain.Terrain;
+import terrain.TerrainFace;
 import textures.ModelTexture;
 
 public class MainGameLoop {
@@ -48,7 +48,8 @@ public class MainGameLoop {
 		Light light  = new Light(new Vector3f(0,0, -20), new Vector3f(1,1,1));
 		
 		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("chimp")));
-		Sphere sphere = new Sphere(128, loader, new ModelTexture(loader.loadTexture("chimp")));
+		//Sphere sphere = new Sphere(128, loader, new ModelTexture(loader.loadTexture("chimp")));
+		TerrainFace tf = new TerrainFace(loader, 128, new Vector3f(1, 0, 0), new ModelTexture(loader.loadTexture("chimp")));
 		Camera camera = new Camera();
 	
 		
@@ -88,8 +89,8 @@ public class MainGameLoop {
 		//renderer.processFunction(function2);
 		renderer.processFunction(function3);
 
-		renderer.processSphere(sphere);
-		
+		//renderer.processSphere(sphere);
+		renderer.processTerrainFace(tf);
 		while(!Display.isCloseRequested()){
 			
 			if(var < 100) {

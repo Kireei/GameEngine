@@ -19,6 +19,7 @@ import shaders.StaticShader;
 import shaders.TerrainShader;
 import terrain.Sphere;
 import terrain.Terrain;
+import terrain.TerrainFace;
 
 public class MasterRenderer {
 	
@@ -42,6 +43,7 @@ public class MasterRenderer {
 	private List<Terrain> terrains = new ArrayList<Terrain>();
 	private List<Function> functions = new ArrayList<Function>();
 	private List<Sphere> spheres = new ArrayList<Sphere>();
+	private List<TerrainFace> tfs = new ArrayList<TerrainFace>();
 	
 	
 	public MasterRenderer(){
@@ -68,6 +70,7 @@ public class MasterRenderer {
 		terrainShader.loadViewMatrix(camera);
 		terrainRenderer.render(terrains);
 		terrainRenderer.renderSpheres(spheres);
+		terrainRenderer.renderTerrainFaces(tfs);
 		terrainShader.stop();
 		
 		functionShader.start();
@@ -92,6 +95,10 @@ public class MasterRenderer {
 	
 	public void removeFunction(Function function) {
 		functions.remove(function);
+	}
+	
+	public void processTerrainFace(TerrainFace tf) {
+		tfs.add(tf);
 	}
 	
 	
