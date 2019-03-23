@@ -51,8 +51,8 @@ public class TerrainRenderer {
 		for(TerrainFace terrainFace:terrainFaces){
 			prepareTerrainFace(terrainFace);
 			loadModelMatrix(terrainFace);
-			GL11.glDrawElements(GL11.GL_TRIANGLES, terrainFace.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
-			//GL11.glDrawElements(GL11.GL_LINE_STRIP, terrainFace.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			//GL11.glDrawElements(GL11.GL_TRIANGLES, terrainFace.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			GL11.glDrawElements(GL11.GL_LINE_STRIP, terrainFace.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			unbindTexturedModel();
 		}
 	}
@@ -103,17 +103,17 @@ public class TerrainRenderer {
 		GL30.glBindVertexArray(0);
 	}
 	private void loadModelMatrix(Terrain terrain){
-		Matrix4f transformationMatrix = Maths.createTransformationsMatrix(new Vector3f(terrain.getX(), 0, terrain.getZ()), 0, 0, 0, 1);
+		Matrix4f transformationMatrix = Maths.createTransformationsMatrix(new Vector3f(terrain.getX(), 0, terrain.getZ()), 0, 0, 0, new Vector3f(1,1,1));
 		shader.loadTransformationMatrix(transformationMatrix);
 	}
 	
 	private void loadModelMatrix(Sphere sphere){
-		Matrix4f transformationMatrix = Maths.createTransformationsMatrix(new Vector3f(1f, 0, 1f), 0, 0, 0, 4);
+		Matrix4f transformationMatrix = Maths.createTransformationsMatrix(new Vector3f(1f, 0, 1f), 0, 0, 0, new Vector3f(4, 4, 4));
 		shader.loadTransformationMatrix(transformationMatrix);
 	}
 	
 	private void loadModelMatrix(TerrainFace terrainFace){
-		Matrix4f transformationMatrix = Maths.createTransformationsMatrix(new Vector3f(1f, 0, 1f), 0, 0, 0, 4);
+		Matrix4f transformationMatrix = Maths.createTransformationsMatrix(new Vector3f(1f, 0, 1f), 0, 0, 0, new Vector3f(4,4,4));
 		shader.loadTransformationMatrix(transformationMatrix);
 	}
 }

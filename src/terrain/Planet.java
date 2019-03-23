@@ -12,6 +12,7 @@ public class Planet {
 	private TerrainFace[] tfs = new TerrainFace[6];
 	private Loader loader;
 	private int resolution;
+	private float step;
 	private ModelTexture texture;
 	private MasterRenderer renderer;
 	public Planet(MasterRenderer renderer, Loader loader, int resolution, ModelTexture texture) {
@@ -19,6 +20,7 @@ public class Planet {
 		this.resolution = resolution;
 		this.texture = texture;
 		this.renderer = renderer;
+		this.step = 1;
 		texture.setReflectivity(1);
 		texture.setShineDamper(100);
 		directions[0] = new Vector3f(0,1,0);
@@ -29,20 +31,22 @@ public class Planet {
 		directions[5] = new Vector3f(0,0,-1);
 		
 		for(int i = 0; i < directions.length; i++) {
-			tfs[i] = generate(resolution, directions[i]);
+			tfs[i] = generate(directions[i]);
 			renderer.processTerrainFace(tfs[i]);
 		}
 
 	}
 	
-	public TerrainFace generate(int resolution, Vector3f localUp) {
-		return new TerrainFace(loader, resolution, localUp, texture);
+	public TerrainFace generate(Vector3f localUp) {
+		return new TerrainFace(loader, resolution, step, localUp, texture);
 	}
+ 
+	
 	
 	public void checkPlanetResolution() {
 		int res = resolution;
-		
-		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD1) && res >= 3) {
+		float s = step;
+		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD1)) {
 			res -= 1;
 		}
 		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD2)) {
@@ -51,14 +55,24 @@ public class Planet {
 		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD3)) {
 			res += 1;
 		}
-		if(res == resolution) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4)) {
+			s -= 0.01f;
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD5)) {
+			s = 1;
+		}
+		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD6)) {
+			s += 0.01f;
+		}
+		if(res < 3) res = 3;
+		if(res == resolution && s == step) {
 			return;
 		} else {
 			resolution = res;
-			
+			step = s;
 			for(int i = 0; i < directions.length; i++) {
 				renderer.removeTerrainFace(tfs[i]);
-				tfs[i] = generate(resolution, directions[i]);
+				tfs[i] = generate(directions[i]);
 				renderer.processTerrainFace(tfs[i]);
 			}
 		}

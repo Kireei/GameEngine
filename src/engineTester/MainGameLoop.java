@@ -21,8 +21,9 @@ import renderEngine.MasterRenderer;
 import renderEngine.OBJLoader;
 import terrain.Planet;
 import terrain.Terrain;
-import terrain.TerrainFace;
 import textures.ModelTexture;
+import ui.UIHandler;
+import ui.UIMaster;
 
 public class MainGameLoop {
 
@@ -45,13 +46,10 @@ public class MainGameLoop {
 		
 		int[] map = mapReader.readMap(mapImage);
 		
-		Entity entity = new Entity(staticModel, new Vector3f(0, 5, -25),0,0,0,1);
+		Entity entity = new Entity(staticModel, new Vector3f(0, 5, -25),0,0,0, new Vector3f(1,1,1));
 		Light light  = new Light(new Vector3f(0,0, -20), new Vector3f(1,1,1));
 		
 		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("chimp")));
-		//Sphere sphere = new Sphere(128, loader, new ModelTexture(loader.loadTexture("chimp")));
-		TerrainFace tf = new TerrainFace(loader, 16, new Vector3f(1, 0, 0), new ModelTexture(loader.loadTexture("chimp")));
-		TerrainFace tf1 = new TerrainFace(loader, 16, new Vector3f(0, 1, 0), new ModelTexture(loader.loadTexture("chimp")));
 		
 		Camera camera = new Camera();
 	
@@ -60,26 +58,8 @@ public class MainGameLoop {
 		
 		MasterRenderer renderer = new MasterRenderer();
 		Planet planet = new Planet(renderer, loader, 16, new ModelTexture(loader.loadTexture("chimp")));
-		int xPos = 0;
-		int yPos = 0;
+		UIHandler uih = new UIHandler(loader, camera);
 		
-		for(int i = 0; i < map.length; i++){
-			if(xPos >= mapImage.getW()){
-				xPos = 0;
-				yPos++;
-			}
-			if(map[i] == 0){
-				xPos++;
-				continue;
-				}
-			if(map[i] == 1){
-				boxes.add(new Entity(staticModel, new Vector3f(xPos * 2, yPos * 2, 0),0,0,0,1));
-				xPos++;	
-				
-			}
-			
-			
-		}
 		camera.setPosition(new Vector3f(0,0,20));
 		
 		float var = 0;
@@ -90,39 +70,31 @@ public class MainGameLoop {
 		//Function function2 = new Function(0, 0, loader, 0, FunctionTypes.HLINE);
 		Function function3 = new Function(0,0, loader, 0, FunctionTypes.TRUESINE);
 		//renderer.processFunction(function2);
-		renderer.processFunction(function3);
-
-		//renderer.processSphere(sphere);
-		//renderer.processTerrainFace(tf);
-		//renderer.processTerrainFace(tf1);
+		
 		while(!Display.isCloseRequested()){
-			
+			renderer.processUIE(uih.uie);
 			if(var < 100) {
 				//renderer.removeFunction(function1);
 				//function1 = new Function(0, 0, loader, var, FunctionTypes.E);
 				//renderer.processFunction(function1);
 			}
 			
-			camera.move();
-			//entity.increaseRotation(0, 1, 0);
-			renderer.processTerrain(terrain);
 			
-			//renderer.processFunction(function);
-			//renderer.processEntity(entity);
-			light.setPosition(camera.getPosition());
-			//light.setPosition(new Vector3f(0, 10, 0));
-			/*for(int i = 0; i < boxes.size(); i++){
-				renderer.processEntity(boxes.get(i));
-			}*/
+			camera.move();
+			
+			//renderer.processTerrain(terrain);
+			renderer.processFunction(function3);
+			
+			//light.setPosition(camera.getPosition());
+
 			planet.checkPlanetResolution();
 			
 			renderer.render(light, camera);
 			var += 0.1;
-			
 			DisplayManager.updateDisplay();
 			
 		}
-		
+		UIMaster.cleanUp();
 		renderer.cleanUp();
 		loader.cleanUp();
 		DisplayManager.closeDisplay();

@@ -17,9 +17,12 @@ import models.TexturedModel;
 import shaders.FunctionShader;
 import shaders.StaticShader;
 import shaders.TerrainShader;
+import shaders.UIShader;
 import terrain.Sphere;
 import terrain.Terrain;
 import terrain.TerrainFace;
+import ui.UIElement;
+import ui.UIRenderer;
 
 public class MasterRenderer {
 	
@@ -38,12 +41,16 @@ public class MasterRenderer {
 	private FunctionRenderer functionRenderer;
 	private FunctionShader functionShader = new FunctionShader();
 	
+	private UIRenderer uiRenderer;
+	private UIShader uiShader = new UIShader();
+	
 	
 	private Map<TexturedModel, List<Entity>> entities = new HashMap<TexturedModel, List<Entity>>();
 	private List<Terrain> terrains = new ArrayList<Terrain>();
 	private List<Function> functions = new ArrayList<Function>();
 	private List<Sphere> spheres = new ArrayList<Sphere>();
 	private List<TerrainFace> tfs = new ArrayList<TerrainFace>();
+	private List<UIElement> uies = new ArrayList<UIElement>();
 	
 	
 	public MasterRenderer(){
@@ -54,6 +61,7 @@ public class MasterRenderer {
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		functionRenderer = new FunctionRenderer(functionShader, projectionMatrix);
+		uiRenderer = new UIRenderer(uiShader, projectionMatrix);
 	}
 	
 	
@@ -78,8 +86,16 @@ public class MasterRenderer {
 		functionShader.loadViewMatrix(camera);
 		functionRenderer.render(functions);
 		functionShader.stop();
+		
+		uiShader.start();
+		uiRenderer.render(uies);
+		uiShader.stop();
+		
+		functions.clear();
 		terrains.clear();
 		entities.clear();
+		
+		
 	}
 	
 	public void processTerrain(Terrain terrain){
@@ -103,6 +119,13 @@ public class MasterRenderer {
 	
 	public void removeTerrainFace(TerrainFace tf) {
 		tfs.remove(tf);
+	}
+	
+	public void processUIE(UIElement uie) {
+		uies.add(uie);
+	}
+	public void removeUIE(UIElement uie) {
+		uies.remove(uie);
 	}
 	
 	

@@ -10,8 +10,8 @@ public class Entity {
 	private TexturedModel model;
 	private Vector3f position;
 	private float rotX, rotY, rotZ;
-	private float scale;
-	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, float scale) {
+	private Vector3f scale;
+	public Entity(TexturedModel model, Vector3f position, float rotX, float rotY, float rotZ, Vector3f scale) {
 		this.model = model;
 		this.position = position;
 		this.rotX = rotX;
@@ -62,10 +62,10 @@ public class Entity {
 	public void setRotZ(float rotZ) {
 		this.rotZ = rotZ;
 	}
-	public float getScale() {
+	public Vector3f getScale() {
 		return scale;
 	}
-	public void setScale(float scale) {
+	public void setScale(Vector3f scale) {
 		this.scale = scale;
 	}
 	

@@ -47,8 +47,8 @@ public class FunctionShader extends ShaderProgram{
 	}
 	
 	public void loadLight(Light light){
-		super.loadVector(location_lightPosition, light.getPosition());
-		super.loadVector(location_lightColor, light.getColor());
+		super.loadVector3(location_lightPosition, light.getPosition());
+		super.loadVector3(location_lightColor, light.getColor());
 	}
 	
 	public void loadViewMatrix(Camera camera){

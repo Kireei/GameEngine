@@ -47,7 +47,7 @@ public class FunctionRenderer {
 		GL30.glBindVertexArray(0);
 	}
 	private void loadModelMatrix(Function function){
-		Matrix4f transformationMatrix = Maths.createTransformationsMatrix(new Vector3f(function.getX(), 0, function.getZ()), 0, 0, 0, 1);
+		Matrix4f transformationMatrix = Maths.createTransformationsMatrix(new Vector3f(function.getX(), 0, function.getZ()), 0, 0, 0, new Vector3f(1, 1, 1));
 		shader.loadTransformationMatrix(transformationMatrix);
 	}
 }
