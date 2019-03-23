@@ -101,6 +101,10 @@ public class MasterRenderer {
 		tfs.add(tf);
 	}
 	
+	public void removeTerrainFace(TerrainFace tf) {
+		tfs.remove(tf);
+	}
+	
 	
 	public void processEntity(Entity entity){
 		TexturedModel entityModel = entity.getModel();

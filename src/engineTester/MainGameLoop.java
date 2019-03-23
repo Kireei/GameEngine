@@ -19,6 +19,7 @@ import renderEngine.DisplayManager;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import renderEngine.OBJLoader;
+import terrain.Planet;
 import terrain.Terrain;
 import terrain.TerrainFace;
 import textures.ModelTexture;
@@ -49,14 +50,16 @@ public class MainGameLoop {
 		
 		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("chimp")));
 		//Sphere sphere = new Sphere(128, loader, new ModelTexture(loader.loadTexture("chimp")));
-		TerrainFace tf = new TerrainFace(loader, 128, new Vector3f(1, 0, 0), new ModelTexture(loader.loadTexture("chimp")));
+		TerrainFace tf = new TerrainFace(loader, 16, new Vector3f(1, 0, 0), new ModelTexture(loader.loadTexture("chimp")));
+		TerrainFace tf1 = new TerrainFace(loader, 16, new Vector3f(0, 1, 0), new ModelTexture(loader.loadTexture("chimp")));
+		
 		Camera camera = new Camera();
 	
 		
 		List<Entity> boxes = new ArrayList<Entity>();
 		
 		MasterRenderer renderer = new MasterRenderer();
-		
+		Planet planet = new Planet(renderer, loader, 16, new ModelTexture(loader.loadTexture("chimp")));
 		int xPos = 0;
 		int yPos = 0;
 		
@@ -90,7 +93,8 @@ public class MainGameLoop {
 		renderer.processFunction(function3);
 
 		//renderer.processSphere(sphere);
-		renderer.processTerrainFace(tf);
+		//renderer.processTerrainFace(tf);
+		//renderer.processTerrainFace(tf1);
 		while(!Display.isCloseRequested()){
 			
 			if(var < 100) {
@@ -101,16 +105,16 @@ public class MainGameLoop {
 			
 			camera.move();
 			//entity.increaseRotation(0, 1, 0);
-			//renderer.processTerrain(terrain);
+			renderer.processTerrain(terrain);
 			
 			//renderer.processFunction(function);
 			//renderer.processEntity(entity);
-			//light.setPosition(camera.getPosition());
-			light.setPosition(new Vector3f(0, 10, 0));
+			light.setPosition(camera.getPosition());
+			//light.setPosition(new Vector3f(0, 10, 0));
 			/*for(int i = 0; i < boxes.size(); i++){
 				renderer.processEntity(boxes.get(i));
 			}*/
-			
+			planet.checkPlanetResolution();
 			
 			renderer.render(light, camera);
 			var += 0.1;

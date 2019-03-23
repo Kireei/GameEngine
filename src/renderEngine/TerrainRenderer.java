@@ -51,8 +51,8 @@ public class TerrainRenderer {
 		for(TerrainFace terrainFace:terrainFaces){
 			prepareTerrainFace(terrainFace);
 			loadModelMatrix(terrainFace);
-			//GL11.glDrawElements(GL11.GL_TRIANGLES, sphere.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
-			GL11.glDrawElements(GL11.GL_LINES, terrainFace.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			GL11.glDrawElements(GL11.GL_TRIANGLES, terrainFace.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			//GL11.glDrawElements(GL11.GL_LINE_STRIP, terrainFace.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			unbindTexturedModel();
 		}
 	}
