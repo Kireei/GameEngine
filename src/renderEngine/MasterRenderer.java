@@ -50,7 +50,8 @@ public class MasterRenderer {
 	private List<Function> functions = new ArrayList<Function>();
 	private List<Sphere> spheres = new ArrayList<Sphere>();
 	private List<TerrainFace> tfs = new ArrayList<TerrainFace>();
-	private List<UIElement> uies = new ArrayList<UIElement>();
+	public List<UIElement> uies = new ArrayList<UIElement>();
+
 	
 	
 	public MasterRenderer(){
@@ -62,6 +63,7 @@ public class MasterRenderer {
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
 		functionRenderer = new FunctionRenderer(functionShader, projectionMatrix);
 		uiRenderer = new UIRenderer(uiShader, projectionMatrix);
+
 	}
 	
 	
@@ -90,7 +92,7 @@ public class MasterRenderer {
 		uiShader.start();
 		uiRenderer.render(uies);
 		uiShader.stop();
-		
+
 		functions.clear();
 		terrains.clear();
 		entities.clear();
@@ -127,6 +129,7 @@ public class MasterRenderer {
 	public void removeUIE(UIElement uie) {
 		uies.remove(uie);
 	}
+	
 	
 	
 	public void processEntity(Entity entity){

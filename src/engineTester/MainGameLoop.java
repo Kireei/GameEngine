@@ -1,14 +1,19 @@
 package engineTester;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
+import fontMeshCreator.FontType;
+import fontMeshCreator.GUIText;
+import fontRendering.TextMaster;
 import functions.Function;
 import functions.FunctionTypes;
 import image.Image;
@@ -22,6 +27,7 @@ import renderEngine.OBJLoader;
 import terrain.Planet;
 import terrain.Terrain;
 import textures.ModelTexture;
+import ui.UIElement;
 import ui.UIHandler;
 import ui.UIMaster;
 
@@ -58,7 +64,10 @@ public class MainGameLoop {
 		
 		MasterRenderer renderer = new MasterRenderer();
 		Planet planet = new Planet(renderer, loader, 16, new ModelTexture(loader.loadTexture("chimp")));
-		UIHandler uih = new UIHandler(loader, camera);
+		UIHandler.init(loader);
+		
+		List<UIElement> window = UIHandler.createWindow(new Vector2f(5f, 15f));
+		
 		
 		camera.setPosition(new Vector3f(0,0,20));
 		
@@ -70,9 +79,17 @@ public class MainGameLoop {
 		//Function function2 = new Function(0, 0, loader, 0, FunctionTypes.HLINE);
 		Function function3 = new Function(0,0, loader, 0, FunctionTypes.TRUESINE);
 		//renderer.processFunction(function2);
+		FontType ft = new FontType(loader.loadFont("arial"), new File("res/Fonts/arial.fnt"));
+		GUIText text = new GUIText("String", 1, ft, new Vector2f(0,0), 50, false, false);
+		text.setColour(1, 1, 1);
+		TextMaster.init(loader);
+		TextMaster.loadText(text);
+		for(UIElement uie: window) {
+			renderer.processUIE(uie);
+		}
 		
 		while(!Display.isCloseRequested()){
-			renderer.processUIE(uih.uie);
+			window.get(8).checkMouse();
 			if(var < 100) {
 				//renderer.removeFunction(function1);
 				//function1 = new Function(0, 0, loader, var, FunctionTypes.E);
@@ -90,6 +107,7 @@ public class MainGameLoop {
 			planet.checkPlanetResolution();
 			
 			renderer.render(light, camera);
+			TextMaster.render();
 			var += 0.1;
 			DisplayManager.updateDisplay();
 			

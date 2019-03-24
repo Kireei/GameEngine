@@ -8,7 +8,6 @@ import textures.ModelTexture;
 import toolbox.OpenSimplexNoise;
 
 public class TerrainFace {
-	private Loader loader;
 	private ModelTexture texture;
 	private RawModel model;
 	private int resolution;
@@ -20,7 +19,6 @@ public class TerrainFace {
 	private OpenSimplexNoise noise;
 	
 	public TerrainFace(Loader loader, int resolution, float step, Vector3f localUp, ModelTexture texture) {
-		this.loader = loader;
 		this.resolution = resolution;
 		this.localUp = localUp;
 		this.texture = texture;
@@ -55,14 +53,7 @@ public class TerrainFace {
 				float scaleB = (pY - 0.5f) * 2;
 
 				Vector3f pointOnUnitCube = new Vector3f(localUp.x + axisA.x * scaleA + axisB.x * scaleB, localUp.y + axisA.y * scaleA + axisB.y * scaleB, localUp.z + axisA.z * scaleA + axisB.z * scaleB);
-				
-				/*System.out.println("x: "+ x + " y: " + y);
-				System.out.println("xper: "+ pX + " yper: " + pY);
-				System.out.println("sA: " + scaleA + " sB: " + scaleB);
-				System.out.println("pointOnUnitCube: " + pointOnUnitCube);
-				System.out.println("AxisA: " + axisA);
-				System.out.println("AxisB: " + axisB);
-				System.out.println();*/
+
 				pointOnUnitCube.normalise();
 				float noiseFactor = (float) noise.eval(pointOnUnitCube.x * step, pointOnUnitCube.y * step, pointOnUnitCube.z * step);
 

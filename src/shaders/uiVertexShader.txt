@@ -11,6 +11,6 @@ uniform mat4 pMatrix;
 
 void main(void){
 	float offset = 2.0;
-	gl_Position = pMatrix * tMatrix * vec4(position.x, position.y, 0.0, 1.0);
+	gl_Position = tMatrix * vec4(position.x, position.y, 0.0, 1.0);
 	pass_textureCoords = textureCoords;
 }
