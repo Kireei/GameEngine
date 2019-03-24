@@ -38,7 +38,8 @@ public class MainGameLoop {
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
 		
-		
+		UIHandler.init(loader);
+		TextMaster.init(loader);
 		RawModel model = OBJLoader.loadObjModel("cuby", loader);
 	
 		TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("chimp")));
@@ -64,32 +65,36 @@ public class MainGameLoop {
 		
 		MasterRenderer renderer = new MasterRenderer();
 		Planet planet = new Planet(renderer, loader, 16, new ModelTexture(loader.loadTexture("chimp")));
-		UIHandler.init(loader);
 		
-		List<UIElement> window = UIHandler.createWindow(new Vector2f(5f, 15f));
+		
+		
 		
 		
 		camera.setPosition(new Vector3f(0,0,20));
 		
 		float var = 0;
-
+		
+		
+		List<UIElement> window = UIHandler.createWindow(new Vector2f(5f, 15f));
 		Function function = new Function(0,0,loader, 0, FunctionTypes.SINE);
 
 		Function function1 = new Function(0, 0, loader, 0, FunctionTypes.SINE);
 		//Function function2 = new Function(0, 0, loader, 0, FunctionTypes.HLINE);
 		Function function3 = new Function(0,0, loader, 0, FunctionTypes.TRUESINE);
 		//renderer.processFunction(function2);
+		
 		FontType ft = new FontType(loader.loadFont("arial"), new File("res/Fonts/arial.fnt"));
 		GUIText text = new GUIText("String", 1, ft, new Vector2f(0,0), 50, false, false);
 		text.setColour(1, 1, 1);
-		TextMaster.init(loader);
+		
+		
 		TextMaster.loadText(text);
 		for(UIElement uie: window) {
 			renderer.processUIE(uie);
 		}
 		
 		while(!Display.isCloseRequested()){
-			window.get(8).checkMouse();
+			window.get(1).checkMouse();
 			if(var < 100) {
 				//renderer.removeFunction(function1);
 				//function1 = new Function(0, 0, loader, var, FunctionTypes.E);

@@ -9,6 +9,7 @@ import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
+import org.lwjgl.util.vector.Vector4f;
 
 import models.RawModel;
 import shaders.UIShader;
@@ -29,7 +30,7 @@ public class UIRenderer {
 		prepare();
 		for(UIElement uie: uies) {
 			prepareUI(uie);
-			//shader.loadColor(new Vector4f(0, 0, 0, 0));
+			shader.loadColor(new Vector4f(0, 0, 0, 0));
 			renderUI(uie);
 		}
 	}
@@ -66,5 +67,6 @@ public class UIRenderer {
 	public void prepare() {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
 	}
 }

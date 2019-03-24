@@ -18,7 +18,7 @@ public class GUIText {
  
     private int textMeshVao;
     private int vertexCount;
-    private Vector3f colour = new Vector3f(0f, 0f, 0f);
+    private Vector3f colour = new Vector3f(1f, 1f, 1f);
  
     private Vector2f position;
     private float lineMaxSize;
