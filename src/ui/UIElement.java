@@ -64,7 +64,7 @@ public class UIElement {
 		        		Vector3f position = sliders.get(index)[3].getPosition();
 		        		Vector2f scale = sliders.get(index)[3].getScale();
 		        		if(mX >= position.x - (scale.x * 0.5626) && mX <= position.x + (scale.x * 0.5626) && mY >= position.y - scale.y + 0.015f && mY <= position.y + scale.y + 0.015f){
-		    				clickedElement = sliders.get(index)[3];
+		    				clickedElement = sliders.get(index)[3]; 
 		    				break;		
 		    			}
 		        	}
