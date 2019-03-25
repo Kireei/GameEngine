@@ -77,7 +77,7 @@ public class UIElement {
 				UIElement newButton = new UIElement(clickedRadioButton.position, clickedRadioButton.rotation, clickedRadioButton.scale, UIHandler.radioButtonChecked);
 				newButton.radioButtons = clickedRadioButton.radioButtons;
 				if(newButton.getTitle() != null && newButton.getTitle().getTextString() == "test") System.out.println("test");
-				
+				 
 				
 				int index = radioButtons.lastIndexOf(clickedRadioButton);
 				radioButtons.remove(clickedRadioButton);
