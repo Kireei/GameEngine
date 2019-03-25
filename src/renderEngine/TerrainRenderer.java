@@ -19,7 +19,7 @@ import toolbox.Maths;
 
 public class TerrainRenderer {
 	private TerrainShader shader;
-	
+	public static int renderingGeometry = GL11.GL_LINE_STRIP;
 	public TerrainRenderer(TerrainShader shader, Matrix4f projectionMatrix){
 		this.shader = shader;
 		shader.start();
@@ -52,7 +52,7 @@ public class TerrainRenderer {
 			prepareTerrainFace(terrainFace);
 			loadModelMatrix(terrainFace);
 			//GL11.glDrawElements(GL11.GL_TRIANGLES, terrainFace.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
-			GL11.glDrawElements(GL11.GL_LINE_STRIP, terrainFace.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+			GL11.glDrawElements(renderingGeometry, terrainFace.getModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
 			unbindTexturedModel();
 		}
 	}

@@ -18,7 +18,6 @@ import toolbox.Maths;
 
 public class UIRenderer {
 	private UIShader shader;
-	
 	public UIRenderer(UIShader shader, Matrix4f projectionMatrix) {
 		this.shader = shader;
 		shader.start();

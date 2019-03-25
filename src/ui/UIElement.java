@@ -24,8 +24,10 @@ public class UIElement {
 	private TexturedModel texModel;
 	private Entity en;
 	
-	private GUIText title = null;
+	private GUIText title;
+	private String id = "";
 	private List<UIElement> radioButtons;
+	private List<UIElement[]> sliders;
 	
 	private boolean toggled = false;
 	
@@ -35,6 +37,7 @@ public class UIElement {
 		this.scale = scale;
 		this.texModel = new TexturedModel(this.rawModel, texture);
 		this.radioButtons = new ArrayList<UIElement>();
+		this.sliders = new ArrayList<UIElement[]>();
 		this.en = new Entity(texModel, new Vector3f(position.x - 1 + (scale.x*(9f/16f)), position.y + 0.9831f - scale.y, position.z), rotation.x, rotation.y, rotation.z, new Vector3f(scale.x, scale.y, 1));
 		//this.en = new Entity(texModel, new Vector3f(position.x, position.y, position.z), rotation.x, rotation.y, rotation.z, new Vector3f(scale.x, scale.y, 1));
 	}
@@ -50,21 +53,29 @@ public class UIElement {
 			}
 		}*/
 		
-		UIElement clickedRadioButton = null;
+		UIElement clickedElement = null;
 		
 			
 		while (Mouse.next()){
 		    if (Mouse.getEventButtonState()) {
 		        if (Mouse.getEventButton() == 0) {
-		            System.out.println("Left button pressed");
+		            //System.out.println("Left button pressed");
+		        	for(int index = 0; index < sliders.size(); index++) {
+		        		Vector3f position = sliders.get(index)[3].getPosition();
+		        		Vector2f scale = sliders.get(index)[3].getScale();
+		        		if(mX >= position.x - (scale.x * 0.5626) && mX <= position.x + (scale.x * 0.5626) && mY >= position.y - scale.y + 0.015f && mY <= position.y + scale.y + 0.015f){
+		    				clickedElement = sliders.get(index)[3];
+		    				break;		
+		    			}
+		        	}
+		        	
 		        }
 		    }else {
 		        if (Mouse.getEventButton() == 0) {
-		            System.out.println("Left button released");
+		            //System.out.println("Left button released");
 		            for(UIElement radioB: radioButtons) {
 		            	if(mX >= radioB.en.getPosition().x - (radioB.scale.x * 0.5626) && mX <= radioB.en.getPosition().x + (radioB.scale.x * 0.5626) && mY >= radioB.en.getPosition().y - radioB.scale.y + 0.015f && mY <= radioB.en.getPosition().y + radioB.scale.y + 0.015f){
-		    				clickedRadioButton = radioB;
-		    				System.out.println("Clicked");
+		    				clickedElement = radioB;
 		    				break;		
 		    			}
 		            }
@@ -72,27 +83,15 @@ public class UIElement {
 			}
 			
 		}
-		if(clickedRadioButton != null) {
-			if(clickedRadioButton.getTexModel().getTexture() == UIHandler.radioButtonUnchecked) {
-				UIElement newButton = new UIElement(clickedRadioButton.position, clickedRadioButton.rotation, clickedRadioButton.scale, UIHandler.radioButtonChecked);
-				newButton.radioButtons = clickedRadioButton.radioButtons;
-				if(newButton.getTitle() != null && newButton.getTitle().getTextString() == "test") System.out.println("test");
-				 
+		if(clickedElement != null) {
+			if(clickedElement.getTexModel().getTexture() == UIHandler.radioButtonUnchecked.getTexture()) {
+				clickedElement.setTexModel(UIHandler.radioButtonChecked);
+				RadioButtonFunctions.function(clickedElement.getId());
 				
-				int index = radioButtons.lastIndexOf(clickedRadioButton);
-				radioButtons.remove(clickedRadioButton);
-				radioButtons.add(index, newButton);
-				MasterRenderer.processUIE(newButton);
-				MasterRenderer.removeUIE(clickedRadioButton);
 				
-			}else if(clickedRadioButton.getTexModel().getTexture() == UIHandler.radioButtonChecked){
-				UIElement newButton = new UIElement(clickedRadioButton.position, clickedRadioButton.rotation, clickedRadioButton.scale, UIHandler.radioButtonUnchecked);	
-				int index = radioButtons.lastIndexOf(clickedRadioButton);
-				radioButtons.remove(clickedRadioButton);
-				
-				radioButtons.add(index, newButton);
-				MasterRenderer.processUIE(newButton);
-				MasterRenderer.removeUIE(clickedRadioButton);
+			}else if(clickedElement.getTexModel().getTexture() == UIHandler.radioButtonChecked.getTexture()){
+				clickedElement.setTexModel(UIHandler.radioButtonUnchecked);
+				RadioButtonFunctions.unFunction(clickedElement.getId());
 			}
 			
 			
@@ -109,9 +108,25 @@ public class UIElement {
 	public void createRadioButtons(int number, Vector2f adjustment) {
 		float size = 0.03f;
 		for(int n = 0; n < number; n++) {
-			UIElement radioButton = new UIElement(new Vector3f(adjustment.x + position.x, -adjustment.y - n * size * 2 + position.y ,0), this.rotation, new Vector2f(size, size), UIHandler.radioButtonUnchecked);
+			UIElement radioButton = new UIElement(new Vector3f(adjustment.x + position.x, -adjustment.y - n * size * 2 + position.y ,0), this.rotation, new Vector2f(size, size), UIHandler.radioButtonUnchecked.getTexture());
 			//Vector3f.add(position, new Vector3f(adjustment.x, -adjustment.y,0), radioButton.position);
 			radioButtons.add(radioButton);
+		}
+	}
+	
+	public UIElement[] createSlider(float width, Vector2f adjustment) {
+		float size = 0.03f;
+		UIElement leftSlider = new UIElement(new Vector3f(adjustment.x + position.x, position.y - adjustment.y, 0), this.rotation, new Vector2f(size, size), UIHandler.leftSlider.getTexture());
+		UIElement middleSlider = new UIElement(new Vector3f(adjustment.x + position.x + size, position.y - adjustment.y, 0), this.rotation, new Vector2f(size * (width - 2), size), UIHandler.middleSlider.getTexture());
+		UIElement rightSlider = new UIElement(new Vector3f(adjustment.x + position.x + size * (width - 1), position.y - adjustment.y, 0), this.rotation, new Vector2f(size, size), UIHandler.rightSlider.getTexture());
+		UIElement slider = new UIElement(new Vector3f(adjustment.x + position.x, position.y - adjustment.y, 0), this.rotation, new Vector2f(size, size), UIHandler.slider.getTexture());
+		UIElement[] sliderArray = {leftSlider, middleSlider, rightSlider, slider};
+		sliders.add(sliderArray);
+		return sliderArray;
+	}
+	public static void addSlider(UIElement[] slider, List<UIElement> dest) {
+		for(UIElement uie: slider) {
+			dest.add(uie);
 		}
 	}
 
@@ -164,5 +179,21 @@ public class UIElement {
 
 	public void setRadioButtons(List<UIElement> radioButtons) {
 		this.radioButtons = radioButtons;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public List<UIElement[]> getSliders() {
+		return sliders;
+	}
+
+	public void setSliders(List<UIElement[]> sliders) {
+		this.sliders = sliders;
 	}
 }

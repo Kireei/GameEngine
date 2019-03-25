@@ -9,9 +9,9 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import fontMeshCreator.FontType;
-import fontMeshCreator.GUIText;
 import fontRendering.TextMaster;
 import models.RawModel;
+import models.TexturedModel;
 import renderEngine.Loader;
 import textures.ModelTexture;
 
@@ -19,8 +19,14 @@ public class UIHandler {
 	private static Loader loader;
 	public static RawModel rawModel;
 	public static FontType font;
-	public static ModelTexture radioButtonUnchecked;
-	public static ModelTexture radioButtonChecked;
+	
+	public static TexturedModel radioButtonUnchecked;
+	public static TexturedModel radioButtonChecked;
+	public static TexturedModel leftSlider;
+	public static TexturedModel middleSlider;
+	public static TexturedModel rightSlider;
+	public static TexturedModel slider;
+	
 	public List<UIElement> uies;
 	
 	
@@ -34,8 +40,12 @@ public class UIHandler {
 		loader = actuallLoader;
 		rawModel = rawModel();
 		font = new FontType(loader.loadFont("arial"), new File("res/Fonts/arial.fnt"));
-		radioButtonUnchecked = new ModelTexture(loader.loadTexture("GUI/Radiobutton Unclicked"));
-		radioButtonChecked = new ModelTexture(loader.loadTexture("GUI/Radiobutton Clicked"));
+		radioButtonUnchecked = new TexturedModel(rawModel, new ModelTexture(loader.loadTexture("GUI/Radiobutton Unclicked")));
+		radioButtonChecked = new TexturedModel(rawModel, new ModelTexture(loader.loadTexture("GUI/Radiobutton Clicked")));
+		leftSlider = new TexturedModel(rawModel, new ModelTexture(loader.loadTexture("GUI/Slider edge left")));
+		middleSlider = new TexturedModel(rawModel, new ModelTexture(loader.loadTexture("GUI/Slider middle")));
+		rightSlider = new TexturedModel(rawModel, new ModelTexture(loader.loadTexture("GUI/Slider edge right")));
+		slider = new TexturedModel(rawModel, new ModelTexture(loader.loadTexture("GUI/Slider")));
 		
 	}
 	private static RawModel rawModel() {
@@ -79,12 +89,23 @@ public class UIHandler {
 		topEdge.getTitle().setColour(0, 0, 0);
 		TextMaster.loadText(topEdge.getTitle());
 		topEdge.createRadioButtons(5, new Vector2f(0, 0.4f));
-		topEdge.getRadioButtons().get(0).createTitle("test", 1, new Vector2f(0, 0));
+		topEdge.getRadioButtons().get(0).createTitle("White / Black", 1, new Vector2f(0, 0));
+		topEdge.getRadioButtons().get(0).setId("backgroundColor");
+		topEdge.getRadioButtons().get(1).createTitle("Lines / Triangles", 1, new Vector2f(0, 0));
+		topEdge.getRadioButtons().get(1).setId("renderingGeometry");
+		
+		
 		TextMaster.loadText(topEdge.getRadioButtons().get(0).getTitle());
+		TextMaster.loadText(topEdge.getRadioButtons().get(1).getTitle());
 		for(UIElement uie: topEdge.getRadioButtons()) {
 			window.add(uie);
 		}
+		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0,1)), window);
 		
 		return window;
+	}
+	
+	public void destroyWindow() {
+		uies.clear();
 	}
 }

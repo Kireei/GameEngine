@@ -90,7 +90,7 @@ public class MainGameLoop {
 		
 		TextMaster.loadText(text);
 		for(UIElement uie: window) {
-			renderer.processUIE(uie);
+			MasterRenderer.processUIE(uie);
 		}
 		
 		while(!Display.isCloseRequested()){
