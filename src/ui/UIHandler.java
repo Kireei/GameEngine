@@ -101,6 +101,7 @@ public class UIHandler {
 			window.add(uie);
 		}
 		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0,1)), window);
+		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0,1.1f)), window);
 		
 		return window;
 	}

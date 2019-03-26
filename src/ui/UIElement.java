@@ -29,6 +29,11 @@ public class UIElement {
 	private List<UIElement> radioButtons;
 	private List<UIElement[]> sliders;
 	
+	private UIElement savedElement;
+	private int savedElementIndex = 0;
+	
+
+	
 	private boolean toggled = false;
 	
 	public UIElement(Vector3f position, Vector3f rotation, Vector2f scale, ModelTexture texture){
@@ -55,24 +60,31 @@ public class UIElement {
 		
 		UIElement clickedElement = null;
 		
+		
 			
 		while (Mouse.next()){
 		    if (Mouse.getEventButtonState()) {
 		        if (Mouse.getEventButton() == 0) {
 		            //System.out.println("Left button pressed");
+		        	toggled = true;
 		        	for(int index = 0; index < sliders.size(); index++) {
-		        		Vector3f position = sliders.get(index)[3].getPosition();
-		        		Vector2f scale = sliders.get(index)[3].getScale();
+		        		Vector3f position = sliders.get(index)[3].getEn().getPosition();
+		        		Vector3f scale = sliders.get(index)[3].getEn().getScale();
 		        		if(mX >= position.x - (scale.x * 0.5626) && mX <= position.x + (scale.x * 0.5626) && mY >= position.y - scale.y + 0.015f && mY <= position.y + scale.y + 0.015f){
 		    				clickedElement = sliders.get(index)[3]; 
+		    				savedElement = clickedElement;
+		    				savedElementIndex = index;
 		    				break;		
 		    			}
+		        		savedElement = null;
 		        	}
+		        	
 		        	
 		        }
 		    }else {
 		        if (Mouse.getEventButton() == 0) {
 		            //System.out.println("Left button released");
+		        	toggled = false;
 		            for(UIElement radioB: radioButtons) {
 		            	if(mX >= radioB.en.getPosition().x - (radioB.scale.x * 0.5626) && mX <= radioB.en.getPosition().x + (radioB.scale.x * 0.5626) && mY >= radioB.en.getPosition().y - radioB.scale.y + 0.015f && mY <= radioB.en.getPosition().y + radioB.scale.y + 0.015f){
 		    				clickedElement = radioB;
@@ -94,11 +106,16 @@ public class UIElement {
 				RadioButtonFunctions.unFunction(clickedElement.getId());
 			}
 			
-			if(clickedElement.getTexModel().getTexture() == UIHandler.slider.getTexture()) {
-				
+		}else if(savedElement != null) {
+			if(toggled && savedElement.getTexModel().getTexture() == UIHandler.slider.getTexture()) {
+				savedElement.getEn().setPosition(new Vector3f((float) mX, savedElement.getEn().getPosition().y, 0));
+				if(mX > sliders.get(savedElementIndex)[2].getEn().getPosition().x) {
+					savedElement.getEn().setPosition(new Vector3f(sliders.get(savedElementIndex)[2].getEn().getPosition().x, savedElement.getEn().getPosition().y, 0));
+				}
+				if(mX < sliders.get(savedElementIndex)[0].getEn().getPosition().x) {
+					savedElement.getEn().setPosition(new Vector3f(sliders.get(savedElementIndex)[0].getEn().getPosition().x, savedElement.getEn().getPosition().y, 0));
+				}
 			}
-			
-			
 		}
 	}
 	
@@ -199,5 +216,9 @@ public class UIElement {
 
 	public void setSliders(List<UIElement[]> sliders) {
 		this.sliders = sliders;
+	}
+
+	public void setPosition(Vector3f position) {
+		this.position = position;
 	}
 }
