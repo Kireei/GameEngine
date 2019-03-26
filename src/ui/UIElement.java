@@ -94,6 +94,10 @@ public class UIElement {
 				RadioButtonFunctions.unFunction(clickedElement.getId());
 			}
 			
+			if(clickedElement.getTexModel().getTexture() == UIHandler.slider.getTexture()) {
+				
+			}
+			
 			
 		}
 	}

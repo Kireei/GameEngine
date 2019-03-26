@@ -46,22 +46,22 @@ public class Planet {
 	public void checkPlanetResolution() {
 		int res = resolution;
 		float s = step;
-		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD1)) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD1) || Keyboard.isKeyDown(Keyboard.KEY_1) ) {
 			res -= 1;
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD2)) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD2) || Keyboard.isKeyDown(Keyboard.KEY_2) ) {
 			res = 16;
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD3)) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD3) || Keyboard.isKeyDown(Keyboard.KEY_3) ) {
 			res += 1;
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4)) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD4) || Keyboard.isKeyDown(Keyboard.KEY_4) ) {
 			s -= 0.01f;
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD5)) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD5) || Keyboard.isKeyDown(Keyboard.KEY_5) ) {
 			s = 1;
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD6)) {
+		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD6) || Keyboard.isKeyDown(Keyboard.KEY_6) ) {
 			s += 0.01f;
 		}
 		if(res < 3) res = 3;
