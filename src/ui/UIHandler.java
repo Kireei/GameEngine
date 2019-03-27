@@ -9,16 +9,21 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import fontMeshCreator.FontType;
+import fontMeshCreator.GUIText;
 import fontRendering.TextMaster;
 import models.RawModel;
 import models.TexturedModel;
 import renderEngine.Loader;
+import renderEngine.MasterRenderer;
 import textures.ModelTexture;
 
 public class UIHandler {
 	private static Loader loader;
 	public static RawModel rawModel;
 	public static FontType font;
+	
+	public static float sizeRadioButton = 0.03f;
+	public static float sizeSlider = 0.03f;
 	
 	public static TexturedModel radioButtonUnchecked;
 	public static TexturedModel radioButtonChecked;
@@ -85,26 +90,81 @@ public class UIHandler {
 		window.add(bottomEdge);
 		window.add(LRCorner);
 		
-		topEdge.createTitle("Detta ar en testmeny", 1);
+		topEdge.createTitle("Detta ar en testmeny", 1, new Vector2f(0,0));
 		topEdge.getTitle().setColour(0, 0, 0);
-		TextMaster.loadText(topEdge.getTitle());
 		topEdge.createRadioButtons(5, new Vector2f(0, 0.4f));
 		topEdge.getRadioButtons().get(0).createTitle("White / Black", 1, new Vector2f(0, 0));
 		topEdge.getRadioButtons().get(0).setId("backgroundColor");
 		topEdge.getRadioButtons().get(1).createTitle("Lines / Triangles", 1, new Vector2f(0, 0));
 		topEdge.getRadioButtons().get(1).setId("renderingGeometry");
-		
-		
-		TextMaster.loadText(topEdge.getRadioButtons().get(0).getTitle());
-		TextMaster.loadText(topEdge.getRadioButtons().get(1).getTitle());
+		topEdge.getRadioButtons().get(4).createTitle("Close this menu", 1, new Vector2f(0, 0));
+		topEdge.getRadioButtons().get(4).setId("closeMenu");
+
 		for(UIElement uie: topEdge.getRadioButtons()) {
 			window.add(uie);
 		}
-		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0,1)), window);
-		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0,1.1f)), window);
+		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0, 1), "slider1"), window);
+		
+		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0, 1.1f),"slider2"), window);
 		
 		return window;
 	}
+	
+	public static void openWindow(List<UIElement> window) {
+		for(int i = 0; i < window.size(); i++) {
+			for(UIElement rb: window.get(i).getRadioButtons()) {
+				MasterRenderer.uies.add(rb);
+				for(GUIText text: rb.getTexts()) {
+					TextMaster.texts.get(UIHandler.font).add(text);
+				}
+			}
+			for(UIElement[] slider: window.get(i).getSliders()) {
+				MasterRenderer.uies.add(slider[0]);
+				MasterRenderer.uies.add(slider[1]);
+				MasterRenderer.uies.add(slider[2]);
+				MasterRenderer.uies.add(slider[3]);
+				for(int j = 0; j < 4; j++) {
+					for(GUIText text: slider[j].getTexts()) {
+						TextMaster.texts.get(UIHandler.font).add(text);//
+					}
+				}
+			}
+			for(GUIText text: window.get(i).getTexts()) {
+				TextMaster.texts.get(UIHandler.font).add(text);
+			}
+			MasterRenderer.uies.add(window.get(i));
+			window.get(1).setActive(true);
+		}
+	}
+	
+	public static void closeWindow(List<UIElement> window) {
+		for(int i = 0; i < window.size(); i++) {
+			for(UIElement rb: window.get(i).getRadioButtons()) {
+				MasterRenderer.uies.remove(rb);
+				for(GUIText text: rb.getTexts()) {
+					if(text != null)TextMaster.texts.get(UIHandler.font).remove(text);
+				}
+			}
+			for(UIElement[] slider: window.get(i).getSliders()) {
+				MasterRenderer.uies.remove(slider[0]);
+				MasterRenderer.uies.remove(slider[1]);
+				MasterRenderer.uies.remove(slider[2]);
+				MasterRenderer.uies.remove(slider[3]);
+				for(int j = 0; j < 4; j++) {
+					for(GUIText text: slider[j].getTexts()) {
+						if(text != null)TextMaster.texts.get(UIHandler.font).remove(text);//
+					}
+				}
+			}
+			for(GUIText text: window.get(i).getTexts()) {
+				if(text != null) TextMaster.texts.get(UIHandler.font).remove(text);
+			}
+			MasterRenderer.uies.remove(window.get(i));
+			window.get(1).setActive(false);
+		}
+	}
+	
+	
 	
 	public void destroyWindow() {
 		uies.clear();

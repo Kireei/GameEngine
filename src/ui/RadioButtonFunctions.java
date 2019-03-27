@@ -24,7 +24,7 @@ public class RadioButtonFunctions {
 			TerrainRenderer.renderingGeometry = renderingGeometryTriangles;
 			break;
 		default:
-			System.out.println("Function for given ID not found");
+			System.out.println("Function for given RadioButton-ID not found");
 		}
 	}
 	public static void unFunction(String id) {
@@ -38,7 +38,7 @@ public class RadioButtonFunctions {
 			TerrainRenderer.renderingGeometry = renderingGeometryLines;
 			break;
 		default:
-			System.out.println("Function for given ID not found");
+			System.out.println("Function for given RadioButton-ID not found");
 		}
 	}
 }

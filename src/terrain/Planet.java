@@ -6,6 +6,7 @@ import org.lwjgl.util.vector.Vector3f;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import textures.ModelTexture;
+import ui.SliderFunctions;
 
 public class Planet {
 	private Vector3f[] directions = new Vector3f[6];
@@ -44,8 +45,8 @@ public class Planet {
 	
 	
 	public void checkPlanetResolution() {
-		int res = resolution;
-		float s = step;
+		int res = SliderFunctions.planetResolution;
+		float s = SliderFunctions.planetStep;
 		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD1) || Keyboard.isKeyDown(Keyboard.KEY_1) ) {
 			res -= 1;
 		}

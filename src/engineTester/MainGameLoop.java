@@ -112,8 +112,11 @@ public class MainGameLoop {
 			planet.checkPlanetResolution();
 			
 			renderer.render(light, camera);
+			UIHandler.closeWindow(window);
+			UIHandler.openWindow(window);
 			TextMaster.render();
 			var += 0.1;
+			
 			DisplayManager.updateDisplay();
 			
 		}
