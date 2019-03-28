@@ -138,17 +138,15 @@ public class UIElement {
 	
 	public void createTitle(String text, float size) {
 		GUIText titleText = new GUIText(text, size, UIHandler.font, new Vector2f(position.x + 0.05f, position.y + scale.y / 2), 50, false, false);
-		TextMaster.loadText(titleText);
 		texts.add(titleText);
-		this.title = titleText;
+		//this.title = titleText;
 		
 		
 	}
 	public void createTitle(String text, float size, Vector2f adjustment) {
 		GUIText titleText = new GUIText(text, size, UIHandler.font, new Vector2f(adjustment.x + position.x + 0.05f, adjustment.y - position.y + scale.y / 2), 50, false, false);
 		texts.add(titleText);
-		this.title = titleText;
-		TextMaster.loadText(titleText);
+		//this.title = titleText;
 	}
 	
 	public void createRadioButtons(int number, Vector2f adjustment) {
