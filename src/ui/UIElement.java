@@ -37,7 +37,7 @@ public class UIElement {
 	private int savedElementIndex = 0;
 	
 
-	private boolean active = true;
+	private boolean active = false;
 	private boolean toggled = false;
 	
 	public UIElement(Vector3f position, Vector3f rotation, Vector2f scale, ModelTexture texture){
@@ -175,9 +175,6 @@ public class UIElement {
 			dest.add(uie);
 		}
 	}
-	
-	
-
 	
 	public TexturedModel getTexModel() {
 		return texModel;

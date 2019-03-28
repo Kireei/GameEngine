@@ -90,6 +90,7 @@ public class UIHandler {
 		window.add(bottomEdge);
 		window.add(LRCorner);
 		
+		//topEdge.setActive(true);
 		topEdge.createTitle("Detta ar en testmeny", 1, new Vector2f(0,0));
 		topEdge.getTitle().setColour(0, 0, 0);
 		topEdge.createRadioButtons(5, new Vector2f(0, 0.4f));
@@ -111,13 +112,10 @@ public class UIHandler {
 	}
 	
 	public static void openWindow(List<UIElement> window) {
+		window.get(1).setActive(true);
 		for(int i = 0; i < window.size(); i++) {
-			for(UIElement rb: window.get(i).getRadioButtons()) {
-				MasterRenderer.uies.add(rb);
-				for(GUIText text: rb.getTexts()) {
-					TextMaster.texts.get(UIHandler.font).add(text);
-				}
-			}
+			MasterRenderer.uies.add(window.get(i));
+			
 			for(UIElement[] slider: window.get(i).getSliders()) {
 				MasterRenderer.uies.add(slider[0]);
 				MasterRenderer.uies.add(slider[1]);
@@ -125,15 +123,22 @@ public class UIHandler {
 				MasterRenderer.uies.add(slider[3]);
 				for(int j = 0; j < 4; j++) {
 					for(GUIText text: slider[j].getTexts()) {
-						TextMaster.texts.get(UIHandler.font).add(text);//
+						TextMaster.texts.get(UIHandler.font).add(text);
 					}
 				}
 			}
 			for(GUIText text: window.get(i).getTexts()) {
 				TextMaster.texts.get(UIHandler.font).add(text);
 			}
-			MasterRenderer.uies.add(window.get(i));
-			window.get(1).setActive(true);
+			
+			for(UIElement rb: window.get(i).getRadioButtons()) {
+				MasterRenderer.uies.add(rb);
+				//if(rb.getTitle() != null)TextMaster.loadText(rb.getTitle());
+				for(GUIText text: rb.getTexts()) {
+					TextMaster.texts.get(UIHandler.font).add(text);
+				}
+			}
+			
 		}
 	}
 	
@@ -141,8 +146,10 @@ public class UIHandler {
 		for(int i = 0; i < window.size(); i++) {
 			for(UIElement rb: window.get(i).getRadioButtons()) {
 				MasterRenderer.uies.remove(rb);
+				if(rb.getTitle() != null)TextMaster.removeText(rb.getTitle());
 				for(GUIText text: rb.getTexts()) {
-					if(text != null)TextMaster.texts.get(UIHandler.font).remove(text);
+					TextMaster.removeText(text);
+					//TextMaster.removeText(text);
 				}
 			}
 			for(UIElement[] slider: window.get(i).getSliders()) {
@@ -152,13 +159,12 @@ public class UIHandler {
 				MasterRenderer.uies.remove(slider[3]);
 				for(int j = 0; j < 4; j++) {
 					for(GUIText text: slider[j].getTexts()) {
-						if(text != null)TextMaster.texts.get(UIHandler.font).remove(text);//
+						//TextMaster.texts.get(UIHandler.font).remove(text);
+						TextMaster.removeText(text);
 					}
 				}
 			}
-			for(GUIText text: window.get(i).getTexts()) {
-				if(text != null) TextMaster.texts.get(UIHandler.font).remove(text);
-			}
+			if(window.get(1).getTitle() != null) {TextMaster.removeText(window.get(1).getTitle());}
 			MasterRenderer.uies.remove(window.get(i));
 			window.get(1).setActive(false);
 		}

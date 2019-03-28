@@ -40,6 +40,7 @@ public class MainGameLoop {
 		
 		UIHandler.init(loader);
 		TextMaster.init(loader);
+		UIMaster.init();
 		RawModel model = OBJLoader.loadObjModel("cuby", loader);
 	
 		TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("chimp")));
@@ -65,17 +66,12 @@ public class MainGameLoop {
 		
 		MasterRenderer renderer = new MasterRenderer();
 		Planet planet = new Planet(renderer, loader, 16, new ModelTexture(loader.loadTexture("chimp")));
-		
-		
-		
-		
-		
+
 		camera.setPosition(new Vector3f(0,0,20));
 		
 		float var = 0;
 		
 		
-		List<UIElement> window = UIHandler.createWindow(new Vector2f(5f, 15f));
 		Function function = new Function(0,0,loader, 0, FunctionTypes.SINE);
 
 		Function function1 = new Function(0, 0, loader, 0, FunctionTypes.SINE);
@@ -89,12 +85,11 @@ public class MainGameLoop {
 		
 		
 		TextMaster.loadText(text);
-		for(UIElement uie: window) {
-			MasterRenderer.processUIE(uie);
-		}
+		
 		
 		while(!Display.isCloseRequested()){
-			window.get(1).checkMouse();
+			
+			UIMaster.updateUI();
 			if(var < 100) {
 				//renderer.removeFunction(function1);
 				//function1 = new Function(0, 0, loader, var, FunctionTypes.E);
@@ -112,15 +107,14 @@ public class MainGameLoop {
 			planet.checkPlanetResolution();
 			
 			renderer.render(light, camera);
-			UIHandler.closeWindow(window);
-			UIHandler.openWindow(window);
+
 			TextMaster.render();
 			var += 0.1;
 			
 			DisplayManager.updateDisplay();
 			
 		}
-		UIMaster.cleanUp();
+		
 		renderer.cleanUp();
 		loader.cleanUp();
 		DisplayManager.closeDisplay();

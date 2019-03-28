@@ -3,22 +3,43 @@ package ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.util.vector.Vector2f;
+
+import renderEngine.MasterRenderer;
+
 public class UIMaster {
-	public static List<UIElement> ui = new ArrayList<UIElement>();
+	public static List<UIElement> uies = MasterRenderer.uies;
+	public static List<UIElement> window;
 	
-	public static void loadUI(UIElement uie) {
-		ui.add(uie);
+	public static void init() {
+		window = UIHandler.createWindow(new Vector2f(5,15));
+		UIHandler.openWindow(window);
+		UIHandler.closeWindow(window);
 		
 	}
 	
-	public static void removeUI(UIElement uie) {
-		ui.remove(uie);
-	}
-	
-	public static void render() {
+	public static void updateUI() {
+		while(Keyboard.next()) {
+			if(Keyboard.getEventKeyState()) {
+				if(Keyboard.getEventKey() == Keyboard.KEY_G) {
+					System.out.println("close");
+					
+				}
+			} else {
+				if(Keyboard.getEventKey() == Keyboard.KEY_G) {
+					System.out.println("close");
+					if(!window.get(1).isActive()) {UIHandler.openWindow(window); return;}
+					if(window.get(1).isActive())UIHandler.closeWindow(window);
+				}
+			}
+		}
 		
-	}
-	
-	public static void cleanUp() {
+		
+		for(UIElement uie: UIMaster.uies) {
+			if(uie.isActive()) {
+				uie.checkMouse();
+			}
+		}
 	}
 }
