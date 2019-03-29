@@ -53,9 +53,6 @@ public class FontRenderer {
     	GL20.glEnableVertexAttribArray(1);
     	shader.loadColor(text.getColour());
     	shader.loadTranslation(text.getPosition());
-    	GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
-    	GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_LINEAR);
     	GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, text.getVertexCount());
     	GL20.glDisableVertexAttribArray(0);
     	GL20.glDisableVertexAttribArray(1);

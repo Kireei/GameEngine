@@ -105,14 +105,19 @@ public class UIHandler {
 			window.add(uie);
 		}
 		
-		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0, 1), "slider1"), window);
-		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0, 1.1f),"slider2"), window);
+		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1), "slider1"), window);
+		topEdge.getSliders().get(0)[1].createTitle("Vertex Densitiy", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
+		topEdge.getSliders().get(0)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
+		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.1f),"slider2"), window);
+		topEdge.getSliders().get(1)[1].createTitle("Frequency", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
+		topEdge.getSliders().get(1)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
 
 		return window;
 	}
 	
 	public static void openWindow(List<UIElement> window) {
 		window.get(1).setActive(true);
+		
 		for(int i = 0; i < window.size(); i++) {
 			MasterRenderer.uies.add(window.get(i));
 			

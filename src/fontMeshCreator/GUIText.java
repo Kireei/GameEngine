@@ -125,7 +125,7 @@ public class GUIText {
     /**
      * @return the font size of the text (a font size of 1 is normal).
      */
-    protected float getFontSize() {
+    public float getFontSize() {
         return fontSize;
     }
  
