@@ -111,6 +111,9 @@ public class UIHandler {
 		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.1f),"slider2"), window);
 		topEdge.getSliders().get(1)[1].createTitle("Frequency", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
 		topEdge.getSliders().get(1)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
+		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.2f),"slider3"), window);
+		topEdge.getSliders().get(2)[1].createTitle("Frequency", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
+		topEdge.getSliders().get(2)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
 
 		return window;
 	}

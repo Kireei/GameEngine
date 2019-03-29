@@ -133,6 +133,8 @@ public class UIElement {
 					SliderFunctions.function(savedElement.getId(), savedElement.sliderAmount);
 				}
 			}
+			
+			
 		}
 	}
 	

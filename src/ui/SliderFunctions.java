@@ -12,6 +12,8 @@ public class SliderFunctions {
 		case "slider2":
 			planetStep = (float) (5 * (fraction * 2 - 1));
 			break;
+		case "slider3":
+			break;
 		default:
 			System.out.println("Function for given Slider-ID not found");
 		}
