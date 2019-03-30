@@ -93,11 +93,13 @@ public class UIHandler {
 		//topEdge.setActive(true);
 		topEdge.createTitle("Detta ar en testmeny", 1, new Vector2f(0,0));
 		//topEdge.getTitle().setColour(0, 0, 0);
-		topEdge.createRadioButtons(5, new Vector2f(0, 0.4f));
+		topEdge.createRadioButtons(5, new Vector2f(-0.05f, 0.4f));
 		topEdge.getRadioButtons().get(0).createTitle("White / Black", 1, new Vector2f(0, 0));
 		topEdge.getRadioButtons().get(0).setId("backgroundColor");
 		topEdge.getRadioButtons().get(1).createTitle("Lines / Triangles", 1, new Vector2f(0, 0));
 		topEdge.getRadioButtons().get(1).setId("renderingGeometry");
+		topEdge.getRadioButtons().get(2).createTitle("Rotate light", 1, new Vector2f(0, 0));
+		topEdge.getRadioButtons().get(2).setId("rotateLight");
 
 		for(UIElement uie: topEdge.getRadioButtons()) {
 			window.add(uie);
@@ -115,6 +117,10 @@ public class UIHandler {
 		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.3f),"slider4"), window);
 		topEdge.getSliders().get(3)[1].createTitle("Amplitude", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
 		topEdge.getSliders().get(3)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
+		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.4f),"slider5"), window);
+		topEdge.getSliders().get(4)[1].createTitle("Min Level", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
+		topEdge.getSliders().get(4)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
+		topEdge.getSliders().get(4)[3].setSliderAmount(0);
 
 		return window;
 	}

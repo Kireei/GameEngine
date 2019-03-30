@@ -9,6 +9,7 @@ import renderEngine.TerrainRenderer;
 public class RadioButtonFunctions {
 	private static Vector3f backgroundColorBlack = new Vector3f(0, 0, 0);
 	private static Vector3f backgroundColorWhite = new Vector3f(1, 1, 1);
+	public static boolean rotateLight = false;
 	private static int renderingGeometryLines = GL11.GL_LINE_STRIP;
 	private static int renderingGeometryTriangles = GL11.GL_TRIANGLES;
 	
@@ -23,6 +24,9 @@ public class RadioButtonFunctions {
 			System.out.println("Renderering geometry changed to TRIANGLES");
 			TerrainRenderer.renderingGeometry = renderingGeometryTriangles;
 			break;
+		case "rotateLight":
+			rotateLight = true;
+			break;
 		default:
 			System.out.println("Function for given RadioButton-ID not found");
 		}
@@ -36,6 +40,9 @@ public class RadioButtonFunctions {
 		case "renderingGeometry":
 			System.out.println("Renderering geometry changed to LINES");
 			TerrainRenderer.renderingGeometry = renderingGeometryLines;
+			break;
+		case "rotateLight":
+			rotateLight = false;
 			break;
 		default:
 			System.out.println("Function for given RadioButton-ID not found");

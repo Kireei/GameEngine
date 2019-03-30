@@ -16,6 +16,7 @@ public class Planet {
 	private float radius;
 	private float step;
 	private float amplitude;
+	private float minLevel;
 	private ModelTexture texture;
 	private MasterRenderer renderer;
 	
@@ -44,7 +45,7 @@ public class Planet {
 	}
 	
 	public TerrainFace generate(Vector3f localUp) {
-		return new TerrainFace(loader, resolution, radius, step, amplitude, localUp, texture);
+		return new TerrainFace(loader, resolution, radius, step, amplitude, minLevel, localUp, texture);
 	}
  
 	
@@ -54,6 +55,7 @@ public class Planet {
 		float s = SliderFunctions.planetStep;
 		float r = SliderFunctions.planetRadius;
 		float a = SliderFunctions.planetAmplitude;
+		float mL = SliderFunctions.planetMinLevel;
 		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD1) || Keyboard.isKeyDown(Keyboard.KEY_1) ) {
 			res -= 1;
 		}
@@ -73,13 +75,14 @@ public class Planet {
 			s += 0.01f;
 		}
 		if(res < 3) res = 3;
-		if(res == resolution && s == step && r == radius && a == amplitude) {
+		if(res == resolution && s == step && r == radius && a == amplitude && mL == minLevel) {
 			return;
 		} else {
 			resolution = res;
 			step = s;
 			radius = r;
 			amplitude = a;
+			minLevel = mL;
 			for(int i = 0; i < directions.length; i++) {
 				renderer.removeTerrainFace(tfs[i]);
 				tfs[i] = generate(directions[i]);

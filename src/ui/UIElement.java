@@ -253,4 +253,12 @@ public class UIElement {
 	public void setTexts(List<GUIText> texts) {
 		this.texts = texts;
 	}
+
+	public float getSliderAmount() {
+		return sliderAmount;
+	}
+
+	public void setSliderAmount(float sliderAmount) {
+		this.sliderAmount = sliderAmount;
+	}
 }

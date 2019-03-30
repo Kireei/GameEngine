@@ -6,6 +6,7 @@ import models.RawModel;
 import renderEngine.Loader;
 import textures.ModelTexture;
 import toolbox.OpenSimplexNoise;
+import ui.SliderFunctions;
 
 public class TerrainFace {
 	private ModelTexture texture;
@@ -14,19 +15,21 @@ public class TerrainFace {
 	private float radius;
 	private float step;
 	private float amplitude;
+	private float minLevel;
 	private Vector3f localUp;
 	private Vector3f axisA;
 	private Vector3f axisB;
 	
 	private OpenSimplexNoise noise;
 	
-	public TerrainFace(Loader loader, int resolution, float radius, float step, float amplitude, Vector3f localUp, ModelTexture texture) {
+	public TerrainFace(Loader loader, int resolution, float radius, float step, float amplitude, float minLevel, Vector3f localUp, ModelTexture texture) {
 		this.resolution = resolution;
 		this.radius = radius;
 		this.localUp = localUp;
 		this.texture = texture;
 		this.step = step;
 		this.amplitude = amplitude;
+		this.minLevel = minLevel;
 		noise = new OpenSimplexNoise();
 		
 		axisA = new Vector3f(localUp.y, localUp.z, localUp.x);
@@ -63,7 +66,10 @@ public class TerrainFace {
 				float noiseFactor = (float) noise.eval(pointOnUnitCube.x * step, pointOnUnitCube.y * step, pointOnUnitCube.z * step);
 
 				pointOnUnitCube.scale(((noiseFactor) * amplitude) + radius);
-
+				if(pointOnUnitCube.length() < (radius + amplitude * minLevel)) {
+					pointOnUnitCube.normalise();
+					pointOnUnitCube.scale(radius + amplitude * minLevel);
+				}
 				vertices[vertexPointer * 3] = pointOnUnitCube.x;
 				vertices[vertexPointer * 3 + 1] = pointOnUnitCube.y;
 				vertices[vertexPointer * 3 + 2] = pointOnUnitCube.z;

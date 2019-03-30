@@ -25,6 +25,7 @@ import renderEngine.OBJLoader;
 import terrain.Planet;
 import terrain.Terrain;
 import textures.ModelTexture;
+import ui.RadioButtonFunctions;
 import ui.UIHandler;
 import ui.UIMaster;
 
@@ -104,7 +105,7 @@ public class MainGameLoop {
 			renderer.render(light, camera);
 
 			TextMaster.render();
-			var += 0.009;
+			if(RadioButtonFunctions.rotateLight)var += 0.009;
 			
 			DisplayManager.updateDisplay();
 			

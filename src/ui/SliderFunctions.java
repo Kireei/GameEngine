@@ -5,6 +5,7 @@ public class SliderFunctions {
 	public static float planetStep = 1;
 	public static float planetRadius = 1;
 	public static float planetAmplitude = 1;
+	public static float planetMinLevel = 0;
 	
 	public static void function(String id, float fraction) {
 		switch(id) {
@@ -19,6 +20,9 @@ public class SliderFunctions {
 			break;
 		case "slider4":
 			planetAmplitude = fraction * 5;
+			break;
+		case "slider5":
+			planetMinLevel = fraction;
 			break;
 		default:
 			System.out.println("Function for given Slider-ID not found");
