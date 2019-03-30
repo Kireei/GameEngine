@@ -1,8 +1,6 @@
 package engineTester;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector2f;
@@ -27,7 +25,6 @@ import renderEngine.OBJLoader;
 import terrain.Planet;
 import terrain.Terrain;
 import textures.ModelTexture;
-import ui.UIElement;
 import ui.UIHandler;
 import ui.UIMaster;
 
@@ -62,8 +59,6 @@ public class MainGameLoop {
 		Camera camera = new Camera();
 	
 		
-		List<Entity> boxes = new ArrayList<Entity>();
-		
 		MasterRenderer renderer = new MasterRenderer();
 		Planet planet = new Planet(renderer, loader, 16, new ModelTexture(loader.loadTexture("chimp")));
 
@@ -75,9 +70,9 @@ public class MainGameLoop {
 		Function function = new Function(0,0,loader, 0, FunctionTypes.SINE);
 
 		Function function1 = new Function(0, 0, loader, 0, FunctionTypes.SINE);
-		//Function function2 = new Function(0, 0, loader, 0, FunctionTypes.HLINE);
+
 		Function function3 = new Function(0,0, loader, 0, FunctionTypes.TRUESINE);
-		//renderer.processFunction(function2);
+
 		
 		FontType ft = new FontType(loader.loadFont("arial"), new File("res/Fonts/arial.fnt"));
 		GUIText text = new GUIText("String", 1, ft, new Vector2f(0,0), 50, false, false);

@@ -101,6 +101,7 @@ public abstract class ShaderProgram {
 			while((line = reader.readLine()) != null){
 				shaderSource.append(line).append("\n");
 			}
+			reader.close();
 		} catch(IOException e){
 			System.err.println("Could not read file!");
 			e.printStackTrace();

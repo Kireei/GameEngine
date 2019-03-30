@@ -98,8 +98,6 @@ public class UIHandler {
 		topEdge.getRadioButtons().get(0).setId("backgroundColor");
 		topEdge.getRadioButtons().get(1).createTitle("Lines / Triangles", 1, new Vector2f(0, 0));
 		topEdge.getRadioButtons().get(1).setId("renderingGeometry");
-		topEdge.getRadioButtons().get(4).createTitle("Close this menu", 1, new Vector2f(0, 0));
-		topEdge.getRadioButtons().get(4).setId("closeMenu");
 
 		for(UIElement uie: topEdge.getRadioButtons()) {
 			window.add(uie);
@@ -112,8 +110,11 @@ public class UIHandler {
 		topEdge.getSliders().get(1)[1].createTitle("Frequency", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
 		topEdge.getSliders().get(1)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
 		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.2f),"slider3"), window);
-		topEdge.getSliders().get(2)[1].createTitle("Frequency", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
+		topEdge.getSliders().get(2)[1].createTitle("Radius", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
 		topEdge.getSliders().get(2)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
+		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.3f),"slider4"), window);
+		topEdge.getSliders().get(3)[1].createTitle("Amplitude", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
+		topEdge.getSliders().get(3)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
 
 		return window;
 	}

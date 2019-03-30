@@ -10,10 +10,8 @@ import org.lwjgl.util.vector.Vector3f;
 
 import entities.Entity;
 import fontMeshCreator.GUIText;
-import fontRendering.TextMaster;
 import models.RawModel;
 import models.TexturedModel;
-import renderEngine.MasterRenderer;
 import textures.ModelTexture;
 
 public class UIElement {
@@ -28,7 +26,6 @@ public class UIElement {
 	private GUIText title;
 	private String id = "";
 	private float sliderAmount;
-	private List<UIElement> window;
 	private List<UIElement> radioButtons;
 	private List<UIElement[]> sliders;
 	private List<GUIText> texts;
@@ -56,17 +53,8 @@ public class UIElement {
 		if(active) {
 			double mX = (Mouse.getX() / (double)(Display.getWidth()) * 2 - 1);
 			double mY = (Mouse.getY() / (double)(Display.getHeight()) * 2 - 1);
-			float scaleX = this.scale.x;
-			float scaleY = this.scale.y;
-			/*if(Mouse.isButtonDown(0) && mX >= this.en.getPosition().x - (scaleX * 0.5626) && mX <= this.en.getPosition().x + (scaleX * 0.5626) && mY >= this.en.getPosition().y - scaleY && mY <= this.en.getPosition().y + scaleY){
-				if(title != null) {
-					title.setColour(1, 1, 0);
-				}
-			}*/
-			
+
 			UIElement clickedElement = null;
-			
-			
 				
 			while (Mouse.next()){
 			    if (Mouse.getEventButtonState()) {
@@ -105,9 +93,6 @@ public class UIElement {
 				if(clickedElement.getTexModel().getTexture() == UIHandler.radioButtonUnchecked.getTexture()) {
 					clickedElement.setTexModel(UIHandler.radioButtonChecked);
 					RadioButtonFunctions.function(clickedElement.getId());
-					if(clickedElement.getId() == "closeMenu") {
-						
-					}
 					
 					
 				}else if(clickedElement.getTexModel().getTexture() == UIHandler.radioButtonChecked.getTexture()){

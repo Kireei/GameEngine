@@ -13,7 +13,9 @@ public class Planet {
 	private TerrainFace[] tfs = new TerrainFace[6];
 	private Loader loader;
 	private int resolution;
+	private float radius;
 	private float step;
+	private float amplitude;
 	private ModelTexture texture;
 	private MasterRenderer renderer;
 	public Planet(MasterRenderer renderer, Loader loader, int resolution, ModelTexture texture) {
@@ -21,7 +23,9 @@ public class Planet {
 		this.resolution = resolution;
 		this.texture = texture;
 		this.renderer = renderer;
+		this.radius = SliderFunctions.planetRadius;
 		this.step = 1;
+		this.amplitude = SliderFunctions.planetAmplitude;
 		texture.setReflectivity(1);
 		texture.setShineDamper(100);
 		directions[0] = new Vector3f(0,1,0);
@@ -39,7 +43,7 @@ public class Planet {
 	}
 	
 	public TerrainFace generate(Vector3f localUp) {
-		return new TerrainFace(loader, resolution, step, localUp, texture);
+		return new TerrainFace(loader, resolution, radius, step, amplitude, localUp, texture);
 	}
  
 	
@@ -47,6 +51,8 @@ public class Planet {
 	public void checkPlanetResolution() {
 		int res = SliderFunctions.planetResolution;
 		float s = SliderFunctions.planetStep;
+		float r = SliderFunctions.planetRadius;
+		float a = SliderFunctions.planetAmplitude;
 		if(Keyboard.isKeyDown(Keyboard.KEY_NUMPAD1) || Keyboard.isKeyDown(Keyboard.KEY_1) ) {
 			res -= 1;
 		}
@@ -66,11 +72,13 @@ public class Planet {
 			s += 0.01f;
 		}
 		if(res < 3) res = 3;
-		if(res == resolution && s == step) {
+		if(res == resolution && s == step && r == radius && a == amplitude) {
 			return;
 		} else {
 			resolution = res;
 			step = s;
+			radius = r;
+			amplitude = a;
 			for(int i = 0; i < directions.length; i++) {
 				renderer.removeTerrainFace(tfs[i]);
 				tfs[i] = generate(directions[i]);

@@ -11,18 +11,22 @@ public class TerrainFace {
 	private ModelTexture texture;
 	private RawModel model;
 	private int resolution;
+	private float radius;
 	private float step;
+	private float amplitude;
 	private Vector3f localUp;
 	private Vector3f axisA;
 	private Vector3f axisB;
 	
 	private OpenSimplexNoise noise;
 	
-	public TerrainFace(Loader loader, int resolution, float step, Vector3f localUp, ModelTexture texture) {
+	public TerrainFace(Loader loader, int resolution, float radius, float step, float amplitude, Vector3f localUp, ModelTexture texture) {
 		this.resolution = resolution;
+		this.radius = radius;
 		this.localUp = localUp;
 		this.texture = texture;
 		this.step = step;
+		this.amplitude = amplitude;
 		noise = new OpenSimplexNoise();
 		
 		axisA = new Vector3f(localUp.y, localUp.z, localUp.x);
@@ -37,6 +41,7 @@ public class TerrainFace {
 		float[] vertices = new float[count * 3];
 		float[] normals = new float[count * 3];
 		float[] textureCoords = new float[count * 2];
+		float[] colors = new float[count * 3];
 		int[] indices = new int[6 * (resolution - 1) * (resolution - 1)];
 		int vertexPointer = 0;
 		int triIndex = 0;
@@ -57,8 +62,8 @@ public class TerrainFace {
 				pointOnUnitCube.normalise();
 				float noiseFactor = (float) noise.eval(pointOnUnitCube.x * step, pointOnUnitCube.y * step, pointOnUnitCube.z * step);
 
-				pointOnUnitCube.scale((noiseFactor + 1) * 2);
-				
+				pointOnUnitCube.scale(((noiseFactor) * amplitude) + radius);
+
 				vertices[vertexPointer * 3] = pointOnUnitCube.x;
 				vertices[vertexPointer * 3 + 1] = pointOnUnitCube.y;
 				vertices[vertexPointer * 3 + 2] = pointOnUnitCube.z;
@@ -67,6 +72,9 @@ public class TerrainFace {
 				normals[vertexPointer * 3 + 2] = pointOnUnitCube.z;
 				textureCoords[vertexPointer * 2] = (float) x / ((float) resolution - 1);
 				textureCoords[vertexPointer * 2 + 1] = (float) y / ((float) resolution - 1);
+				colors[vertexPointer * 3] = 0;
+				colors[vertexPointer * 3 + 1] = (noiseFactor + 1) * 0.5f;
+				colors[vertexPointer * 3 + 2] = 0;
 				vertexPointer++;
 				
 				if (x != resolution - 1 && y != resolution - 1) {
@@ -99,7 +107,7 @@ public class TerrainFace {
 				indices[pointer++] = bottomRight;
 			}
 		}*/
-		return loader.loadToVAO(vertices, textureCoords, normals, indices);
+		return loader.loadToVAO(vertices, textureCoords, normals, colors, indices);
 		}
 		
 
