@@ -72,9 +72,9 @@ public class TerrainFace {
 				normals[vertexPointer * 3 + 2] = pointOnUnitCube.z;
 				textureCoords[vertexPointer * 2] = (float) x / ((float) resolution - 1);
 				textureCoords[vertexPointer * 2 + 1] = (float) y / ((float) resolution - 1);
-				colors[vertexPointer * 3] = 0;
-				colors[vertexPointer * 3 + 1] = (noiseFactor + 1) * 0.5f;
-				colors[vertexPointer * 3 + 2] = 0;
+				colors[vertexPointer * 3] = 1;
+				colors[vertexPointer * 3 + 1] = 1;//(noiseFactor + 1) * 0.5f;
+				colors[vertexPointer * 3 + 2] = 1;
 				vertexPointer++;
 				
 				if (x != resolution - 1 && y != resolution - 1) {

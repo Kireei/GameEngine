@@ -42,8 +42,8 @@ public class MainGameLoop {
 	
 		TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("chimp")));
 		ModelTexture texture = staticModel.getTexture();
-		texture.setShineDamper(10);
-		texture.setReflectivity(1);
+		texture.setShineDamper(10000);
+		texture.setReflectivity(100);
 		
 		
 		Map mapReader = new Map();
@@ -52,7 +52,7 @@ public class MainGameLoop {
 		int[] map = mapReader.readMap(mapImage);
 		
 		Entity entity = new Entity(staticModel, new Vector3f(0, 5, -25),0,0,0, new Vector3f(1,1,1));
-		Light light  = new Light(new Vector3f(0,0, -20), new Vector3f(1,1,1));
+		Light light  = new Light(new Vector3f(0,0, -200), new Vector3f(1,1,1));
 		
 		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("chimp")));
 		
@@ -60,7 +60,7 @@ public class MainGameLoop {
 	
 		
 		MasterRenderer renderer = new MasterRenderer();
-		Planet planet = new Planet(renderer, loader, 16, new ModelTexture(loader.loadTexture("chimp")));
+		Planet planet = new Planet(renderer, loader, 16, texture);
 
 		camera.setPosition(new Vector3f(0,0,20));
 		
@@ -100,11 +100,11 @@ public class MainGameLoop {
 			//light.setPosition(camera.getPosition());
 
 			planet.checkPlanetResolution();
-			
+			light.setPosition(new Vector3f(200f * (float)Math.cos(var), 0, 200f*(float)Math.sin(var)));
 			renderer.render(light, camera);
 
 			TextMaster.render();
-			var += 0.1;
+			var += 0.009;
 			
 			DisplayManager.updateDisplay();
 			

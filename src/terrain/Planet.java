@@ -18,6 +18,7 @@ public class Planet {
 	private float amplitude;
 	private ModelTexture texture;
 	private MasterRenderer renderer;
+	
 	public Planet(MasterRenderer renderer, Loader loader, int resolution, ModelTexture texture) {
 		this.loader = loader;
 		this.resolution = resolution;
