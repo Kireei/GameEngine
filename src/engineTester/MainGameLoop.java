@@ -101,7 +101,7 @@ public class MainGameLoop {
 			//light.setPosition(camera.getPosition());
 
 			planet.checkPlanetResolution();
-			light.setPosition(new Vector3f(200f * (float)Math.cos(var), 0, 200f*(float)Math.sin(var)));
+			light.setPosition(new Vector3f(2000f * (float)Math.cos(var), 0, 2000f*(float)Math.sin(var)));
 			renderer.render(light, camera);
 
 			TextMaster.render();
