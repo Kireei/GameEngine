@@ -68,7 +68,7 @@ public class TerrainFace {
 				pointOnUnitCube.scale(((noiseFactor) * amplitude) + radius);
 				if(pointOnUnitCube.length() < (radius + amplitude * minLevel)) {
 					pointOnUnitCube.normalise();
-					pointOnUnitCube.scale(radius + amplitude * minLevel);
+					pointOnUnitCube.scale(radius + amplitude * (minLevel));
 				}
 				vertices[vertexPointer * 3] = pointOnUnitCube.x;
 				vertices[vertexPointer * 3 + 1] = pointOnUnitCube.y;
@@ -96,23 +96,8 @@ public class TerrainFace {
 	            
 				
 				
+				}
 			}
-		}
-		/*int pointer = 0;
-		for (int gz = 0; gz < resolution - 1; gz++) {
-			for (int gx = 0; gx < resolution - 1; gx++) {
-				int topLeft = (gz * resolution) + gx;
-				int topRight = topLeft + 1;
-				int bottomLeft = ((gz + 1) * resolution) + gx;
-				int bottomRight = bottomLeft + 1;
-				indices[pointer++] = topLeft;
-				indices[pointer++] = topRight;
-				indices[pointer++] = bottomLeft;
-				indices[pointer++] = bottomLeft;
-				indices[pointer++] = topRight;
-				indices[pointer++] = bottomRight;
-			}
-		}*/
 		return loader.loadToVAO(vertices, textureCoords, normals, colors, indices);
 		}
 		
