@@ -29,6 +29,7 @@ public class UIElement {
 	private List<UIElement> radioButtons;
 	private List<UIElement[]> sliders;
 	private List<GUIText> texts;
+	private List<UIElement[]> textBoxes;
 	
 	private UIElement savedElement;
 	private int savedElementIndex = 0;
@@ -45,6 +46,7 @@ public class UIElement {
 		this.radioButtons = new ArrayList<UIElement>();
 		this.sliders = new ArrayList<UIElement[]>();
 		this.texts = new ArrayList<GUIText>();
+		this.textBoxes = new ArrayList<UIElement[]>();
 		this.en = new Entity(texModel, new Vector3f(position.x - 1 + (scale.x*(9f/16f)), position.y + 0.9831f - scale.y, position.z), rotation.x, rotation.y, rotation.z, new Vector3f(scale.x, scale.y, 1));
 		//this.en = new Entity(texModel, new Vector3f(position.x, position.y, position.z), rotation.x, rotation.y, rotation.z, new Vector3f(scale.x, scale.y, 1));
 	}
@@ -85,6 +87,14 @@ public class UIElement {
 			    				break;		
 			    			}
 			            }
+			            for(UIElement[] textBox: textBoxes) {
+			            	for(UIElement textElement: textBox) {
+			            		if(mX >= textElement.en.getPosition().x - (textElement.scale.x * 0.5626) && mX <= textElement.en.getPosition().x + (textElement.scale.x * 0.5626) && mY >= textElement.en.getPosition().y - textElement.scale.y + 0.015f && mY <= textElement.en.getPosition().y + textElement.scale.y + 0.015f){
+				    				clickedElement = textElement;
+				    				break;		
+				    			}
+			            	}
+			            }
 			        }
 				}
 				
@@ -98,6 +108,9 @@ public class UIElement {
 				}else if(clickedElement.getTexModel().getTexture() == UIHandler.radioButtonChecked.getTexture()){
 					clickedElement.setTexModel(UIHandler.radioButtonUnchecked);
 					RadioButtonFunctions.unFunction(clickedElement.getId());
+				}
+				if(clickedElement.getId() == "testBox") {
+					UIMaster.uiState = UIState.TEXT_INPUT;
 				}
 				
 			}else if(savedElement != null) {
@@ -118,6 +131,7 @@ public class UIElement {
 					SliderFunctions.function(savedElement.getId(), savedElement.sliderAmount);
 				}
 			}
+			
 			
 			
 		}
@@ -164,6 +178,36 @@ public class UIElement {
 	}
 	public static void addSlider(UIElement[] slider, List<UIElement> dest) {
 		for(UIElement uie: slider) {
+			dest.add(uie);
+		}
+	}
+	public UIElement[] createTextBox(Vector2f adjustment, Vector2f scale, Vector2f size, String id) {
+		float tileSize = 0.04f;
+		float tileSpaceX = tileSize * 18f / 16f * size.x;
+		float tileSpaceY = tileSize * 2  * size.y;
+		float adjustX = adjustment.x + position.x;
+		float adjustY = -(adjustment.y + position.y);
+		
+		UIElement TLCorner = new UIElement(new Vector3f(adjustX, adjustY,0), new Vector3f(0,0,0), new Vector2f(tileSize*size.x, tileSize * size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextCorner 1")));
+		UIElement topEdge = new UIElement(new Vector3f(tileSpaceX + adjustX, adjustY, 0), new Vector3f(0,0,0), new Vector2f(tileSize*(scale.x-2) * size.x, tileSize* size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextEdge 1")));
+		UIElement TRCorner = new UIElement(new Vector3f(tileSpaceX * (scale.x - 1) + adjustX, adjustY, 0), new Vector3f(0,0,0), new Vector2f(tileSize * size.x, tileSize* size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextCorner 2")));
+		UIElement LEdge = new UIElement(new Vector3f(adjustX, -tileSpaceY + adjustY, 0), new Vector3f(0,0,0), new Vector2f(tileSize * size.x, tileSize * (scale.y - 2)* size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextEdge 2")));
+		UIElement middle = new UIElement(new Vector3f(tileSpaceX + adjustX, -tileSpaceY + adjustY, 0), new Vector3f(0,0,0), new Vector2f(tileSize * (scale.x - 2) * size.x, tileSize * (scale.y - 2)* size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextBackground")));
+		UIElement REdge = new UIElement(new Vector3f(tileSpaceX * (scale.x - 1) + adjustX, -tileSpaceY+ adjustY,0), new Vector3f(0,0,0), new Vector2f(tileSize * size.x, tileSize * (scale.y - 2)* size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextEdge 3")));
+		UIElement LLCorner = new UIElement(new Vector3f( adjustX, -tileSpaceY * (scale.y - 1)+ adjustY,0), new Vector3f(0,0,0), new Vector2f(tileSize * size.x, tileSize* size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextCorner 3")));
+		UIElement bottomEdge = new UIElement(new Vector3f(tileSpaceX+ adjustX, -tileSpaceY * (scale.y - 1)+ adjustY, 0), new Vector3f(0,0,0), new Vector2f(tileSize * (scale.x - 2) * size.x, tileSize* size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextEdge 4")));
+		UIElement LRCorner = new UIElement(new Vector3f(tileSpaceX * (scale.x - 1)+ adjustX, -tileSpaceY * (scale.y - 1)+ adjustY,0), new Vector3f(0,0,0), new Vector2f(tileSize * size.x, tileSize* size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextCorner 4")));
+		
+		UIElement[] textBox = {TLCorner, topEdge, TRCorner, LEdge, middle, REdge, LLCorner, bottomEdge, LRCorner};
+		for(UIElement uie: textBox) {
+			uie.id = id;
+		}
+		textBoxes.add(textBox);
+		return textBox;
+	}
+	
+	public static void addTextBox(UIElement[] textBox, List<UIElement> dest) {
+		for(UIElement uie: textBox) {
 			dest.add(uie);
 		}
 	}

@@ -40,7 +40,7 @@ public class UIRenderer {
     	shader.loadTMatrix(tMatrix);
     	shader.loadTranslation(new Vector2f(uie.getPosition().x, uie.getPosition().y));
     	GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-    	
+    	GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
     	GL11.glDrawElements(GL11.GL_TRIANGLES, uie.getTexModel().getRawModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
     	GL20.glDisableVertexAttribArray(0);
     	GL20.glDisableVertexAttribArray(1);

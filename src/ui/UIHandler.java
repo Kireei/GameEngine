@@ -18,7 +18,7 @@ import renderEngine.MasterRenderer;
 import textures.ModelTexture;
 
 public class UIHandler {
-	private static Loader loader;
+	static Loader loader;
 	public static RawModel rawModel;
 	public static FontType font;
 	
@@ -121,6 +121,9 @@ public class UIHandler {
 		topEdge.getSliders().get(4)[1].createTitle("Min Level", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
 		topEdge.getSliders().get(4)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
 		topEdge.getSliders().get(4)[3].setSliderAmount(0);
+		
+		
+		UIElement.addTextBox(topEdge.createTextBox(new Vector2f(-0.035f,0.2f), new Vector2f(3,3), new Vector2f(2f,0.5f), "testBox"), window);
 
 		return window;
 	}
