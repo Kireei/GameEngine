@@ -110,6 +110,7 @@ public class UIElement {
 					RadioButtonFunctions.unFunction(clickedElement.getId());
 				}
 				if(clickedElement.getId() == "testBox") {
+					UIMaster.activeText = clickedElement;
 					UIMaster.uiState = UIState.TEXT_INPUT;
 				}
 				
