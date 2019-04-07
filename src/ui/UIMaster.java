@@ -10,21 +10,25 @@ import org.lwjgl.util.vector.Vector3f;
 import fontMeshCreator.GUIText;
 import fontRendering.TextMaster;
 import renderEngine.MasterRenderer;
+import windows.ColorPicker;
+import windows.Controller;
 
 public class UIMaster {
 	public static List<UIElement> uies = MasterRenderer.uies;
-	public static List<UIElement> window;
+	
+	public static List<UIElement> controller;
+	public static List<UIElement> colorPicker;
+	
 	public static UIState uiState = UIState.NORMAL;
 	public static String testText = new String();
-	private static List<String> textInput = new ArrayList<String>();
+	private static List<String> words = new ArrayList<String>();
+	static List<List<UIElement>> activeWindows = new ArrayList<List<UIElement>>();
 	
 	public static UIElement activeText;
 	
 	public static void init() {
-		window = UIHandler.createWindow(new Vector2f(5,15));
-		UIHandler.openWindow(window);
-		//updateText();
-		UIHandler.closeWindow(window);
+		controller = Controller.createWindow();
+		colorPicker = ColorPicker.createWindow();
 		
 	}
 	
@@ -41,13 +45,12 @@ public class UIMaster {
 					}
 				} else {
 					if(Keyboard.getEventKey() == Keyboard.KEY_G) {
-						if(!window.get(1).isActive()) {
-							UIHandler.openWindow(window);
-							
+						if(!controller.get(1).isActive()) {
+							UIHandler.openWindow(controller);
 							return;
 							}
-						if(window.get(1).isActive()) {
-							UIHandler.closeWindow(window);
+						if(controller.get(1).isActive()) {
+							UIHandler.closeWindow(controller);
 							
 						}
 					}
@@ -57,26 +60,26 @@ public class UIMaster {
 			getTextInput();
 		}
 		
-		for(UIElement uie: UIMaster.uies) {
-			if(uie.isActive()) {
-				uie.checkMouse();
-			}
-		}		
-		
+		if(activeWindows.size() > 0) {
+			for(UIElement uie: activeWindows.get(activeWindows.size() - 1)) {
+				if(uie.isActive()) {
+					uie.checkMouse();
+				}
+			}		
+		}
 	}
 	
 	private static void getTextInput() {
-		String text = testText;
 		while(Keyboard.next()) {
 			if(Keyboard.getEventKeyState()) {
 				if(Keyboard.getEventKey() == Keyboard.KEY_END) uiState = UIState.NORMAL;
 				if(Keyboard.getEventKey() == Keyboard.KEY_SPACE) {
-					textInput.add(testText);
+					words.add(testText);
 					testText = "";
 				}else {
 					testText = testText.concat(Keyboard.getKeyName(Keyboard.getEventKey()));
 				}
-				System.out.println(textInput);
+				System.out.println(words);
 				System.out.println(testText);
 				if(testText.equals("STOP")) System.exit(0);
 				
@@ -84,15 +87,12 @@ public class UIMaster {
 			}
 		}
 		
-		//System.out.println(text);
 	}
 	public static void updateText(UIElement uie) {
 		List<GUIText> texts = uie.getTexts();
-		Vector2f pos = new Vector2f(0,0);
 		Vector3f color = new Vector3f(1,1,1);
 		for(GUIText text : texts) {
 			color = text.getColour();
-			pos = text.getPosition();
 			TextMaster.removeText(text);
 		}
 		
@@ -107,7 +107,7 @@ public class UIMaster {
 
 	}
 	public static void clearUpdatedText() {
-		for(GUIText text : window.get(1).getSliders().get(0)[2].getTexts()) {
+		for(GUIText text : controller.get(1).getSliders().get(0)[2].getTexts()) {
 			TextMaster.removeText(text);
 		}
 	}

@@ -22,6 +22,7 @@ import shaders.UIShader;
 import terrain.Sphere;
 import terrain.Terrain;
 import terrain.TerrainFace;
+import ui.SliderFunctions;
 import ui.UIElement;
 import ui.UIRenderer;
 
@@ -82,6 +83,7 @@ public class MasterRenderer {
 		terrainShader.start();
 		terrainShader.loadLight(sun);
 		terrainShader.loadViewMatrix(camera);
+		terrainShader.loadColor(SliderFunctions.planetColor);
 		terrainRenderer.render(terrains);
 		terrainRenderer.renderSpheres(spheres);
 		terrainRenderer.renderTerrainFaces(tfs);

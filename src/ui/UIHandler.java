@@ -7,7 +7,6 @@ import java.util.List;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
-import entities.Camera;
 import fontMeshCreator.FontType;
 import fontMeshCreator.GUIText;
 import fontRendering.TextMaster;
@@ -35,11 +34,6 @@ public class UIHandler {
 	public List<UIElement> uies;
 	
 	
-	public UIHandler(Camera camera) {
-		
-		//this.uie = new UIElement(new Vector3f(0, 0, 0), new Vector2f(0.06f, 0.06f), new ModelTexture(loader.loadTexture("GUI/Corner")));
-		//this.uies = createWindow(new Vector2f(5f, 15f));
-	}
 	
 	public static void init(Loader actuallLoader) {
 		loader = actuallLoader;
@@ -62,6 +56,7 @@ public class UIHandler {
 		
 		return loader.loadToVAO(positions, textureCoords, normals, indices);
 	}
+
 	
 	public static List<UIElement> createWindow(Vector2f scale) {
 		float tileSize = 0.06f;
@@ -89,7 +84,7 @@ public class UIHandler {
 		window.add(LLCorner);
 		window.add(bottomEdge);
 		window.add(LRCorner);
-		
+		/*
 		//topEdge.setActive(true);
 		topEdge.createTitle("Detta ar en testmeny", 1, new Vector2f(0,0));
 		//topEdge.getTitle().setColour(0, 0, 0);
@@ -123,7 +118,7 @@ public class UIHandler {
 		topEdge.getSliders().get(4)[3].setSliderAmount(0);
 		
 		
-		UIElement.addTextBox(topEdge.createTextBox(new Vector2f(-0.035f,0.2f), new Vector2f(3,3), new Vector2f(2f,0.5f), "testBox"), window);
+		UIElement.addTextBox(topEdge.createTextBox(new Vector2f(-0.035f,0.2f), new Vector2f(3,3), new Vector2f(2f,0.5f), "testBox"), window);*/
 
 		return window;
 	}
@@ -159,13 +154,13 @@ public class UIHandler {
 			}
 			
 		}
+		UIMaster.activeWindows.add(window);
 	}
 	
 	public static void closeWindow(List<UIElement> window) {
 		for(int i = 0; i < window.size(); i++) {
 			for(UIElement rb: window.get(i).getRadioButtons()) {
 				MasterRenderer.uies.remove(rb);
-				//if(rb.getTitle() != null)TextMaster.removeText(rb.getTitle());
 				for(GUIText text: rb.getTexts()) {
 					TextMaster.removeText(text);
 					
@@ -184,10 +179,15 @@ public class UIHandler {
 				}
 			}
 			for(GUIText text: window.get(i).getTexts()) {
-				//TextMaster.removeText(text);
+				try{
+					TextMaster.removeText(text);
+				}catch (Exception e){
+					System.err.println(e);
+				}
 			}
 			MasterRenderer.uies.remove(window.get(i));
 			window.get(1).setActive(false);
+			UIMaster.activeWindows.remove(window);
 		}
 	}
 	

@@ -1,16 +1,11 @@
 package engineTester;
 
-import java.io.File;
-
 import org.lwjgl.opengl.Display;
-import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
 import entities.Entity;
 import entities.Light;
-import fontMeshCreator.FontType;
-import fontMeshCreator.GUIText;
 import fontRendering.TextMaster;
 import functions.Function;
 import functions.FunctionTypes;
@@ -73,16 +68,6 @@ public class MainGameLoop {
 		Function function1 = new Function(0, 0, loader, 0, FunctionTypes.SINE);
 
 		Function function3 = new Function(0,0, loader, 0, FunctionTypes.TRUESINE);
-
-		
-		FontType ft = new FontType(loader.loadFont("arial"), new File("res/Fonts/arial.fnt"));
-		GUIText text = new GUIText("String", 1, ft, new Vector2f(0,0), 50, false, false);
-		text.setColour(1, 1, 1);
-		
-		
-		TextMaster.loadText(text);
-		
-		
 		while(!Display.isCloseRequested()){
 			
 			UIMaster.updateUI();

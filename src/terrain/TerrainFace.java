@@ -6,7 +6,6 @@ import models.RawModel;
 import renderEngine.Loader;
 import textures.ModelTexture;
 import toolbox.OpenSimplexNoise;
-import ui.SliderFunctions;
 
 public class TerrainFace {
 	private ModelTexture texture;
