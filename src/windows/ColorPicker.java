@@ -9,7 +9,7 @@ import ui.UIHandler;
 
 public class ColorPicker {
 	public static List<UIElement> createWindow(){
-		List<UIElement> window = UIHandler.createWindow(new Vector2f(3,3));
+		List<UIElement> window = UIHandler.createWindow(new Vector2f(3,3), new Vector2f(0.35f,0.5f));
 		UIElement topEdge = window.get(1);
 		
 		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(-0.044f, 0.07f), "sliderRed"), window);

@@ -10,7 +10,7 @@ import ui.UIHandler;
 public class Controller {
 	
 	public static List<UIElement> createWindow() {
-		List<UIElement> window = UIHandler.createWindow(new Vector2f(5,15));
+		List<UIElement> window = UIHandler.createWindow(new Vector2f(5,15), new Vector2f(0,0));
 		UIElement topEdge = window.get(1);
 		topEdge.createTitle("Controller", 1, new Vector2f(0,0));
 		//topEdge.getTitle().setColour(0, 0, 0);

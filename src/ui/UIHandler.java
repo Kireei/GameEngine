@@ -58,23 +58,23 @@ public class UIHandler {
 	}
 
 	
-	public static List<UIElement> createWindow(Vector2f scale) {
+	public static List<UIElement> createWindow(Vector2f scale, Vector2f position) {
 		float tileSize = 0.06f;
 		float tileSpaceX = tileSize*18f/16f;
 		float tileSpaceY = tileSize*2;
-		
+		 
 		
 		
 		List<UIElement> window = new ArrayList<UIElement>();
-		UIElement TLCorner = new UIElement(new Vector3f(0,0,0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize), new ModelTexture(loader.loadTexture("GUI/Corner 1")));
-		UIElement topEdge = new UIElement(new Vector3f(tileSpaceX, 0, 0), new Vector3f(0,0,0), new Vector2f(tileSize*(scale.x-2), tileSize), new ModelTexture(loader.loadTexture("GUI/Edge 1")));
-		UIElement TRCorner = new UIElement(new Vector3f(tileSpaceX * (scale.x - 1), 0, 0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize), new ModelTexture(loader.loadTexture("GUI/Corner 2")));
-		UIElement LEdge = new UIElement(new Vector3f(0, -tileSpaceY, 0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize * (scale.y - 2)), new ModelTexture(loader.loadTexture("GUI/Edge 2")));
-		UIElement middle = new UIElement(new Vector3f(tileSpaceX, -tileSpaceY, 0), new Vector3f(0,0,0), new Vector2f(tileSize * (scale.x - 2), tileSize * (scale.y - 2)), new ModelTexture(loader.loadTexture("GUI/Background")));
-		UIElement REdge = new UIElement(new Vector3f(tileSpaceX * (scale.x - 1), -tileSpaceY,0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize * (scale.y - 2)), new ModelTexture(loader.loadTexture("GUI/Edge 3")));
-		UIElement LLCorner = new UIElement(new Vector3f(0, -tileSpaceY * (scale.y - 1),0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize), new ModelTexture(loader.loadTexture("GUI/Corner 3")));
-		UIElement bottomEdge = new UIElement(new Vector3f(tileSpaceX, -tileSpaceY * (scale.y - 1), 0), new Vector3f(0,0,0), new Vector2f(tileSize * (scale.x - 2), tileSize), new ModelTexture(loader.loadTexture("GUI/Edge 4")));
-		UIElement LRCorner = new UIElement(new Vector3f(tileSpaceX * (scale.x - 1), -tileSpaceY * (scale.y - 1),0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize), new ModelTexture(loader.loadTexture("GUI/Corner 4")));
+		UIElement TLCorner = new UIElement(new Vector3f(position.x, -position.y,0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize), new ModelTexture(loader.loadTexture("GUI/Corner 1")));
+		UIElement topEdge = new UIElement(new Vector3f(tileSpaceX + position.x, -position.y, 0), new Vector3f(0,0,0), new Vector2f(tileSize*(scale.x-2), tileSize), new ModelTexture(loader.loadTexture("GUI/Edge 1")));
+		UIElement TRCorner = new UIElement(new Vector3f(tileSpaceX * (scale.x - 1) + position.x, -position.y, 0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize), new ModelTexture(loader.loadTexture("GUI/Corner 2")));
+		UIElement LEdge = new UIElement(new Vector3f(position.x, -tileSpaceY - position.y, 0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize * (scale.y - 2)), new ModelTexture(loader.loadTexture("GUI/Edge 2")));
+		UIElement middle = new UIElement(new Vector3f(tileSpaceX + position.x, -tileSpaceY - position.y, 0), new Vector3f(0,0,0), new Vector2f(tileSize * (scale.x - 2), tileSize * (scale.y - 2)), new ModelTexture(loader.loadTexture("GUI/Background")));
+		UIElement REdge = new UIElement(new Vector3f(tileSpaceX * (scale.x - 1) + position.x, -tileSpaceY - position.y,0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize * (scale.y - 2)), new ModelTexture(loader.loadTexture("GUI/Edge 3")));
+		UIElement LLCorner = new UIElement(new Vector3f(position.x, -tileSpaceY * (scale.y - 1) - position.y,0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize), new ModelTexture(loader.loadTexture("GUI/Corner 3")));
+		UIElement bottomEdge = new UIElement(new Vector3f(tileSpaceX+ position.x, -tileSpaceY * (scale.y - 1) - position.y, 0), new Vector3f(0,0,0), new Vector2f(tileSize * (scale.x - 2), tileSize), new ModelTexture(loader.loadTexture("GUI/Edge 4")));
+		UIElement LRCorner = new UIElement(new Vector3f(tileSpaceX * (scale.x - 1) + position.x, -tileSpaceY * (scale.y - 1) - position.y,0), new Vector3f(0,0,0), new Vector2f(tileSize, tileSize), new ModelTexture(loader.loadTexture("GUI/Corner 4")));
 		window.add(TLCorner);
 		window.add(topEdge);
 		window.add(TRCorner);
@@ -84,42 +84,6 @@ public class UIHandler {
 		window.add(LLCorner);
 		window.add(bottomEdge);
 		window.add(LRCorner);
-		/*
-		//topEdge.setActive(true);
-		topEdge.createTitle("Detta ar en testmeny", 1, new Vector2f(0,0));
-		//topEdge.getTitle().setColour(0, 0, 0);
-		topEdge.createRadioButtons(5, new Vector2f(-0.05f, 0.4f));
-		topEdge.getRadioButtons().get(0).createTitle("White / Black", 1, new Vector2f(0, 0));
-		topEdge.getRadioButtons().get(0).setId("backgroundColor");
-		topEdge.getRadioButtons().get(1).createTitle("Lines / Triangles", 1, new Vector2f(0, 0));
-		topEdge.getRadioButtons().get(1).setId("renderingGeometry");
-		topEdge.getRadioButtons().get(2).createTitle("Rotate light", 1, new Vector2f(0, 0));
-		topEdge.getRadioButtons().get(2).setId("rotateLight");
-
-		for(UIElement uie: topEdge.getRadioButtons()) {
-			window.add(uie);
-		}
-		
-		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1), "slider1"), window);
-		topEdge.getSliders().get(0)[1].createTitle("Vertex Densitiy", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
-		topEdge.getSliders().get(0)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
-		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.1f),"slider2"), window);
-		topEdge.getSliders().get(1)[1].createTitle("Frequency", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
-		topEdge.getSliders().get(1)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
-		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.2f),"slider3"), window);
-		topEdge.getSliders().get(2)[1].createTitle("Radius", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
-		topEdge.getSliders().get(2)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
-		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.3f),"slider4"), window);
-		topEdge.getSliders().get(3)[1].createTitle("Amplitude", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
-		topEdge.getSliders().get(3)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
-		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.4f),"slider5"), window);
-		topEdge.getSliders().get(4)[1].createTitle("Min Level", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
-		topEdge.getSliders().get(4)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
-		topEdge.getSliders().get(4)[3].setSliderAmount(0);
-		
-		
-		UIElement.addTextBox(topEdge.createTextBox(new Vector2f(-0.035f,0.2f), new Vector2f(3,3), new Vector2f(2f,0.5f), "testBox"), window);*/
-
 		return window;
 	}
 	
