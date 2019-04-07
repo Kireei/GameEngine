@@ -22,7 +22,7 @@ public class SliderFunctions {
 			planetAmplitude = fraction * 5;
 			break;
 		case "slider5":
-			planetMinLevel = fraction;
+			planetMinLevel = fraction * 2 - 1;
 			break;
 		default:
 			System.out.println("Function for given Slider-ID not found");

@@ -141,7 +141,7 @@ public class UIHandler {
 				MasterRenderer.uies.add(slider[3]);
 				for(int j = 0; j < 4; j++) {
 					for(GUIText text: slider[j].getTexts()) {
-						TextMaster.loadText(text);
+						//TextMaster.loadText(text);
 					}
 				}
 			}
@@ -184,7 +184,7 @@ public class UIHandler {
 				}
 			}
 			for(GUIText text: window.get(i).getTexts()) {
-				TextMaster.removeText(text);
+				//TextMaster.removeText(text);
 			}
 			MasterRenderer.uies.remove(window.get(i));
 			window.get(1).setActive(false);

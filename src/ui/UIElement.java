@@ -57,7 +57,13 @@ public class UIElement {
 			double mY = (Mouse.getY() / (double)(Display.getHeight()) * 2 - 1);
 
 			UIElement clickedElement = null;
-				
+			
+			for(UIElement[] slider: sliders) {
+				UIMaster.updateText(slider[2]);
+			}
+			for(UIElement[] boxes: textBoxes) {
+				UIMaster.updateText(boxes[4]);
+			}
 			while (Mouse.next()){
 			    if (Mouse.getEventButtonState()) {
 			        if (Mouse.getEventButton() == 0) {
@@ -141,14 +147,20 @@ public class UIElement {
 	public void createTitle(String text, float size) {
 		GUIText titleText = new GUIText(text, size, UIHandler.font, new Vector2f(position.x + 0.05f, position.y + scale.y / 2), 50, false, false);
 		texts.add(titleText);
-		this.title = titleText;
-		
-		
+	}
+	public void createTitle(String text, float size, Vector3f color) {
+		GUIText titleText = new GUIText(text, size, UIHandler.font, new Vector2f(position.x + 0.05f, position.y + scale.y / 2), 50, false, false);
+		titleText.setColour(color.x, color.y, color.z);
+		texts.add(titleText);
 	}
 	public void createTitle(String text, float size, Vector2f adjustment) {
 		GUIText titleText = new GUIText(text, size, UIHandler.font, new Vector2f(adjustment.x + position.x + 0.05f, adjustment.y - position.y + scale.y / 2), 50, false, false);
 		texts.add(titleText);
-		this.title = titleText;
+	}
+	public void createTitle(String text, float size, Vector2f adjustment, Vector3f color) {
+		GUIText titleText = new GUIText(text, size, UIHandler.font, new Vector2f(adjustment.x + position.x + 0.05f, adjustment.y - position.y + scale.y / 2), 50, false, false);
+		titleText.setColour(color.x, color.y, color.z);
+		texts.add(titleText);
 	}
 	
 	public void updateTitle(GUIText title, String text) {
@@ -172,6 +184,9 @@ public class UIElement {
 		UIElement middleSlider = new UIElement(new Vector3f(adjustment.x + position.x + size, position.y - adjustment.y, 0), this.rotation, new Vector2f(size * (width - 2), size), UIHandler.middleSlider.getTexture());
 		UIElement rightSlider = new UIElement(new Vector3f(adjustment.x + position.x + size * (width - 1), position.y - adjustment.y, 0), this.rotation, new Vector2f(size, size), UIHandler.rightSlider.getTexture());
 		UIElement slider = new UIElement(new Vector3f(adjustment.x + position.x + size * 0.5f * width - size / 2, position.y - adjustment.y, 0), this.rotation, new Vector2f(size, size), UIHandler.slider.getTexture());
+		leftSlider.id = id;
+		middleSlider.id = id;
+		rightSlider.id = id;
 		slider.id = id;
 		UIElement[] sliderArray = {leftSlider, middleSlider, rightSlider, slider};
 		sliders.add(sliderArray);
@@ -198,6 +213,7 @@ public class UIElement {
 		UIElement LLCorner = new UIElement(new Vector3f( adjustX, -tileSpaceY * (scale.y - 1)+ adjustY,0), new Vector3f(0,0,0), new Vector2f(tileSize * size.x, tileSize* size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextCorner 3")));
 		UIElement bottomEdge = new UIElement(new Vector3f(tileSpaceX+ adjustX, -tileSpaceY * (scale.y - 1)+ adjustY, 0), new Vector3f(0,0,0), new Vector2f(tileSize * (scale.x - 2) * size.x, tileSize* size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextEdge 4")));
 		UIElement LRCorner = new UIElement(new Vector3f(tileSpaceX * (scale.x - 1)+ adjustX, -tileSpaceY * (scale.y - 1)+ adjustY,0), new Vector3f(0,0,0), new Vector2f(tileSize * size.x, tileSize* size.y), new ModelTexture(UIHandler.loader.loadTexture("GUI/TextCorner 4")));
+		middle.createTitle("", 1, new Vector3f(0, 0, 0));
 		
 		UIElement[] textBox = {TLCorner, topEdge, TRCorner, LEdge, middle, REdge, LLCorner, bottomEdge, LRCorner};
 		for(UIElement uie: textBox) {
