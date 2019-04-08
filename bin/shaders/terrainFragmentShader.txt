@@ -32,5 +32,4 @@ void main(void){
 	vec3 finalSpecular = dampedFactor * reflectivity * lightColor;
 	
 	out_Color = vec4(diffuse, 1.0) * vec4(pass_color, 1.0) + vec4(finalSpecular, 1.0);
-
 }

@@ -51,6 +51,7 @@ public class UIMaster {
 							}
 						if(controller.get(1).isActive()) {
 							UIHandler.closeWindow(controller);
+							UIHandler.closeWindow(colorPicker);
 							
 						}
 					}
