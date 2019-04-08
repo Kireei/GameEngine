@@ -68,7 +68,10 @@ public class MainGameLoop {
 		Function function1 = new Function(0, 0, loader, 0, FunctionTypes.SINE);
 
 		Function function3 = new Function(0,0, loader, 0, FunctionTypes.TRUESINE);
+		
+		double firstFrameTime = 0;
 		while(!Display.isCloseRequested()){
+			double start = System.nanoTime();
 			
 			UIMaster.updateUI();
 			if(var < 100) {
@@ -76,23 +79,25 @@ public class MainGameLoop {
 				//function1 = new Function(0, 0, loader, var, FunctionTypes.E);
 				//renderer.processFunction(function1);
 			}
-			
-			
 			camera.move();
-			
-			//renderer.processTerrain(terrain);
+
 			renderer.processFunction(function3);
-			
-			//light.setPosition(camera.getPosition());
 
 			planet.checkPlanetResolution();
 			light.setPosition(new Vector3f(2000f * (float)Math.cos(var), 0, 2000f*(float)Math.sin(var)));
-			renderer.render(light, camera);
-
-			TextMaster.render();
 			if(RadioButtonFunctions.rotateLight)var += 0.009;
 			
+			renderer.render(light, camera);
+			TextMaster.render();
 			DisplayManager.updateDisplay();
+			
+			double done = System.nanoTime();
+			if(firstFrameTime / Math.pow(10, 9) <= 1) {
+				firstFrameTime += done - start;	
+			}else{
+				firstFrameTime = 0;
+				System.out.println(Math.round(1 / ((done - start) / Math.pow(10, 9))));
+			}
 			
 		}
 		

@@ -20,7 +20,7 @@ public class DisplayManager {
 		try {
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT));
 			
-			Display.create(new PixelFormat(), attribs);
+			Display.create(new PixelFormat(0, 8, 0, 8), attribs);
 			Display.setTitle("3D Game");
 		} catch (LWJGLException e) {
 			e.printStackTrace();
