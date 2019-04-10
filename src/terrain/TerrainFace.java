@@ -6,6 +6,7 @@ import models.RawModel;
 import renderEngine.Loader;
 import textures.ModelTexture;
 import toolbox.OpenSimplexNoise;
+import ui.SliderFunctions;
 
 public class TerrainFace {
 	private ModelTexture texture;
@@ -15,14 +16,14 @@ public class TerrainFace {
 	private float step;
 	private float amplitude;
 	private float minLevel;
-
+	private float seaLevel;
 	private Vector3f localUp;
 	private Vector3f axisA;
 	private Vector3f axisB;
 	
 	private OpenSimplexNoise noise;
 	
-	public TerrainFace(Loader loader, int resolution, float radius, float step, float amplitude, float minLevel, Vector3f localUp, ModelTexture texture) {
+	public TerrainFace(Loader loader, int resolution, float radius, float step, float amplitude, float minLevel, float seaLevel, Vector3f localUp, ModelTexture texture) {
 		this.resolution = resolution;
 		this.radius = radius;
 		this.localUp = localUp;
@@ -30,6 +31,7 @@ public class TerrainFace {
 		this.step = step;
 		this.amplitude = amplitude;
 		this.minLevel = minLevel;
+		this.seaLevel = seaLevel;
 		noise = new OpenSimplexNoise();
 		
 		axisA = new Vector3f(localUp.y, localUp.z, localUp.x);
@@ -66,6 +68,7 @@ public class TerrainFace {
 				float noiseFactor = (float) noise.eval(pointOnUnitCube.x * step, pointOnUnitCube.y * step, pointOnUnitCube.z * step);
 
 				pointOnUnitCube.scale(((noiseFactor) * amplitude) + radius);
+				
 				if(pointOnUnitCube.length() < (radius + amplitude * minLevel)) {
 					pointOnUnitCube.normalise();
 					pointOnUnitCube.scale(radius + amplitude * (minLevel));
@@ -104,8 +107,13 @@ public class TerrainFace {
 	private Vector3f colorMap(Vector3f vector) {
 		float quota = vector.length() / (radius + (amplitude));
 		//System.out.println(quota);
-		if(quota < 0.5) return new Vector3f(0, 0, 0);
-		return new Vector3f(1, 1, 1);
+		if(quota < seaLevel) {
+			float diff = 0;// seaLevel;
+			return new Vector3f(diff, diff, diff);
+		}else {
+			return new Vector3f(1, 1, 1);	
+		}
+		
 	}
 		
 

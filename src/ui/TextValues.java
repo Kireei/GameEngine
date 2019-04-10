@@ -13,6 +13,8 @@ public class TextValues {
 			return Float.toString(Math.round((SliderFunctions.planetAmplitude * 100)) / 100f);
 		case "slider5":
 			return Float.toString(Math.round((SliderFunctions.planetMinLevel * 100)) / 100f);
+		case "slider6":
+			return Float.toString(Math.round((SliderFunctions.planetSeaLevel * 100)) / 100f);
 		case "testBox":
 			return UIMaster.testText;
 		default:
