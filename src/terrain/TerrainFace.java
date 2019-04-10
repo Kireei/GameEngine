@@ -15,6 +15,7 @@ public class TerrainFace {
 	private float step;
 	private float amplitude;
 	private float minLevel;
+
 	private Vector3f localUp;
 	private Vector3f axisA;
 	private Vector3f axisB;
@@ -77,9 +78,9 @@ public class TerrainFace {
 				normals[vertexPointer * 3 + 2] = pointOnUnitCube.z;
 				textureCoords[vertexPointer * 2] = (float) x / ((float) resolution - 1);
 				textureCoords[vertexPointer * 2 + 1] = (float) y / ((float) resolution - 1);
-				colors[vertexPointer * 3] = 1;
-				colors[vertexPointer * 3 + 1] = 1;//(noiseFactor + 1) * 0.5f;
-				colors[vertexPointer * 3 + 2] = 1;
+				colors[vertexPointer * 3] = colorMap(pointOnUnitCube).x;
+				colors[vertexPointer * 3 + 1] = colorMap(pointOnUnitCube).y;//(noiseFactor + 1) * 0.5f;
+				colors[vertexPointer * 3 + 2] = colorMap(pointOnUnitCube).z;
 				vertexPointer++;
 				
 				if (x != resolution - 1 && y != resolution - 1) {
@@ -98,7 +99,14 @@ public class TerrainFace {
 				}
 			}
 		return loader.loadToVAO(vertices, textureCoords, normals, colors, indices);
-		}
+	}
+	
+	private Vector3f colorMap(Vector3f vector) {
+		float quota = vector.length() / (radius + (amplitude));
+		//System.out.println(quota);
+		if(quota < 0.5) return new Vector3f(0, 0, 0);
+		return new Vector3f(1, 1, 1);
+	}
 		
 
 	public ModelTexture getTexture() {

@@ -96,7 +96,7 @@ public class MainGameLoop {
 				firstFrameTime += done - start;	
 			}else{
 				firstFrameTime = 0;
-				System.out.println(Math.round(1 / ((done - start) / Math.pow(10, 9))));
+				//System.out.println(Math.round(1 / ((done - start) / Math.pow(10, 9))));
 			}
 			
 		}
