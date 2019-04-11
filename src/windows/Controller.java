@@ -45,6 +45,9 @@ public class Controller {
 		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.5f),"slider6"), window);
 		topEdge.getSliders().get(5)[1].createTitle("Sea Level", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
 		topEdge.getSliders().get(5)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
+		UIElement.addSlider(topEdge.createSlider(5, new Vector2f(0.05f, 1.6f),"slider7"), window);
+		topEdge.getSliders().get(6)[1].createTitle("Ambient", 0.5f, new Vector2f(-0.18f,0.5f*0.028f));
+		topEdge.getSliders().get(6)[2].createTitle("value", 0.5f, new Vector2f(0.01f,0.5f*0.028f));
 		
 		
 		UIElement.addTextBox(topEdge.createTextBox(new Vector2f(-0.035f,0.2f), new Vector2f(3,3), new Vector2f(2f,0.5f), "testBox"), window);

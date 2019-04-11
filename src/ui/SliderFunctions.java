@@ -10,6 +10,7 @@ public class SliderFunctions {
 	public static float planetMinLevel = 0;
 	public static Vector3f planetColor = new Vector3f(1, 1, 1);
 	public static float planetSeaLevel = 0;
+	public static float ambientLight = 0;
 	
 	public static void function(String id, float fraction) {
 		switch(id) {
@@ -30,6 +31,10 @@ public class SliderFunctions {
 			break;
 		case "slider6":
 			planetSeaLevel = fraction;
+			break;
+		case "slider7":
+			ambientLight = fraction;
+			break;
 		case "sliderRed":
 			planetColor.x = fraction;
 			break;

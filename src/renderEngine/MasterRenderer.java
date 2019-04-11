@@ -85,6 +85,7 @@ public class MasterRenderer {
 		terrainShader.loadLight(sun);
 		terrainShader.loadViewMatrix(camera);
 		terrainShader.loadColor(SliderFunctions.planetColor);
+		terrainShader.loadAmbientLight(SliderFunctions.ambientLight);
 		terrainRenderer.render(terrains);
 		terrainRenderer.renderSpheres(spheres);
 		terrainRenderer.renderTerrainFaces(tfs);
