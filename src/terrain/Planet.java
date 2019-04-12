@@ -1,8 +1,12 @@
 package terrain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector3f;
 
+import entities.Entity;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
 import textures.ModelTexture;
@@ -11,6 +15,7 @@ import ui.SliderFunctions;
 public class Planet {
 	private Vector3f[] directions = new Vector3f[6];
 	private TerrainFace[] tfs = new TerrainFace[6];
+	private List<Entity> planet = new ArrayList<Entity>();
 	private Loader loader;
 	private int resolution;
 	private float radius;
@@ -40,6 +45,7 @@ public class Planet {
 		
 		for(int i = 0; i < directions.length; i++) {
 			tfs[i] = generate(directions[i]);
+			planet.add(tfs[i].getEn());
 			renderer.processTerrainFace(tfs[i]);
 		}
 
@@ -93,6 +99,14 @@ public class Planet {
 			}
 		}
 		
+	}
+
+	public List<Entity> getPlanet() {
+		return planet;
+	}
+
+	public void setPlanet(List<Entity> planet) {
+		this.planet = planet;
 	}
 	
 }

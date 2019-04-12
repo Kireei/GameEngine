@@ -2,7 +2,9 @@ package terrain;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import entities.Entity;
 import models.RawModel;
+import models.TexturedModel;
 import renderEngine.Loader;
 import textures.ModelTexture;
 import toolbox.OpenSimplexNoise;
@@ -11,6 +13,7 @@ import ui.SliderFunctions;
 public class TerrainFace {
 	private ModelTexture texture;
 	private RawModel model;
+	private Entity en;
 	private int resolution;
 	private float radius;
 	private float step;
@@ -38,6 +41,7 @@ public class TerrainFace {
 		axisB = Vector3f.cross(localUp, axisA, axisB);
 		
 		this.model = constructMesh(loader);
+		this.en = new Entity(new TexturedModel(this.model, this.texture), new Vector3f(0,0,0), 0,0,0, new Vector3f(0,0,0));
 	}
 	
 	public RawModel constructMesh(Loader loader) { 
@@ -67,12 +71,12 @@ public class TerrainFace {
 				pointOnUnitCube.normalise();
 				float noiseFactor = (float) noise.eval(pointOnUnitCube.x * step, pointOnUnitCube.y * step, pointOnUnitCube.z * step);
 
-				pointOnUnitCube.scale(((noiseFactor) * amplitude) + radius);
+				pointOnUnitCube.scale(Math.abs(((noiseFactor) * amplitude) + radius));
 				
-				if(pointOnUnitCube.length() < (radius + amplitude * minLevel)) {
+				/*if(pointOnUnitCube.length() < (radius + amplitude * minLevel)) {
 					pointOnUnitCube.normalise();
 					pointOnUnitCube.scale(radius + amplitude * (minLevel));
-				}
+				}*/
 				vertices[vertexPointer * 3] = pointOnUnitCube.x;
 				vertices[vertexPointer * 3 + 1] = pointOnUnitCube.y;
 				vertices[vertexPointer * 3 + 2] = pointOnUnitCube.z;
@@ -131,5 +135,13 @@ public class TerrainFace {
 
 	public void setModel(RawModel model) {
 		this.model = model;
+	}
+
+	public Entity getEn() {
+		return en;
+	}
+
+	public void setEn(Entity en) {
+		this.en = en;
 	}
 }

@@ -48,14 +48,14 @@ public class MainGameLoop {
 		int[] map = mapReader.readMap(mapImage);
 		
 		Entity entity = new Entity(staticModel, new Vector3f(0, 5, -25),0,0,0, new Vector3f(1,1,1));
-		Light light  = new Light(new Vector3f(0,0, -200), new Vector3f(1,1,1));
+		Light light  = new Light(new Vector3f(1000000,100000, -200000), new Vector3f(1,1,1));
 		
 		Terrain terrain = new Terrain(0, -1, loader, new ModelTexture(loader.loadTexture("chimp")));
 		
 		Camera camera = new Camera();
 	
 		
-		MasterRenderer renderer = new MasterRenderer();
+		MasterRenderer renderer = new MasterRenderer(camera);
 		Planet planet = new Planet(renderer, loader, 16, texture);
 
 		camera.setPosition(new Vector3f(0,0,20));
@@ -69,6 +69,9 @@ public class MainGameLoop {
 
 		Function function3 = new Function(0,0, loader, 0, FunctionTypes.TRUESINE);
 		
+
+		
+		
 		double firstFrameTime = 0;
 		while(!Display.isCloseRequested()){
 			double start = System.nanoTime();
@@ -80,11 +83,10 @@ public class MainGameLoop {
 				//renderer.processFunction(function1);
 			}
 			camera.move();
-
+			renderer.renderShadowMap(planet.getPlanet(), light);
 			renderer.processFunction(function3);
-
 			planet.checkPlanetResolution();
-			light.setPosition(new Vector3f(2000f * (float)Math.cos(var), 0, 2000f*(float)Math.sin(var)));
+			//light.setPosition(new Vector3f(2000f * (float)Math.cos(var), 0, 2000f*(float)Math.sin(var)));
 			if(RadioButtonFunctions.rotateLight)var += 0.009;
 			
 			renderer.render(light, camera);

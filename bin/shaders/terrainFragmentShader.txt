@@ -5,6 +5,7 @@ in vec3 pass_color;
 in vec3 surfaceNormal;
 in vec3 toLightVector;
 in vec3 toCameraVector;
+in vec4 shadowCoords;
 
 out vec4 out_Color;
 
@@ -14,14 +15,22 @@ uniform float shineDamper;
 uniform float reflectivity;
 uniform float ambientLight;
 
+uniform sampler2D shadowMap;
+
 void main(void){
 
+	float objectNearestLight = texture(shadowMap, shadowCoords.xy).r;
+	float lightFactor = 1.0;
+	if(shadowCoords.z > objectNearestLight){
+		lightFactor = 1.0 - 0.4;
+	}
+	
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitLightVector = normalize(toLightVector);
 	
 	float nDotl = dot(unitNormal, unitLightVector);
 	float brightness = max(nDotl, ambientLight);
-	vec3 diffuse = brightness * lightColor;
+	vec3 diffuse = brightness * lightColor * lightFactor;
 	
 	vec3 unitVectorToCamera = normalize(toCameraVector);
 	vec3 lightDirection = -unitLightVector;

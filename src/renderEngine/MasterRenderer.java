@@ -20,6 +20,7 @@ import shaders.FunctionShader;
 import shaders.StaticShader;
 import shaders.TerrainShader;
 import shaders.UIShader;
+import shadows.ShadowMapMasterRenderer;
 import terrain.Sphere;
 import terrain.Terrain;
 import terrain.TerrainFace;
@@ -29,9 +30,9 @@ import ui.UIRenderer;
 
 public class MasterRenderer {
 	
-	private static final float FOV = 90;
-	private static final float NEAR_PLANE = 0.1f;
-	private static final float FAR_PLANE = 1000f;
+	public static final float FOV = 90;
+	public static final float NEAR_PLANE = 0.1f;
+	public static final float FAR_PLANE = 1000f;
 	
 	public static Vector3f backgroundColor;
 	
@@ -42,6 +43,8 @@ public class MasterRenderer {
 	
 	private TerrainRenderer terrainRenderer;
 	private TerrainShader terrainShader = new TerrainShader();
+	
+	private ShadowMapMasterRenderer shadowRenderer;
 	
 	private FunctionRenderer functionRenderer;
 	private FunctionShader functionShader = new FunctionShader();
@@ -59,13 +62,14 @@ public class MasterRenderer {
 
 	
 	
-	public MasterRenderer(){
+	public MasterRenderer(Camera camera){
 		GL11.glFrontFace(GL11.GL_CCW);
 		GL11.glEnable(GL11.GL_CULL_FACE);
 		GL11.glCullFace(GL11.GL_BACK);
 		createProjectionMatrix();
 		renderer = new EntityRenderer(shader, projectionMatrix);
 		terrainRenderer = new TerrainRenderer(terrainShader, projectionMatrix);
+		this.shadowRenderer = new ShadowMapMasterRenderer(camera);
 		functionRenderer = new FunctionRenderer(functionShader, projectionMatrix);
 		uiRenderer = new UIRenderer(uiShader, projectionMatrix);
 		backgroundColor = new Vector3f(1, 1, 1);
@@ -88,7 +92,7 @@ public class MasterRenderer {
 		terrainShader.loadAmbientLight(SliderFunctions.ambientLight);
 		terrainRenderer.render(terrains);
 		terrainRenderer.renderSpheres(spheres);
-		terrainRenderer.renderTerrainFaces(tfs);
+		terrainRenderer.renderTerrainFaces(tfs, shadowRenderer.getToShadowMapSpaceMatrix());
 		terrainShader.stop();
 		
 		functionShader.start();
@@ -156,31 +160,44 @@ public class MasterRenderer {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, 1);
+		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, shadowRenderer.getShadowMap());
 	}
 	
 	private void createProjectionMatrix(){
+	  	projectionMatrix = new Matrix4f();
 		float aspectRatio = (float) Display.getWidth() / (float) Display.getHeight();
-		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))) * aspectRatio);
-		float x_scale = y_scale  / aspectRatio;
-		float frustrum_length = FAR_PLANE - NEAR_PLANE;
-		
-		projectionMatrix = new Matrix4f();
+		float y_scale = (float) ((1f / Math.tan(Math.toRadians(FOV / 2f))));
+		float x_scale = y_scale / aspectRatio;
+		float frustum_length = FAR_PLANE - NEAR_PLANE;
 		projectionMatrix.m00 = x_scale;
 		projectionMatrix.m11 = y_scale;
-		projectionMatrix.m22 = -((FAR_PLANE + NEAR_PLANE) / frustrum_length);
+		projectionMatrix.m22 = -((FAR_PLANE + NEAR_PLANE) / frustum_length);
 		projectionMatrix.m23 = -1;
-		projectionMatrix.m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustrum_length);
+		projectionMatrix.m32 = -((2 * NEAR_PLANE * FAR_PLANE) / frustum_length);
 		projectionMatrix.m33 = 0;
-		
 	}
 	
+	public void renderShadowMap(List<Entity> entityList, Light sun) {
+		for(Entity entity : entityList) {
+			processEntity(entity);
+		}
+		shadowRenderer.render(entities, sun);
+		entities.clear();
+	}
 	
+	public int getShadowMapRenderer(){
+		return shadowRenderer.getShadowMap();
+	}
 	
 	
 	public void cleanUp(){
 		shader.cleanUp();
 		terrainShader.cleanUp();
 		functionShader.cleanUp();
+		terrainShader.cleanUp();
+		uiShader.cleanUp();
+		shadowRenderer.cleanUp();
 	}
 
 }
