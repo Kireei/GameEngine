@@ -8,6 +8,7 @@ import java.nio.FloatBuffer;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
+import org.lwjgl.opengl.GL32;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
@@ -17,6 +18,7 @@ public abstract class ShaderProgram {
 	
 	private int programID;
 	private int vertexShaderID;
+	private int geometryShaderID;
 	private int fragmentShaderID;
 	
 	private static FloatBuffer matrixBuffer = BufferUtils.createFloatBuffer(16);
@@ -31,7 +33,20 @@ public abstract class ShaderProgram {
 		GL20.glLinkProgram(programID);
 		GL20.glValidateProgram(programID);
 		getAllUniformLocations();
-		
+	}
+	
+	public ShaderProgram(String vertexFile, String geometryFile, String fragmentFile){
+		vertexShaderID = loadShader(vertexFile, GL20.GL_VERTEX_SHADER);
+		geometryShaderID = loadShader(geometryFile, GL32.GL_GEOMETRY_SHADER);
+		fragmentShaderID = loadShader(fragmentFile, GL20.GL_FRAGMENT_SHADER);
+		programID = GL20.glCreateProgram();
+		GL20.glAttachShader(programID, vertexShaderID);
+		GL20.glAttachShader(programID, geometryShaderID);
+		GL20.glAttachShader(programID, fragmentShaderID);
+		bindAttributes();
+		GL20.glLinkProgram(programID);
+		GL20.glValidateProgram(programID);
+		getAllUniformLocations();
 	}
 	
 	protected abstract void getAllUniformLocations();

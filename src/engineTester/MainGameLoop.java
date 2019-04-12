@@ -38,8 +38,8 @@ public class MainGameLoop {
 	
 		TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("chimp")));
 		ModelTexture texture = staticModel.getTexture();
-		texture.setShineDamper(10000);
-		texture.setReflectivity(100);
+		texture.setShineDamper(0);
+		texture.setReflectivity(0);
 		
 		
 		Map mapReader = new Map();
