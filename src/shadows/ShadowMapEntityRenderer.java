@@ -7,10 +7,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
 
 import entities.Entity;
 import models.RawModel;
 import models.TexturedModel;
+import terrain.TerrainFace;
 import toolbox.Maths;
 
 public class ShadowMapEntityRenderer {
@@ -38,8 +40,8 @@ public class ShadowMapEntityRenderer {
 	 * @param entities
 	 *            - the entities to be rendered to the shadow map.
 	 */
-	protected void render(Map<TexturedModel, List<Entity>> entities) {
-		for (TexturedModel model : entities.keySet()) {
+	protected void render(List<TerrainFace> entities) {
+		/*for (TexturedModel model : entities.keySet()) {
 			RawModel rawModel = model.getRawModel();
 			bindModel(rawModel);
 			for (Entity entity : entities.get(model)) {
@@ -47,6 +49,12 @@ public class ShadowMapEntityRenderer {
 				GL11.glDrawElements(GL11.GL_TRIANGLES, rawModel.getVertexCount(),
 						GL11.GL_UNSIGNED_INT, 0);
 			}
+		}*/
+		for(TerrainFace tf : entities) {
+			RawModel rawModel = tf.getModel();
+			bindModel(rawModel);
+			prepareInstance(tf);
+			
 		}
 		GL20.glDisableVertexAttribArray(0);
 		GL30.glBindVertexArray(0);
@@ -74,9 +82,8 @@ public class ShadowMapEntityRenderer {
 	 * @param entity
 	 *            - the entity to be prepared for rendering.
 	 */
-	private void prepareInstance(Entity entity) {
-		Matrix4f modelMatrix = Maths.createTransformationsMatrix(entity.getPosition(),
-				entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
+	private void prepareInstance(TerrainFace tf) {
+		Matrix4f modelMatrix = Maths.createTransformationsMatrix(new Vector3f(1f, 0, 1f), 0, 0, 0, new Vector3f(4,4,4));
 		Matrix4f mvpMatrix = Matrix4f.mul(projectionViewMatrix, modelMatrix, null);
 		shader.loadMvpMatrix(mvpMatrix);
 	}

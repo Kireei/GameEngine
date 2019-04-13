@@ -30,7 +30,7 @@ import ui.UIRenderer;
 
 public class MasterRenderer {
 	
-	public static final float FOV = 90;
+	public static final float FOV = 45;
 	public static final float NEAR_PLANE = 0.1f;
 	public static final float FAR_PLANE = 1000f;
 	
@@ -90,6 +90,7 @@ public class MasterRenderer {
 		terrainShader.loadViewMatrix(camera);
 		terrainShader.loadColor(SliderFunctions.planetColor);
 		terrainShader.loadAmbientLight(SliderFunctions.ambientLight);
+		terrainShader.loadShadowMap();
 		terrainRenderer.render(terrains);
 		terrainRenderer.renderSpheres(spheres);
 		terrainRenderer.renderTerrainFaces(tfs, shadowRenderer.getToShadowMapSpaceMatrix());
@@ -160,8 +161,8 @@ public class MasterRenderer {
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GL11.glClearColor(backgroundColor.x, backgroundColor.y, backgroundColor.z, 1);
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, shadowRenderer.getShadowMap());
+		GL13.glActiveTexture(GL13.GL_TEXTURE1);
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, getShadowMapTexture());
 	}
 	
 	private void createProjectionMatrix(){
@@ -178,15 +179,15 @@ public class MasterRenderer {
 		projectionMatrix.m33 = 0;
 	}
 	
-	public void renderShadowMap(List<Entity> entityList, Light sun) {
-		for(Entity entity : entityList) {
-			processEntity(entity);
+	public void renderShadowMap(List<TerrainFace> entityList, Light sun) {
+		for(TerrainFace entity : entityList) {
+			processTerrainFace(entity);
 		}
-		shadowRenderer.render(entities, sun);
+		shadowRenderer.render(tfs, sun);
 		entities.clear();
 	}
 	
-	public int getShadowMapRenderer(){
+	public int getShadowMapTexture(){
 		return shadowRenderer.getShadowMap();
 	}
 	

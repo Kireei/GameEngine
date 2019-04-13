@@ -53,6 +53,9 @@ public class TerrainShader extends ShaderProgram{
 		location_shadowMap = super.getUniformLocation("shadowMap");
 	}
 	
+	public void loadShadowMap() {
+		super.loadInt(location_shadowMap, 1);
+	}
 	
 	public void loadShineVariable(float damper, float reflectivity){
 		super.loadFloat(location_shineDamper, damper);

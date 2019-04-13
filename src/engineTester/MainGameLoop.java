@@ -75,7 +75,7 @@ public class MainGameLoop {
 		double firstFrameTime = 0;
 		while(!Display.isCloseRequested()){
 			double start = System.nanoTime();
-			
+			//renderer.renderShadowMap(planet.getTfs(), light);
 			UIMaster.updateUI();
 			if(var < 100) {
 				//renderer.removeFunction(function1);
@@ -83,10 +83,11 @@ public class MainGameLoop {
 				//renderer.processFunction(function1);
 			}
 			camera.move();
-			renderer.renderShadowMap(planet.getPlanet(), light);
+			entity.setPosition(new Vector3f(20f * (float)Math.cos(var), 0, 20f*(float)Math.sin(var)));
+			renderer.processEntity(entity);
 			renderer.processFunction(function3);
 			planet.checkPlanetResolution();
-			//light.setPosition(new Vector3f(2000f * (float)Math.cos(var), 0, 2000f*(float)Math.sin(var)));
+			light.setPosition(new Vector3f(2000f * (float)Math.cos(var), 0, 2000f*(float)Math.sin(var)));
 			if(RadioButtonFunctions.rotateLight)var += 0.009;
 			
 			renderer.render(light, camera);
