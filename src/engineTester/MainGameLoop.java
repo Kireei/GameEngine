@@ -1,6 +1,7 @@
 package engineTester;
 
 import org.lwjgl.opengl.Display;
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
@@ -20,6 +21,7 @@ import renderEngine.OBJLoader;
 import terrain.Planet;
 import terrain.Terrain;
 import textures.ModelTexture;
+import toolbox.Maths;
 import ui.RadioButtonFunctions;
 import ui.UIHandler;
 import ui.UIMaster;
@@ -56,7 +58,8 @@ public class MainGameLoop {
 	
 		
 		MasterRenderer renderer = new MasterRenderer(camera);
-		Planet planet = new Planet(renderer, loader, 16, texture);
+		Matrix4f planetMatrix = Maths.createTransformationsMatrix(new Vector3f(0,0,0), 0, 0, 0, new Vector3f(4,4,4));
+		Planet planet = new Planet(renderer, loader, planetMatrix, texture);
 
 		camera.setPosition(new Vector3f(0,0,20));
 		
@@ -70,7 +73,7 @@ public class MainGameLoop {
 		Function function3 = new Function(0,0, loader, 0, FunctionTypes.TRUESINE);
 		
 
-		
+		float test = 0;
 		
 		double firstFrameTime = 0;
 		while(!Display.isCloseRequested()){
@@ -83,9 +86,14 @@ public class MainGameLoop {
 			}
 			camera.move();
 			entity.setPosition(new Vector3f(20f * (float)Math.cos(var), 0, 20f*(float)Math.sin(var)));
+			
+			test += 0.5f;
+			planet.settMatrix(Maths.createTransformationsMatrix(new Vector3f(0,0,0), 0, test, 0, new Vector3f(4,4,4)));
+			
 			renderer.processEntity(entity);
 			renderer.processFunction(function3);
 			planet.checkPlanetResolution();
+			
 			light.setPosition(new Vector3f(2000f * (float)Math.cos(var), 0, 2000f*(float)Math.sin(var)));
 			if(RadioButtonFunctions.rotateLight)var += 0.009;
 			

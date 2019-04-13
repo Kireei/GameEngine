@@ -15,6 +15,14 @@ public class TextValues {
 			return Float.toString(Math.round((SliderFunctions.planetMinLevel * 100)) / 100f);
 		case "slider6":
 			return Float.toString(Math.round((SliderFunctions.planetSeaLevel * 100)) / 100f);
+		case "slider7":
+			return Float.toString(Math.round((SliderFunctions.ambientLight * 100)) / 100f);
+		case "sliderLevels":
+			return Integer.toString(SliderFunctions.planetLevels);
+		case "sliderPersistance":
+			return Float.toString(Math.round((SliderFunctions.planetPersistance * 100)) / 100f);
+		case "sliderLacunarity":
+			return Float.toString(Math.round((SliderFunctions.planetLacunarity * 100)) / 100f);
 		case "testBox":
 			return UIMaster.testText;
 		default:

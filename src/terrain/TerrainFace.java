@@ -1,5 +1,6 @@
 package terrain;
 
+import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Entity;
@@ -8,7 +9,6 @@ import models.TexturedModel;
 import renderEngine.Loader;
 import textures.ModelTexture;
 import toolbox.OpenSimplexNoise;
-import ui.SliderFunctions;
 
 public class TerrainFace {
 	private ModelTexture texture;
@@ -20,13 +20,17 @@ public class TerrainFace {
 	private float amplitude;
 	private float minLevel;
 	private float seaLevel;
+	private float levels;
+	private float persistance;
+	private float lacunarity;
 	private Vector3f localUp;
 	private Vector3f axisA;
 	private Vector3f axisB;
+	private Matrix4f tMatrix;
 	
-	private OpenSimplexNoise noise;
+	private OpenSimplexNoise[] noise;
 	
-	public TerrainFace(Loader loader, int resolution, float radius, float step, float amplitude, float minLevel, float seaLevel, Vector3f localUp, ModelTexture texture) {
+	public TerrainFace(Loader loader, int resolution, float radius, float step, float amplitude, float minLevel, float seaLevel, float levels, float persistance, float lacunarity, Vector3f localUp, Matrix4f tMatrix, ModelTexture texture) {
 		this.resolution = resolution;
 		this.radius = radius;
 		this.localUp = localUp;
@@ -35,7 +39,11 @@ public class TerrainFace {
 		this.amplitude = amplitude;
 		this.minLevel = minLevel;
 		this.seaLevel = seaLevel;
-		noise = new OpenSimplexNoise();
+		this.levels = levels;
+		this.persistance = persistance;
+		this.lacunarity = lacunarity;
+		this.tMatrix = tMatrix;
+		noise = new OpenSimplexNoise[(int) levels];
 		
 		axisA = new Vector3f(localUp.y, localUp.z, localUp.x);
 		axisB = Vector3f.cross(localUp, axisA, axisB);
@@ -56,6 +64,9 @@ public class TerrainFace {
 		int vertexPointer = 0;
 		int triIndex = 0;
 		
+		for(int i = 0; i < noise.length; i++) {
+			noise[i] = new OpenSimplexNoise(i);
+		}
 		
 		
 		for (int y = 0; y < resolution; y++) {
@@ -68,9 +79,14 @@ public class TerrainFace {
 				float scaleB = (pY - 0.5f) * 2;
 
 				Vector3f pointOnUnitCube = new Vector3f(localUp.x + axisA.x * scaleA + axisB.x * scaleB, localUp.y + axisA.y * scaleA + axisB.y * scaleB, localUp.z + axisA.z * scaleA + axisB.z * scaleB);
-
+				float noiseFactor = 0;
 				pointOnUnitCube.normalise();
-				float noiseFactor = (float) noise.eval(pointOnUnitCube.x * step, pointOnUnitCube.y * step, pointOnUnitCube.z * step);
+				for(int l = 0; l < noise.length; l++) {
+					float frequency = (float) (Math.pow(lacunarity, l));
+					float amplitude = (float) Math.pow(persistance, l);
+					noiseFactor += (float) (amplitude * noise[l].eval(pointOnUnitCube.x * step * frequency, pointOnUnitCube.y * step * frequency, pointOnUnitCube.z * step * frequency));
+				}
+				// noiseFactor = (float) noise.eval(pointOnUnitCube.x * step, pointOnUnitCube.y * step, pointOnUnitCube.z * step);
 
 				pointOnUnitCube.scale(Math.abs(((noiseFactor) * amplitude) + radius));
 				
@@ -160,5 +176,13 @@ public class TerrainFace {
 
 	public void setEn(Entity en) {
 		this.en = en;
+	}
+
+	public Matrix4f gettMatrix() {
+		return tMatrix;
+	}
+
+	public void settMatrix(Matrix4f tMatrix) {
+		this.tMatrix = tMatrix;
 	}
 }

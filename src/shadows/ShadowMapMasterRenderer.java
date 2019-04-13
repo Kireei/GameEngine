@@ -1,7 +1,6 @@
 package shadows;
 
 import java.util.List;
-import java.util.Map;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Matrix4f;
@@ -9,7 +8,6 @@ import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import entities.Camera;
-import entities.Entity;
 import entities.Light;
 import models.TexturedModel;
 import terrain.TerrainFace;

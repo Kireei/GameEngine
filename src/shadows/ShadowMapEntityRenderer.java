@@ -1,17 +1,13 @@
 package shadows;
 
 import java.util.List;
-import java.util.Map;
 
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
-import entities.Entity;
 import models.RawModel;
-import models.TexturedModel;
 import terrain.TerrainFace;
 import toolbox.Maths;
 
