@@ -75,7 +75,6 @@ public class MainGameLoop {
 		double firstFrameTime = 0;
 		while(!Display.isCloseRequested()){
 			double start = System.nanoTime();
-			//renderer.renderShadowMap(planet.getTfs(), light);
 			UIMaster.updateUI();
 			if(var < 100) {
 				//renderer.removeFunction(function1);
@@ -99,7 +98,7 @@ public class MainGameLoop {
 				firstFrameTime += done - start;	
 			}else{
 				firstFrameTime = 0;
-				//System.out.println(Math.round(1 / ((done - start) / Math.pow(10, 9))));
+				System.out.println(Math.round(1 / ((done - start) / Math.pow(10, 9))));
 			}
 			
 		}

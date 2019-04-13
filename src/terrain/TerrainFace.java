@@ -51,6 +51,7 @@ public class TerrainFace {
 		float[] normals = new float[count * 3];
 		float[] textureCoords = new float[count * 2];
 		float[] colors = new float[count * 3];
+		float[] lightingFactors = new float[count * 3];
 		int[] indices = new int[6 * (resolution - 1) * (resolution - 1)];
 		int vertexPointer = 0;
 		int triIndex = 0;
@@ -73,10 +74,10 @@ public class TerrainFace {
 
 				pointOnUnitCube.scale(Math.abs(((noiseFactor) * amplitude) + radius));
 				
-				/*if(pointOnUnitCube.length() < (radius + amplitude * minLevel)) {
+				if(pointOnUnitCube.length() < (radius + amplitude * minLevel)) {
 					pointOnUnitCube.normalise();
 					pointOnUnitCube.scale(radius + amplitude * (minLevel));
-				}*/
+				}
 				vertices[vertexPointer * 3] = pointOnUnitCube.x;
 				vertices[vertexPointer * 3 + 1] = pointOnUnitCube.y;
 				vertices[vertexPointer * 3 + 2] = pointOnUnitCube.z;
@@ -88,6 +89,10 @@ public class TerrainFace {
 				colors[vertexPointer * 3] = colorMap(pointOnUnitCube).x;
 				colors[vertexPointer * 3 + 1] = colorMap(pointOnUnitCube).y;//(noiseFactor + 1) * 0.5f;
 				colors[vertexPointer * 3 + 2] = colorMap(pointOnUnitCube).z;
+				lightingFactors[vertexPointer * 3] = 0.8f * (pointOnUnitCube.length() / (radius + amplitude));
+				lightingFactors[vertexPointer * 3 + 1] = lightMap(pointOnUnitCube).y;
+				lightingFactors[vertexPointer * 3 + 2] = lightMap(pointOnUnitCube).z;
+				
 				vertexPointer++;
 				
 				if (x != resolution - 1 && y != resolution - 1) {
@@ -105,17 +110,29 @@ public class TerrainFace {
 				
 				}
 			}
-		return loader.loadToVAO(vertices, textureCoords, normals, colors, indices);
+		return loader.loadToVAO(vertices, textureCoords, normals, colors, lightingFactors, indices);
 	}
 	
 	private Vector3f colorMap(Vector3f vector) {
 		float quota = vector.length() / (radius + (amplitude));
 		//System.out.println(quota);
 		if(quota < seaLevel) {
-			float diff = 0;// seaLevel;
-			return new Vector3f(diff, diff, diff);
+			//float diff = 0;// seaLevel;
+			return new Vector3f(0, 0, 1);
 		}else {
 			return new Vector3f(1, 1, 1);	
+		}
+		
+	}
+	
+	private Vector3f lightMap(Vector3f vector) {
+		float quota = vector.length() / (radius + (amplitude));
+		//System.out.println(quota);
+		if(quota < seaLevel) {
+			float diff = 0;// seaLevel;
+			return new Vector3f(diff, 100, 1000);
+		}else {
+			return new Vector3f(0, 0, 0);	
 		}
 		
 	}

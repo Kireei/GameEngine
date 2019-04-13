@@ -1,6 +1,8 @@
 package entities;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
 import org.lwjgl.util.vector.Vector3f;
 
 import ui.UIMaster;
@@ -64,6 +66,10 @@ public class Camera {
 			}
 			if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){
 				pitch += 0.5;
+			}
+			if(Mouse.isButtonDown(1)) {
+				pitch += (float)Mouse.getDY() * 0.1f;
+				yaw += (float) Mouse.getDX() * (-0.1f * (9f/16f));
 			}
 		}
 	}

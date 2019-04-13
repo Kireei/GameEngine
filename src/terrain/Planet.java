@@ -34,6 +34,7 @@ public class Planet {
 		this.radius = SliderFunctions.planetRadius;
 		this.step = 1;
 		this.amplitude = SliderFunctions.planetAmplitude;
+		this.minLevel = 0;
 		texture.setReflectivity(1);
 		texture.setShineDamper(100);
 		directions[0] = new Vector3f(0,1,0);

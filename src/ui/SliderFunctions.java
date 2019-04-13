@@ -10,7 +10,7 @@ public class SliderFunctions {
 	public static float planetMinLevel = 0;
 	public static Vector3f planetColor = new Vector3f(1, 1, 1);
 	public static float planetSeaLevel = 0;
-	public static float ambientLight = 0;
+	public static float ambientLight = 0.5f;
 	
 	public static void function(String id, float fraction) {
 		switch(id) {

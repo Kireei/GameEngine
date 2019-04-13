@@ -48,7 +48,7 @@ public class TerrainRenderer {
 	}
 	
 	public void renderTerrainFaces(List<TerrainFace> terrainFaces, Matrix4f toShadowSpaceMatrix){
-		shader.loadShadowMapSpaceMatrix(toShadowSpaceMatrix);
+		//shader.loadShadowMapSpaceMatrix(toShadowSpaceMatrix);
 		for(TerrainFace terrainFace:terrainFaces){
 			prepareTerrainFace(terrainFace);
 			loadModelMatrix(terrainFace);
@@ -91,6 +91,7 @@ public class TerrainRenderer {
 		GL20.glEnableVertexAttribArray(1);
 		GL20.glEnableVertexAttribArray(2);
 		GL20.glEnableVertexAttribArray(3);
+		GL20.glEnableVertexAttribArray(4);
 		
 		ModelTexture texture = terrainface.getTexture();
 		shader.loadShineVariable(texture.getShineDamper(), texture.getReflectivity());
@@ -103,6 +104,7 @@ public class TerrainRenderer {
 		GL20.glDisableVertexAttribArray(1);
 		GL20.glDisableVertexAttribArray(2);
 		GL20.glDisableVertexAttribArray(3);
+		GL20.glDisableVertexAttribArray(4);
 		GL30.glBindVertexArray(0);
 	}
 	private void loadModelMatrix(Terrain terrain){
