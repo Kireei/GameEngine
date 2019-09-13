@@ -6,30 +6,34 @@ import java.util.List;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector3f;
 
+import engineTester.MainGameLoop;
 import entities.Entity;
+import models.RawModel;
+import models.TexturedModel;
 import renderEngine.Loader;
 import renderEngine.MasterRenderer;
+import renderEngine.OBJLoader;
 import textures.ModelTexture;
 import toolbox.Maths;
 import ui.SliderFunctions;
 
 public class Planet {
-	private Vector3f[] directions = new Vector3f[6];
-	private List<TerrainFace> tfs = new ArrayList<TerrainFace>();
-	private List<Entity> planet = new ArrayList<Entity>();
-	private Loader loader;
-	private int resolution;
-	private float radius;
-	private float step;
-	private float amplitude;
-	private float minLevel;
-	private float seaLevel;
-	private float levels;
-	private float persistance;
-	private float lacunarity;
-	private ModelTexture texture;
-	private MasterRenderer renderer;
-	private Matrix4f tMatrix;
+	private static Vector3f[] directions = new Vector3f[6];
+	private static List<TerrainFace> tfs = new ArrayList<TerrainFace>();
+	private static List<Entity> planet = new ArrayList<Entity>();
+	private static Loader loader = new Loader();
+	private static int resolution;
+	private static float radius;
+	private static float step;
+	private static float amplitude;
+	private static float minLevel;
+	private static float seaLevel;
+	private static float levels;
+	private static float persistance;
+	private static float lacunarity;
+	private static ModelTexture texture = MainGameLoop.tex;
+	private static MasterRenderer renderer;
+	private static Matrix4f tMatrix = Maths.createTransformationsMatrix(new Vector3f(0,0,0), 0, 0, 0, new Vector3f(4,4,4));
 	
 	public Planet(MasterRenderer renderer, Loader loader, Matrix4f tMatrix, ModelTexture texture) {
 		this.loader = loader;
@@ -52,20 +56,37 @@ public class Planet {
 		this.tMatrix = tMatrix;
 		for(int i = 0; i < directions.length; i++) {
 			tfs.add(generate(directions[i]));
-			tfs.get(i).settMatrix(this.tMatrix);
+			tfs.get(i).settMatrix(tMatrix);
 			planet.add(tfs.get(i).getEn());
 			renderer.processTerrainFace(tfs.get(i));
 		}
 
 	}
 	
-	public TerrainFace generate(Vector3f localUp) {
+	public static TerrainFace generate(Vector3f localUp) {
 		return new TerrainFace(loader, resolution, radius, step, amplitude, minLevel, seaLevel, levels, persistance, lacunarity, localUp, tMatrix, texture);
 	}
- 
+	
+	public static void createPlanet() {
+		//texture.setReflectivity(1);
+		//texture.setShineDamper(100);
+		directions[0] = new Vector3f(0,1,0);
+		directions[1] = new Vector3f(0,-1,0);
+		directions[2] = new Vector3f(-1,0,0);
+		directions[3] = new Vector3f(1,0,0);
+		directions[4] = new Vector3f(0,0,1);
+		directions[5] = new Vector3f(0,0,-1);
+		
+		for(int i = 0; i < directions.length; i++) {
+			tfs.add(generate(directions[i]));
+			tfs.get(i).settMatrix(tMatrix);
+			planet.add(tfs.get(i).getEn());
+			renderer.processTerrainFace(tfs.get(i));
+		}
+	}
 	
 	
-	public void checkPlanetResolution() {
+	public static void checkPlanetResolution() {
 		int res = SliderFunctions.planetResolution;
 		float s = SliderFunctions.planetStep;
 		float r = SliderFunctions.planetRadius;

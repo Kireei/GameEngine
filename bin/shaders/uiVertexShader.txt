@@ -1,0 +1,16 @@
+#version 330
+
+in vec2 position;
+in vec2 textureCoords;
+
+out vec2 pass_textureCoords;
+
+uniform vec2 translation;
+uniform mat4 tMatrix;
+uniform mat4 pMatrix;
+
+void main(void){
+	float offset = 2.0;
+	gl_Position = tMatrix * vec4(position.x, position.y, 0.0, 1.0);
+	pass_textureCoords = textureCoords;
+}

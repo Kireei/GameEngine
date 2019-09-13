@@ -1,0 +1,16 @@
+#version 330
+
+in vec2 pass_textureCoords;
+
+out vec4 out_Color;
+
+uniform sampler2D sampler;
+uniform vec4 color;
+
+void main(void){
+	vec4 textures = texture(sampler, pass_textureCoords);
+	if(textures.r == 1.0 && textures.b == 1.0 && textures.g == 0.0){
+		discard;
+	}
+	out_Color = textures + (color * color.a);
+}
