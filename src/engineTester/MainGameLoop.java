@@ -74,16 +74,16 @@ public class MainGameLoop {
 		
 
 		float test = 0;
-		
+		float xd = 0;
 		double firstFrameTime = 0;
 		while(!Display.isCloseRequested()){
 			double start = System.nanoTime();
 			UIMaster.updateUI();
-			if(var < 100) {
-				//renderer.removeFunction(function1);
-				//function1 = new Function(0, 0, loader, var, FunctionTypes.E);
-				//renderer.processFunction(function1);
-			}
+			/*if(xd < 100) {
+				renderer.removeFunction(function1);
+				function1 = new Function(0, 0, loader, xd, FunctionTypes.SINE);
+				renderer.processFunction(function1);
+			}*/
 			camera.move();
 			entity.setPosition(new Vector3f(20f * (float)Math.cos(var), 0, 20f*(float)Math.sin(var)));
 			
@@ -108,7 +108,7 @@ public class MainGameLoop {
 				firstFrameTime = 0;
 				System.out.println(Math.round(1 / ((done - start) / Math.pow(10, 9))));
 			}
-			
+			xd += 0.1f;
 		}
 		
 		renderer.cleanUp();
