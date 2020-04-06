@@ -27,8 +27,8 @@ import ui.UIHandler;
 import ui.UIMaster;
 
 public class MainGameLoop {
-
-	public static void main(String[] args) {
+	public static ModelTexture tex;
+	public static void run() {
 		
 		DisplayManager.createDisplay();
 		Loader loader = new Loader();
@@ -40,6 +40,7 @@ public class MainGameLoop {
 	
 		TexturedModel staticModel = new TexturedModel(model, new ModelTexture(loader.loadTexture("chimp")));
 		ModelTexture texture = staticModel.getTexture();
+		tex = texture;
 		texture.setShineDamper(0);
 		texture.setReflectivity(0);
 		
@@ -92,7 +93,7 @@ public class MainGameLoop {
 			
 			renderer.processEntity(entity);
 			renderer.processFunction(function3);
-			planet.checkPlanetResolution();
+			//Planet.checkPlanetResolution();
 			
 			light.setPosition(new Vector3f(2000f * (float)Math.cos(var), 0, 2000f*(float)Math.sin(var)));
 			if(RadioButtonFunctions.rotateLight)var += 0.009;

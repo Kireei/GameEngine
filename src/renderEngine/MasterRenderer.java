@@ -59,6 +59,8 @@ public class MasterRenderer {
 	private List<Sphere> spheres = new ArrayList<Sphere>();
 	private List<TerrainFace> tfs = new ArrayList<TerrainFace>();
 	public static List<UIElement> uies = new ArrayList<UIElement>();
+	
+	
 
 	
 	
